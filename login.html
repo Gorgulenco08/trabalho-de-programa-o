@@ -1,247 +1,462 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-PT">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Iniciar sessão</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #0f1b2d;
-    --brand: #3b4bdc;
-    --brand-dark: #2d3bb8;
-    --paper: #f6f7fb;
-    --card: #ffffff;
-    --line: #dde1ec;
-    --text: #1b2437;
-    --muted: #5d667b;
-    --error: #c62f3e;
-    --radius: 12px;
-    --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  }
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    font-family: var(--font);
-    color: var(--text);
-    background: var(--paper);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .layout { min-height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
-
-  /* Painel de marca */
-  .aside {
-    background: var(--ink);
-    color: #e8ecf6;
-    padding: 48px 56px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; color: #fff; }
-  .brand-mark { width: 36px; height: 36px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; }
-  .aside h2 { font-size: clamp(1.9rem, 2.8vw, 2.7rem); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800; margin: 0 0 16px; color: #fff; max-width: 14ch; }
-  .aside p { margin: 0; color: #a9b3c9; max-width: 38ch; line-height: 1.6; }
-  .aside small { color: #7c879f; }
-  .shapes { position: absolute; right: -90px; top: 18%; width: 340px; height: 340px; pointer-events: none; }
-  .shapes span { position: absolute; border-radius: 28px; border: 1.5px solid rgba(255,255,255,.14); }
-  .shapes span:nth-child(1) { inset: 0; }
-  .shapes span:nth-child(2) { inset: 48px; border-color: rgba(255,255,255,.2); }
-  .shapes span:nth-child(3) { inset: 96px; background: var(--brand); border-color: transparent; opacity: .9; }
-  .aside-body { position: relative; z-index: 1; }
-
-  /* Formulário */
-  .main { display: grid; place-items: center; padding: 40px 24px; }
-  .card { width: 100%; max-width: 420px; }
-  .card h1 { font-size: 1.75rem; letter-spacing: -0.03em; font-weight: 800; margin: 0 0 8px; }
-  .lead { margin: 0 0 32px; color: var(--muted); line-height: 1.5; }
-
-  .field { margin-bottom: 20px; }
-  label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: 8px; }
-  .control { position: relative; }
-  input[type="email"], input[type="password"], input[type="text"] {
-    width: 100%;
-    height: 48px;
-    padding: 0 16px;
-    font: inherit;
-    font-size: .975rem;
-    color: var(--text);
-    background: var(--card);
-    border: 1.5px solid var(--line);
-    border-radius: var(--radius);
-    transition: border-color .15s, box-shadow .15s;
-  }
-  input::placeholder { color: #9aa3b8; }
-  input:hover { border-color: #c3c9da; }
-  input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px rgba(59,75,220,.15); }
-  .field.invalid input { border-color: var(--error); }
-  .field.invalid input:focus { box-shadow: 0 0 0 4px rgba(198,47,62,.15); }
-  .error { display: none; margin: 8px 0 0; font-size: .825rem; color: var(--error); }
-  .field.invalid .error { display: block; }
-
-  .toggle {
-    position: absolute; right: 6px; top: 6px; height: 36px; padding: 0 12px;
-    background: none; border: 0; border-radius: 8px; font: inherit; font-size: .825rem; font-weight: 600;
-    color: var(--muted); cursor: pointer;
-  }
-  .toggle:hover { color: var(--brand); background: #eef0fb; }
-  input[type="password"], input.reveal { padding-right: 84px; }
-
-  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 28px; font-size: .875rem; }
-  .check { display: flex; align-items: center; gap: 10px; font-weight: 500; margin: 0; cursor: pointer; }
-  .check input { width: 18px; height: 18px; accent-color: var(--brand); margin: 0; }
-  a { color: var(--brand); font-weight: 600; text-decoration: none; }
-  a:hover { color: var(--brand-dark); text-decoration: underline; }
-
-  .submit {
-    width: 100%; height: 50px; border: 0; border-radius: var(--radius);
-    background: var(--brand); color: #fff; font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: background .15s, transform .05s;
-  }
-  .submit:hover { background: var(--brand-dark); }
-  .submit:active { transform: translateY(1px); }
-  .submit[disabled] { opacity: .8; cursor: progress; }
-  .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; display: none; animation: spin .7s linear infinite; }
-  .submit.loading .spinner { display: block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .divider { display: flex; align-items: center; gap: 16px; margin: 28px 0; color: var(--muted); font-size: .85rem; }
-  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-
-  .social {
-    width: 100%; height: 48px; display: flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--card); border: 1.5px solid var(--line); border-radius: var(--radius);
-    font: inherit; font-weight: 600; font-size: .95rem; color: var(--text); cursor: pointer; transition: border-color .15s, background .15s;
-  }
-  .social:hover { border-color: #c3c9da; background: #fafbfe; }
-
-  .foot { text-align: center; margin: 28px 0 0; font-size: .9rem; color: var(--muted); }
-  .status { margin: 16px 0 0; font-size: .9rem; font-weight: 600; color: #1d7a4d; text-align: center; min-height: 1.2em; }
-
-  :focus-visible { outline: 3px solid rgba(59,75,220,.5); outline-offset: 2px; }
-
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-    .aside { display: none; }
-    .main { padding: 32px 20px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation-duration: 1.5s !important; }
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080a13" />
+  <title>NOVA — Entra no teu espaço</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+    :root {
+      color-scheme: dark;
+      --bg: #080a13; --panel: rgba(19, 22, 39, .76); --panel-strong: #121528;
+      --text: #f6f7ff; --muted: #9298b4; --line: rgba(255,255,255,.105);
+      --field: rgba(255,255,255,.045); --field-focus: rgba(143,112,255,.09);
+      --accent: #a58bff; --accent-2: #6e8cff; --soft: rgba(160,132,255,.14);
+      --shadow: 0 26px 80px rgba(0,0,0,.34); --good: #83e8c1;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text); background: var(--bg);
+      font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow-x: hidden; transition: background .35s ease, color .35s ease;
+    }
+    body.light {
+      color-scheme: light; --bg: #f4f5fc; --panel: rgba(255,255,255,.78); --panel-strong: #fff;
+      --text: #181a2e; --muted: #70758e; --line: rgba(31,35,70,.12); --field: rgba(29,32,66,.035);
+      --field-focus: rgba(125,97,255,.08); --accent: #7358e8; --accent-2: #5878ee;
+      --soft: rgba(122,94,244,.10); --shadow: 0 26px 80px rgba(52,54,94,.13); --good: #087b5a;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .ambient { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events:none; }
+    .ambient::before, .ambient::after { content:""; position:absolute; border-radius:50%; filter: blur(95px); opacity:.34; animation: float 6s ease-in-out infinite alternate; }
+    .ambient::before { width: 490px; height: 490px; background:#5940df; left:-170px; top:-180px; }
+    .ambient::after { width: 540px; height:540px; background:#2457bb; right:-230px; bottom:-260px; animation-delay:-7s; }
+    .grid { position:absolute; inset:0; opacity:.15; background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:62px 62px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 80%,transparent); }
+    /* Full-screen 3D-inspired cosmos: the planet and orbit paths sit behind the interface. */
+    .cosmos-stage { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; isolation:isolate; opacity:.98; }
+    .cosmos-stage::before { content:""; position:absolute; inset:0; background:radial-gradient(ellipse at 48% 47%, transparent 0 14%, rgba(6,8,20,.08) 44%, var(--bg) 100%); z-index:8; }
+    .cosmic-nebula { position:absolute; inset:-15%; background:radial-gradient(ellipse at 45% 43%,rgba(106,76,230,.15),transparent 26%),radial-gradient(ellipse at 68% 52%,rgba(55,103,221,.12),transparent 29%),radial-gradient(ellipse at 28% 70%,rgba(143,85,217,.08),transparent 22%); filter:blur(25px); animation:nebula-breathe 44s ease-in-out infinite alternate; }
+    .starfield { position:absolute; inset:-5%; background-repeat:repeat; opacity:.62; }
+    /* Slow turntable makes the whole planetary backdrop visibly rotate behind the UI. */
+    .cosmic-turntable { position:absolute; inset:0; transform-origin:50% 50%; animation:cosmic-backdrop-spin 240s linear infinite; will-change:transform; }
+    .stars-one { background-image:radial-gradient(circle,#e9e8ff 0 1px,transparent 1.5px),radial-gradient(circle,#9cb7ff 0 .8px,transparent 1.5px),radial-gradient(circle,#d3c7ff 0 .7px,transparent 1.4px); background-size:173px 149px,227px 211px,113px 191px; background-position:17px 31px,79px 61px,47px 133px; animation:stars-drift 80s linear infinite; }
+    .stars-two { background-image:radial-gradient(circle,rgba(255,255,255,.8) 0 .7px,transparent 1.4px),radial-gradient(circle,rgba(147,176,255,.9) 0 1px,transparent 1.6px); background-size:281px 223px,347px 307px; background-position:111px 37px,202px 119px; opacity:.28; animation:stars-drift 116s linear infinite reverse; }
+    .planet-halo { position:absolute; left:48%; top:51%; width:clamp(380px,51vw,790px); aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle,rgba(119,104,255,.18) 0,rgba(87,114,255,.08) 42%,transparent 70%); filter:blur(18px); animation:halo-breathe 21s ease-in-out infinite; }
+    .cosmic-planet { position:absolute; left:48%; top:51%; width:clamp(310px,42vw,650px); aspect-ratio:1; transform:translate(-50%,-50%); border-radius:50%; overflow:hidden; isolation:isolate; background:radial-gradient(circle at 29% 25%,#7478bd 0,#3d478f 17%,#242958 42%,#10152f 69%,#070a18 100%); box-shadow:inset -35px -24px 70px rgba(0,0,0,.66),inset 18px 15px 32px rgba(199,192,255,.18),0 0 0 1px rgba(178,170,255,.22),0 0 55px rgba(100,91,255,.3),0 0 150px rgba(73,101,231,.16); animation:planet-float 22s ease-in-out infinite; }
+    .cosmic-planet::before { content:""; position:absolute; inset:-12%; border-radius:50%; opacity:.68; background:repeating-linear-gradient(156deg,transparent 0 23px,rgba(165,174,255,.14) 24px 27px,rgba(10,17,50,.07) 28px 36px,transparent 37px 59px),radial-gradient(ellipse at 34% 36%,rgba(194,166,255,.48),transparent 30%),radial-gradient(ellipse at 61% 59%,rgba(69,116,211,.34),transparent 37%),radial-gradient(ellipse at 72% 33%,rgba(123,156,255,.18),transparent 23%); filter:blur(1.5px); transform:rotate(-22deg) scale(1.06); transform-origin:50% 50%; animation:planet-surface-spin 90s linear infinite; mix-blend-mode:screen; }
+    .cosmic-planet::after { content:""; position:absolute; inset:0; border-radius:50%; background:radial-gradient(ellipse at 27% 21%,rgba(255,255,255,.28),transparent 18%),linear-gradient(108deg,rgba(255,255,255,.08),transparent 28%,transparent 53%,rgba(1,4,19,.46) 83%,rgba(0,0,0,.74)); box-shadow:inset -22px -8px 32px rgba(0,0,0,.38); }
+    .planet-texture { position:absolute; z-index:1; inset:-18%; border-radius:50%; opacity:.46; background:repeating-linear-gradient(90deg,transparent 0 10%,rgba(173,184,255,.0) 10.5%,rgba(183,174,255,.23) 12%,rgba(98,133,221,.11) 13.5%,transparent 18%),radial-gradient(ellipse at 36% 42%,rgba(184,160,255,.36),transparent 29%),radial-gradient(ellipse at 66% 58%,rgba(62,133,238,.30),transparent 34%); background-size:220% 100%,190% 150%,190% 150%; background-position:0% 50%,12% 38%,72% 55%; mix-blend-mode:screen; filter:blur(4px); animation:planet-texture-flow 50s ease-in-out infinite alternate; }
+    body.light .planet-texture { opacity:.54; mix-blend-mode:normal; background:repeating-linear-gradient(90deg,transparent 0 10%,rgba(141,162,211,0) 10.5%,rgba(255,255,255,.48) 12%,rgba(92,139,201,.20) 13.5%,transparent 18%),radial-gradient(ellipse at 36% 42%,rgba(255,255,255,.60),transparent 29%),radial-gradient(ellipse at 66% 58%,rgba(101,152,211,.25),transparent 34%); }
+    .planet-cloud { position:absolute; z-index:2; display:block; border-radius:50%; filter:blur(9px); opacity:.5; background:linear-gradient(90deg,transparent,rgba(159,169,255,.42),rgba(191,164,255,.27),transparent); transform:rotate(-28deg); }
+    .cloud-a { width:87%; height:13%; left:-4%; top:28%; animation:cloud-stream-a 28s ease-in-out infinite alternate; }
+    .cloud-b { width:75%; height:9%; right:-8%; top:56%; opacity:.34; transform:rotate(23deg); animation:cloud-stream-b 38s ease-in-out infinite alternate; }
+    .orbit-track { position:absolute; left:48%; top:51%; width:max(1050px,130vw); aspect-ratio:1; border:1px solid rgba(160,158,255,.18); border-radius:50%; transform:translate(-50%,-50%) rotateX(69deg) rotateZ(-20deg); transform-style:preserve-3d; box-shadow:0 0 22px rgba(123,107,255,.10),0 0 55px rgba(116,128,255,.035); will-change:transform; }
+    .orbit-track::before { content:""; position:absolute; inset:-1px; border-radius:inherit; border:2px solid transparent; background:conic-gradient(from 8deg,transparent 0 22deg,rgba(181,169,255,.78) 38deg,rgba(126,162,255,.10) 67deg,transparent 85deg 166deg,rgba(130,184,255,.7) 185deg,transparent 215deg 284deg,rgba(204,181,255,.36) 303deg,transparent 330deg) border-box; -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; }
+    .orbit-track::after { content:""; position:absolute; width:8px;height:8px; left:17%;top:13%; border-radius:50%; background:#ddd4ff; box-shadow:0 0 10px 4px rgba(159,135,255,.7),0 0 28px 9px rgba(104,124,255,.24); }
+    .orbit-a { animation:orbit-revolve-a 76s linear infinite; }
+    .orbit-b { width:max(840px,105vw); border-color:rgba(111,159,255,.13); transform:translate(-50%,-50%) rotateX(63deg) rotateZ(41deg); animation:orbit-revolve-b 104s linear infinite; }
+    .orbit-b::after { left:72%; top:8%; width:5px;height:5px; background:#8dbbff; box-shadow:0 0 10px 4px rgba(90,152,255,.72),0 0 26px 9px rgba(89,120,255,.2); }
+    .orbit-c { width:max(1200px,150vw); border-color:rgba(183,145,255,.09); transform:translate(-50%,-50%) rotateX(75deg) rotateZ(8deg); animation:orbit-revolve-c 150s linear infinite; }
+    .cosmic-sweep { position:absolute; left:48%;top:51%; width:100vw;height:100vw; max-width:1250px; max-height:1250px; border-radius:50%; transform:translate(-50%,-50%) rotate(-32deg); background:conic-gradient(from 160deg,transparent 0 195deg,rgba(118,151,255,.035) 214deg,rgba(148,137,255,.14) 228deg,rgba(118,151,255,.045) 237deg,transparent 258deg 360deg); filter:blur(13px); animation:sweep-turn 94s linear infinite; will-change:transform; }
+    body.light .cosmos-stage { opacity:.95; }
+    body.light .cosmos-stage::before { background:radial-gradient(ellipse at 48% 47%,transparent 0 18%,rgba(246,247,255,.06) 48%,var(--bg) 100%); }
+    body.light .cosmic-nebula { background:radial-gradient(ellipse at 45% 43%,rgba(132,126,235,.13),transparent 29%),radial-gradient(ellipse at 68% 52%,rgba(97,157,225,.12),transparent 31%),radial-gradient(ellipse at 28% 70%,rgba(192,133,221,.10),transparent 24%); }
+    body.light .stars-one { background-image:radial-gradient(circle,#7c84c2 0 1px,transparent 1.5px),radial-gradient(circle,#688bc9 0 .8px,transparent 1.5px),radial-gradient(circle,#a795d8 0 .7px,transparent 1.4px); opacity:.40; }
+    body.light .stars-two { opacity:.17; }
+    body.light .planet-halo { background:radial-gradient(circle,rgba(127,161,255,.23) 0,rgba(177,159,255,.13) 43%,transparent 70%); }
+    body.light .cosmic-planet { background:radial-gradient(circle at 27% 22%,#ffffff 0,#eaf1ff 12%,#c8d8f8 31%,#8aa9df 57%,#4d6ba8 82%,#293d70 100%); box-shadow:inset -32px -24px 65px rgba(35,51,103,.42),inset 20px 17px 35px rgba(255,255,255,.88),0 0 0 1px rgba(101,128,196,.27),0 0 55px rgba(109,141,226,.23),0 0 145px rgba(115,128,223,.13); }
+    body.light .cosmic-planet::before { opacity:.78; background:repeating-linear-gradient(156deg,transparent 0 23px,rgba(76,113,179,.16) 24px 27px,rgba(255,255,255,.19) 28px 36px,transparent 37px 59px),radial-gradient(ellipse at 34% 36%,rgba(255,255,255,.72),transparent 30%),radial-gradient(ellipse at 61% 59%,rgba(85,139,199,.28),transparent 37%); mix-blend-mode:normal; }
+    body.light .cosmic-planet::after { background:radial-gradient(ellipse at 27% 21%,rgba(255,255,255,.92),transparent 19%),linear-gradient(108deg,rgba(255,255,255,.42),transparent 32%,transparent 53%,rgba(25,44,95,.24) 83%,rgba(16,34,79,.49)); }
+    body.light .planet-cloud { background:linear-gradient(90deg,transparent,rgba(255,255,255,.82),rgba(136,162,218,.37),transparent); }
+    body.light .orbit-track { border-color:rgba(92,119,194,.21); }
+    body.light .orbit-track::before { background:conic-gradient(from 8deg,transparent 0 22deg,rgba(101,107,201,.64) 38deg,rgba(88,145,226,.13) 67deg,transparent 85deg 166deg,rgba(68,142,211,.64) 185deg,transparent 215deg 284deg,rgba(143,107,205,.31) 303deg,transparent 330deg) border-box; }
+    body.light .orbit-track::after { background:#7777cb; box-shadow:0 0 10px 4px rgba(120,126,210,.48),0 0 28px 9px rgba(104,124,220,.16); }
+    body.light .orbit-b::after { background:#4e8acb; box-shadow:0 0 10px 4px rgba(90,152,215,.55),0 0 26px 9px rgba(89,120,220,.13); }
+    body.light .cosmic-sweep { background:conic-gradient(from 160deg,transparent 0 205deg,rgba(106,133,231,.06) 229deg,transparent 258deg 360deg); }
+    .shell { position:relative; z-index:1; width:min(1240px, calc(100% - 64px)); min-height:100vh; margin:auto; display:grid; grid-template-columns:1.07fr .93fr; align-items:center; gap:clamp(48px, 8vw, 120px); padding:38px 0; }
+    .topbar { position:absolute; z-index:3; top:30px; left: max(32px, calc((100vw - 1240px)/2)); display:flex; align-items:center; gap:12px; animation:fade-down .7s both; }
+    .brand-mark { width:35px; height:35px; border-radius:12px; background:linear-gradient(135deg,#a58bff,#5d7cff); box-shadow:0 5px 24px rgba(131,103,255,.38); display:grid; place-items:center; }
+    .brand-mark svg { width:20px; height:20px; }
+    .brand-name { font:800 18px/1 'Manrope',sans-serif; letter-spacing:.17em; }
+    .theme-toggle { position:fixed; z-index:5; right:30px; top:27px; display:flex; align-items:center; gap:9px; padding:9px 13px; border:1px solid var(--line); border-radius:999px; background:var(--panel); backdrop-filter:blur(16px); box-shadow:0 8px 30px rgba(0,0,0,.08); cursor:pointer; transition:transform .2s,border-color .2s; }
+    .theme-toggle:hover { transform:translateY(-2px); border-color:var(--accent); }
+    .theme-toggle svg { width:17px;height:17px; }
+    .theme-label { color:var(--muted); font-size:12px; font-weight:600; }
+    .intro { padding:64px 0 30px; animation:rise .8s .05s both; }
+    .eyebrow { display:inline-flex; align-items:center; gap:9px; text-transform:uppercase; font-size:10px; font-weight:700; letter-spacing:.2em; color:var(--accent); margin-bottom:25px; }
+    .eyebrow::before { content:""; width:24px; height:1px; background:currentColor; }
+    h1 { font-family:'Manrope',sans-serif; font-size:clamp(43px,5vw,69px); letter-spacing:-.065em; line-height:1.08; font-weight:600; max-width:600px; margin:0 0 23px; }
+    .gradient-text { background:linear-gradient(105deg,#c5aaff 5%,#8aa6ff 55%,#d8c5ff 95%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    body.light .gradient-text { background-image:linear-gradient(105deg,#7552e8 5%,#456fe7 55%,#9b61df 95%); -webkit-background-clip:text; background-clip:text; }
+    .lead { max-width:440px; color:var(--muted); font-size:15px; line-height:1.8; margin:0; }
+    .visual { display:none; position:relative; isolation:isolate; max-width:510px; height:252px; margin:34px 0 27px; border:1px solid var(--line); border-radius:24px; overflow:hidden; background:radial-gradient(ellipse at 51% 48%,rgba(91,79,204,.18),transparent 45%),linear-gradient(130deg,rgba(130,104,255,.10),rgba(71,111,255,.04) 52%,transparent); box-shadow:inset 0 1px rgba(255,255,255,.035); }
+    .visual::before { content:""; position:absolute; z-index:-1; width:250px;height:250px; border:1px solid rgba(180,164,255,.19); border-radius:50%; left:calc(50% - 125px); top:0; box-shadow:0 0 90px rgba(110,94,255,.13),inset 0 0 65px rgba(110,94,255,.08); }
+    .visual::after { content:""; position:absolute; z-index:-1; inset:0; opacity:.52; background-image:radial-gradient(circle at 14% 25%,#b9b5ff 0 1px,transparent 1.5px),radial-gradient(circle at 84% 20%,#8baeff 0 1px,transparent 1.5px),radial-gradient(circle at 76% 72%,#c6b9ff 0 1px,transparent 1.5px),radial-gradient(circle at 20% 79%,#8baeff 0 1px,transparent 1.5px),radial-gradient(circle at 34% 13%,#fff 0 .8px,transparent 1.5px),radial-gradient(circle at 91% 48%,#fff 0 .8px,transparent 1.5px); }
+    .planet-glow { position:absolute; width:150px;height:150px; left:calc(50% - 75px); top:48px; border-radius:50%; background:rgba(117,94,255,.20); filter:blur(30px); animation:planet-pulse 5s ease-in-out infinite; }
+    .orb { position:absolute; z-index:2; width:88px;height:88px; left:calc(50% - 44px); top:79px; overflow:hidden; border-radius:50%; background:radial-gradient(circle at 27% 22%,#f0e8ff 0%,#b7a2ff 13%,#8d75ff 30%,#555ce9 55%,#26327f 79%,#10152e 100%); box-shadow:inset -15px -12px 23px rgba(4,9,37,.68),inset 7px 5px 16px rgba(255,255,255,.28),0 0 27px rgba(137,113,255,.65),0 0 70px rgba(100,106,255,.22); animation:bob 5.5s ease-in-out infinite; }
+    .orb::before { content:""; position:absolute; inset:-12% -35%; border-radius:50%; transform:rotate(-25deg); background:repeating-linear-gradient(174deg,transparent 0 9px,rgba(220,213,255,.19) 10px 12px,rgba(45,55,145,.08) 13px 18px,transparent 19px 26px); mix-blend-mode:screen; opacity:.72; }
+    .orb::after { content:""; position:absolute; inset:0; border-radius:50%; background:linear-gradient(105deg,rgba(255,255,255,.20),transparent 44%,rgba(3,8,36,.44) 86%); }
+    .orbit { position:absolute; z-index:1; left:50%; top:50%; width:360px;height:122px; margin-left:-180px; margin-top:-61px; border:1px solid rgba(167,157,255,.57); border-radius:50%; transform:rotate(-20deg); box-shadow:0 0 12px rgba(128,111,255,.10); animation:orbit-drift 15s linear infinite; }
+    .orbit::after { content:""; position:absolute; width:6px;height:6px; right:13%; top:10%; border-radius:50%; background:#d9d0ff; box-shadow:0 0 9px 3px rgba(174,153,255,.7); }
+    .orbit.orbit-two { z-index:3; width:300px;height:154px; margin-left:-150px; margin-top:-77px; transform:rotate(28deg); border-color:rgba(104,163,255,.63); border-left-color:rgba(104,163,255,.12); border-right-color:rgba(192,174,255,.8); animation:orbit-drift-reverse 19s linear infinite; }
+    .orbit.orbit-two::after { width:4px;height:4px; top:79%; right:8%; background:#9ccaff; box-shadow:0 0 10px 3px rgba(104,163,255,.8); }
+    .orbit.orbit-three { z-index:1; width:405px;height:86px; margin-left:-202px; margin-top:-43px; transform:rotate(12deg); border-color:rgba(184,164,255,.22); animation:orbit-drift 27s linear infinite reverse; }
+    .orbit-dot { position:absolute; z-index:4; left:calc(50% - 125px); top:calc(50% + 41px); width:5px;height:5px; border-radius:50%; background:#7eb6ff; box-shadow:0 0 13px 3px rgba(105,148,255,.62); animation:dot-drift 8s ease-in-out infinite alternate; }
+    .visual-label { position:absolute; left:20px; bottom:17px; color:var(--muted); font-size:10px; letter-spacing:.13em; text-transform:uppercase; }
+    .visual-coordinates { position:absolute; top:17px; right:17px; display:flex; align-items:center; gap:7px; color:var(--muted); font-size:9px; letter-spacing:.12em; text-transform:uppercase; }
+    .visual-coordinates::before { content:""; width:5px;height:5px; border-radius:50%; background:#83e8c1; box-shadow:0 0 9px rgba(131,232,193,.7); }
+    .mini-stats { display:flex; flex-wrap:wrap; gap:22px; margin-top:31px; color:var(--muted); font-size:11px; }
+    .mini-stats span { display:flex; align-items:center; gap:8px; }
+    .mini-stats svg { width:15px;height:15px;color:var(--accent); }
+    .auth-wrap { display:flex; justify-content:center; padding-top:34px; animation:rise .85s .15s both; }
+    .auth-card { width:100%; max-width:440px; padding:clamp(26px,4vw,40px); border:1px solid var(--line); border-radius:26px; background:var(--panel); backdrop-filter:blur(28px); box-shadow:var(--shadow); position:relative; overflow:hidden; }
+    .auth-card::before { content:""; position:absolute; left:15%; right:15%; height:1px; top:0; background:linear-gradient(90deg,transparent,var(--accent),#85a6ff,transparent); opacity:.85; }
+    .card-head { margin-bottom:25px; }
+    .welcome { color:var(--muted); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; margin:0 0 10px; }
+    h2 { font:700 28px/1.2 'Manrope',sans-serif; letter-spacing:-.045em; margin:0 0 9px; }
+    .card-sub { color:var(--muted); font-size:13px; line-height:1.6; margin:0; }
+    .tabs { display:grid; grid-template-columns:1fr 1fr; gap:5px; padding:5px; border:1px solid var(--line); border-radius:13px; background:var(--field); margin-bottom:24px; }
+    .tab { display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid transparent; border-radius:9px; padding:11px 8px; background:transparent; color:var(--muted); font-size:12px; font-weight:700; cursor:pointer; transition:all .25s ease; }
+    .tab svg { width:15px;height:15px; }
+    .tab.active { background:var(--soft); border-color:rgba(151,127,255,.24); color:var(--text); box-shadow:0 3px 15px rgba(97,76,197,.08); }
+    .tab:hover:not(.active) { color:var(--text); }
+    .field { margin-bottom:17px; }
+    .field-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+    label { color:var(--text); font-size:12px; font-weight:700; }
+    .text-link { background:none; border:0; padding:0; color:var(--accent); font-size:11px; font-weight:700; cursor:pointer; }
+    .text-link:hover { text-decoration:underline; }
+    .input-wrap { position:relative; }
+    .input-icon { width:17px;height:17px; position:absolute; left:15px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+    input { width:100%; height:49px; padding:0 45px; border-radius:12px; border:1px solid var(--line); outline:none; background:var(--field); color:var(--text); font-size:13px; transition:border-color .2s,box-shadow .2s,background .2s; }
+    input::placeholder { color:var(--muted); opacity:.7; }
+    input:focus { border-color:var(--accent); background:var(--field-focus); box-shadow:0 0 0 4px rgba(143,112,255,.12); }
+    .eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); display:grid; place-items:center; width:28px;height:28px; border:0; border-radius:7px; background:transparent; color:var(--muted); cursor:pointer; }
+    .eye:hover { color:var(--text); background:var(--soft); }
+    .eye svg { width:17px;height:17px; }
+    .primary { position:relative; isolation:isolate; display:flex; justify-content:center; align-items:center; gap:10px; width:100%; height:51px; margin-top:9px; border:0; border-radius:12px; color:white; font-size:13px; font-weight:700; cursor:pointer; overflow:hidden; background:linear-gradient(105deg,#8968ef,#627ff6 60%,#7779f4); box-shadow:0 9px 22px rgba(112,94,234,.25); transition:transform .2s,box-shadow .2s,filter .2s; }
+    .primary::before { content:""; position:absolute; z-index:-1; width:45%; height:300%; top:-100%; left:-70%; transform:rotate(25deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.23),transparent); transition:left .65s; }
+    .primary:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(112,94,234,.34); filter:saturate(1.12); }
+    .primary:hover::before { left:130%; }
+    .primary:active { transform:translateY(0) scale(.99); }
+    .primary svg { width:16px;height:16px; transition:transform .2s; }
+    .primary:hover svg { transform:translateX(3px); }
+    .separator { display:flex; align-items:center; gap:12px; margin:22px 0; color:var(--muted); font-size:10px; white-space:nowrap; }
+    .separator::before,.separator::after { content:""; height:1px; background:var(--line); flex:1; }
+    .google { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; height:47px; border:1px solid var(--line); border-radius:12px; background:transparent; font-size:12px; font-weight:700; cursor:pointer; transition:all .2s; }
+    .google:hover { border-color:var(--accent); background:var(--soft); transform:translateY(-1px); }
+    .google svg { width:17px;height:17px; }
+    .signup { margin:23px 0 0; color:var(--muted); text-align:center; font-size:12px; }
+    .signup button { color:var(--accent); background:none; border:0; padding:0 0 0 3px; cursor:pointer; font-size:12px; font-weight:700; }
+    .signup button:hover { text-decoration:underline; }
+    .security { display:flex; justify-content:center; align-items:center; gap:7px; color:var(--muted); font-size:10px; margin-top:25px; }
+    .security svg { width:13px;height:13px;color:var(--good); }
+    .notice { display:none; margin:0 0 17px; padding:12px 13px; border-radius:10px; font-size:12px; line-height:1.55; background:var(--soft); border:1px solid rgba(151,127,255,.24); color:var(--text); animation:rise .28s both; }
+    .notice.show { display:block; }
+    .notice.success { background:rgba(75,201,154,.09); border-color:rgba(75,201,154,.26); }
+    .field-error { display:none; color:#ff8f9d; font-size:11px; margin-top:7px; }
+    .field-error.show { display:block; }
+    .footer { position:absolute; z-index:2; bottom:20px; left:0; right:0; text-align:center; color:var(--muted); opacity:.7; font-size:10px; }
+    .mobile-brand { display:none; }
+    @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fade-down { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes float { to { transform:translate(70px,50px) scale(1.12); } }
+    @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @keyframes orbit { to { transform:rotate(360deg); } }
+    @keyframes orbit-drift { from { transform:rotate(-20deg); } to { transform:rotate(340deg); } }
+    @keyframes orbit-drift-reverse { from { transform:rotate(28deg); } to { transform:rotate(-332deg); } }
+    @keyframes dot-drift { from { transform:translate(-8px,4px); opacity:.55; } to { transform:translate(15px,-11px); opacity:1; } }
+    @keyframes planet-pulse { 0%,100% { transform:scale(.94); opacity:.65; } 50% { transform:scale(1.1); opacity:1; } }
+    @keyframes planet-float { 0%,100% { margin-top:0; } 50% { margin-top:-10px; } }
+    @keyframes cosmic-backdrop-spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+    @keyframes planet-surface-spin { from { transform:rotate(-22deg) scale(1.06); } to { transform:rotate(338deg) scale(1.06); } }
+    @keyframes planet-texture-flow {
+      0% { background-position:0% 50%,12% 38%,72% 55%; transform:rotate(-9deg) scale(1.08); }
+      50% { background-position:55% 42%,78% 63%,18% 35%; transform:rotate(0deg) scale(1.11); }
+      100% { background-position:100% 50%,12% 38%,72% 55%; transform:rotate(9deg) scale(1.08); }
+    }
+    @keyframes cloud-stream-a { from { translate:-4% 0; } to { translate:9% -3%; } }
+    @keyframes cloud-stream-b { from { translate:5% 2%; } to { translate:-10% -2%; } }
+    @keyframes halo-breathe { 0%,100% { opacity:.7; transform:translate(-50%,-50%) scale(.96); } 50% { opacity:1; transform:translate(-50%,-50%) scale(1.06); } }
+    @keyframes nebula-breathe { from { transform:translate3d(-1.2%,1%,0) scale(1); opacity:.7; } to { transform:translate3d(1.5%,-1%,0) scale(1.035); opacity:1; } }
+    @keyframes stars-drift { from { transform:translate3d(0,0,0); } to { transform:translate3d(-70px,38px,0); } }
+    @keyframes orbit-revolve-a { from { transform:translate(-50%,-50%) rotateX(69deg) rotateZ(-20deg); } to { transform:translate(-50%,-50%) rotateX(69deg) rotateZ(340deg); } }
+    @keyframes orbit-revolve-b { from { transform:translate(-50%,-50%) rotateX(63deg) rotateZ(41deg); } to { transform:translate(-50%,-50%) rotateX(63deg) rotateZ(-319deg); } }
+    @keyframes orbit-revolve-c { from { transform:translate(-50%,-50%) rotateX(75deg) rotateZ(8deg); } to { transform:translate(-50%,-50%) rotateX(75deg) rotateZ(368deg); } }
+    @keyframes sweep-turn { from { transform:translate(-50%,-50%) rotate(-32deg); } to { transform:translate(-50%,-50%) rotate(328deg); } }
+    .primary:disabled,.google:disabled { opacity:.65; cursor:wait; transform:none; }
+    @media (max-width: 930px) {
+      .cosmic-planet { left:50%; top:47%; width:clamp(300px,78vw,540px); opacity:.88; }
+      .planet-halo { left:50%; top:47%; width:clamp(360px,94vw,660px); }
+      .orbit-track { left:50%; top:47%; width:max(850px,170vw); }
+      .orbit-b { width:max(700px,145vw); }
+      .orbit-c { width:max(1000px,195vw); }
+      .cosmic-sweep { left:50%;top:47%;width:145vw;height:145vw; }
+      .shell { width:min(560px,calc(100% - 36px)); display:block; padding:86px 0 48px; }
+      .topbar { top:22px; left:20px; }
+      .theme-toggle { top:19px; right:19px; }
+      .intro { padding:22px 0 28px; text-align:center; }
+      .eyebrow { margin-bottom:16px; }
+      h1 { margin-left:auto; margin-right:auto; font-size:clamp(38px,8vw,54px); }
+      .lead { margin:auto; font-size:14px; }
+      .visual { height:170px; margin:23px auto 19px; max-width:430px; }
+      .visual::before { width:174px;height:174px;left:calc(50% - 87px);top:-2px; }
+      .orb { width:66px;height:66px;left:calc(50% - 33px);top:51px; }
+      .planet-glow { width:118px;height:118px;left:calc(50% - 59px);top:28px; }
+      .orbit { width:300px;height:98px;margin-left:-150px;margin-top:-49px; }
+      .orbit.orbit-two { width:250px;height:124px;margin-left:-125px;margin-top:-62px; }
+      .orbit.orbit-three { width:330px;height:70px;margin-left:-165px;margin-top:-35px; }
+      .visual-label { font-size:9px; bottom:12px; }
+      .mini-stats { justify-content:center; gap:13px 19px; }
+      .auth-wrap { padding-top:0; }
+      .auth-card { max-width:480px; }
+      .footer { position:relative; z-index:2; padding:0 0 18px; }
+    }
+    @media (max-width: 440px) {
+      .cosmos-stage { opacity:.72; }
+      .cosmic-planet { left:50%; top:45%; width:88vw; }
+      .planet-halo { left:50%; top:45%; width:108vw; }
+      .orbit-track { left:50%; top:45%; width:220vw; }
+      .orbit-b { width:190vw; }
+      .orbit-c { width:245vw; }
+      .cosmic-sweep { left:50%;top:45%;width:180vw;height:180vw; }
+      .shell { width:calc(100% - 28px); padding-top:78px; }
+      .brand-name { font-size:16px; }
+      .theme-toggle { padding:9px 10px; }
+      .theme-label { display:none; }
+      .intro { padding-top:16px; }
+      .visual { display:none; }
+      .mini-stats { margin-top:21px; font-size:10px; }
+      .mini-stats span:last-child { display:none; }
+      .auth-card { padding:24px 20px; border-radius:22px; }
+      h2 { font-size:25px; }
+      .tabs { margin-bottom:20px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .intro,.auth-wrap,.topbar { animation:none !important; } button,input { transition:none !important; } /* The cosmic backdrop keeps its deliberate motion: it is the central visual requested for this page. */ }
+  </style>
 </head>
 <body>
-<div class="layout">
-  <aside class="aside" aria-hidden="true">
-    <div class="brand">
-      <span class="brand-mark">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>
-      </span>
-      Nome da App
+  <div class="ambient" aria-hidden="true"><div class="grid"></div></div>
+  <div class="cosmos-stage" aria-hidden="true">
+    <div class="cosmic-nebula"></div><div class="starfield stars-one"></div><div class="starfield stars-two"></div>
+    <div class="cosmic-turntable">
+      <div class="cosmic-sweep"></div>
+      <div class="orbit-track orbit-c"></div><div class="orbit-track orbit-a"></div>
+      <div class="planet-halo"></div>
+      <div class="cosmic-planet"><span class="planet-texture"></span><span class="planet-cloud cloud-a"></span><span class="planet-cloud cloud-b"></span></div>
+      <div class="orbit-track orbit-b"></div>
     </div>
-    <div class="aside-body">
-      <h2>Entra e continua de onde ficaste.</h2>
-      <p>Acede à tua conta para ver o teu trabalho, as tuas definições e tudo o que guardaste.</p>
-    </div>
-    <small>© 2026 Nome da App. Todos os direitos reservados.</small>
-    <div class="shapes"><span></span><span></span><span></span></div>
-  </aside>
+  </div>
+  <header class="topbar" aria-label="NOVA">
+    <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 17.5V6.5L19 17.5V6.5" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <span class="brand-name">NOVA</span>
+  </header>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar para modo claro" title="Alternar modo claro/escuro">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg><span class="theme-label" id="themeLabel">Modo escuro</span>
+  </button>
 
-  <main class="main">
-    <section class="card">
-      <h1>Iniciar sessão</h1>
-      <p class="lead">Introduz os teus dados para entrares na tua conta.</p>
+  <main class="shell">
+    <section class="intro" aria-labelledby="heroTitle">
+      <div class="eyebrow">O teu próximo capítulo começa aqui</div>
+      <h1 id="heroTitle">Entra no teu<br><span class="gradient-text">próprio espaço.</span></h1>
+      <p class="lead">Tudo o que precisas, num só lugar. Uma experiência simples, segura e feita para acompanhar as tuas ideias.</p>
+      <div class="mini-stats">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>Privacidade em primeiro lugar</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Acesso seguro</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7 10 17l-5-5"/><path d="M21 12a9 9 0 1 1-5.6-8.3"/></svg>Sem complicações</span>
+      </div>
+    </section>
 
-      <form id="login" novalidate>
-        <div class="field" id="f-email">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" placeholder="nome@exemplo.pt" required>
-          <p class="error" id="e-email">Introduz um email válido, por exemplo nome@exemplo.pt.</p>
+    <section class="auth-wrap" aria-label="Iniciar sessão">
+      <div class="auth-card">
+        <div class="card-head">
+          <p class="welcome">Bem-vindo de volta</p>
+          <h2 id="formTitle">É bom ter-te aqui.</h2>
+          <p class="card-sub" id="formSubtitle">Entra na tua conta para continuares de onde ficaste.</p>
         </div>
-
-        <div class="field" id="f-pass">
-          <label for="password">Palavra-passe</label>
-          <div class="control">
-            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="A tua palavra-passe" required>
-            <button type="button" class="toggle" id="toggle" aria-label="Mostrar palavra-passe" aria-pressed="false">Mostrar</button>
+        <div class="tabs" role="tablist" aria-label="Método de acesso">
+          <button class="tab active" id="passwordTab" type="button" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Palavra-passe</button>
+          <button class="tab" id="magicTab" type="button" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8m-3 0h3v3m-8 8 2 2"/></svg>Link mágico</button>
+        </div>
+        <div class="notice" id="notice" role="status" aria-live="polite"></div>
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <div class="field-top"><label for="email">Endereço de email</label></div>
+            <div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><input id="email" name="email" type="email" autocomplete="email" placeholder="tu@exemplo.com" required /></div>
+            <div class="field-error" id="emailError">Introduz um endereço de email válido.</div>
           </div>
-          <p class="error" id="e-pass">A palavra-passe deve ter pelo menos 8 caracteres.</p>
-        </div>
-
-        <div class="row">
-          <label class="check"><input type="checkbox" name="remember"> Manter sessão iniciada</label>
-          <a href="#">Recuperar palavra-passe</a>
-        </div>
-
-        <button class="submit" id="submit" type="submit">
-          <span class="spinner" aria-hidden="true"></span>
-          <span id="label">Iniciar sessão</span>
-        </button>
-        <p class="status" id="status" role="status" aria-live="polite"></p>
-      </form>
-
-      <div class="divider">ou</div>
-
-      <button class="social" type="button">
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.5 5.5 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.8 3.600-4.900 6.700-4.900z"/></svg>
-        Continuar com Google
-      </button>
-
-      <p class="foot">Ainda não tens conta? <a href="#">Criar conta</a></p>
+          <div class="field" id="passwordField">
+            <div class="field-top"><label for="password">Palavra-passe</label><button type="button" class="text-link" id="forgotButton">Esqueceste-te?</button></div>
+            <div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><input id="password" name="password" type="password" autocomplete="current-password" placeholder="A tua palavra-passe" /><button type="button" class="eye" id="togglePassword" aria-label="Mostrar palavra-passe" title="Mostrar palavra-passe"><svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+            <div class="field-error" id="passwordError">Introduz a tua palavra-passe.</div>
+          </div>
+          <button class="primary" id="submitButton" type="submit"><span id="submitText">Entrar na conta</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        </form>
+        <div class="separator">ou continua com</div>
+        <button class="google" id="googleButton" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.64 5.93c4.46-4.12 7.13-10.2 7.13-17.58Z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.87l-7.64-5.93c-2.13 1.43-4.87 2.28-8.27 2.28-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 43.62 14.62 48 24 48Z"/></svg>Continuar com Google</button>
+        <p class="signup" id="signupText">Ainda não tens conta?<button type="button" id="signupButton">Criar conta</button></p>
+        <div class="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>A tua segurança é uma prioridade.</div>
+      </div>
     </section>
   </main>
-</div>
+  <footer class="footer">© <span id="year"></span> NOVA. Feito para o que vem a seguir.</footer>
 
-<script>
-  const form = document.getElementById('login');
-  const email = document.getElementById('email');
-  const pass = document.getElementById('password');
-  const toggle = document.getElementById('toggle');
-  const btn = document.getElementById('submit');
-  const label = document.getElementById('label');
-  const status = document.getElementById('status');
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // 1) Cria um projeto em supabase.com e copia estes dois valores de Project Settings > API.
+    // Usa a Publishable key (sb_publishable_...) ou a anon public key antiga. NUNCA uses service_role/secret key no browser.
+    const SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_KEY';
+    const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_PUBLISHABLE_KEY.includes('YOUR_');
+    const supabaseClient = supabaseConfigured && window.supabase
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+      : null;
 
-  toggle.addEventListener('click', () => {
-    const show = pass.type === 'password';
-    pass.type = show ? 'text' : 'password';
-    pass.classList.toggle('reveal', show);
-    toggle.textContent = show ? 'Ocultar' : 'Mostrar';
-    toggle.setAttribute('aria-label', show ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
-    toggle.setAttribute('aria-pressed', String(show));
-  });
+    const $ = (id) => document.getElementById(id);
+    const body = document.body;
+    let mode = 'password';
+    let intent = 'login';
 
-  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-  const passOk = v => v.length >= 8;
-  const mark = (id, ok) => document.getElementById(id).classList.toggle('invalid', !ok);
+    $('year').textContent = new Date().getFullYear();
 
-  email.addEventListener('blur', () => email.value && mark('f-email', emailOk(email.value)));
-  pass.addEventListener('blur', () => pass.value && mark('f-pass', passOk(pass.value)));
-  email.addEventListener('input', () => emailOk(email.value) && mark('f-email', true));
-  pass.addEventListener('input', () => passOk(pass.value) && mark('f-pass', true));
+    function applyTheme(isLight, persist = true) {
+      body.classList.toggle('light', isLight);
+      $('themeLabel').textContent = isLight ? 'Modo claro' : 'Modo escuro';
+      $('themeToggle').setAttribute('aria-label', isLight ? 'Mudar para modo escuro' : 'Mudar para modo claro');
+      $('themeIcon').innerHTML = isLight
+        ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42 1.42"/>'
+        : '<path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/>';
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f4f5fc' : '#080a13');
+      if (persist) { try { localStorage.setItem('nova-theme', isLight ? 'light' : 'dark'); } catch (_) {} }
+    }
+    try { applyTheme(localStorage.getItem('nova-theme') === 'light', false); } catch (_) { applyTheme(false, false); }
+    $('themeToggle').addEventListener('click', () => applyTheme(!body.classList.contains('light')));
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    status.textContent = '';
-    const okE = emailOk(email.value), okP = passOk(pass.value);
-    mark('f-email', okE); mark('f-pass', okP);
-    if (!okE) return email.focus();
-    if (!okP) return pass.focus();
+    function hideNotice() { $('notice').className = 'notice'; $('notice').textContent = ''; }
+    function showNotice(message, success = false) {
+      $('notice').textContent = message;
+      $('notice').className = 'notice show' + (success ? ' success' : '');
+    }
+    function setMode(nextMode) {
+      mode = nextMode;
+      const magic = mode === 'magic';
+      $('passwordTab').classList.toggle('active', !magic);
+      $('magicTab').classList.toggle('active', magic);
+      $('passwordTab').setAttribute('aria-selected', String(!magic));
+      $('magicTab').setAttribute('aria-selected', String(magic));
+      $('passwordField').style.display = magic ? 'none' : 'block';
+      $('formSubtitle').textContent = magic
+        ? 'Recebe um link seguro no teu email. Sem palavras-passe.'
+        : 'Entra na tua conta para continuares de onde ficaste.';
+      $('submitText').textContent = magic ? 'Enviar link de acesso' : (intent === 'signup' ? 'Criar a minha conta' : 'Entrar na conta');
+      hideNotice(); clearErrors();
+    }
+    $('passwordTab').addEventListener('click', () => setMode('password'));
+    $('magicTab').addEventListener('click', () => setMode('magic'));
+    $('togglePassword').addEventListener('click', () => {
+      const visible = $('password').type === 'password';
+      $('password').type = visible ? 'text' : 'password';
+      $('togglePassword').setAttribute('aria-label', visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
+      $('togglePassword').title = visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe';
+      $('eyeIcon').innerHTML = visible
+        ? '<path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.4 0 2.7-.4 3.8-.9"/>'
+        : '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
+    });
+    function clearErrors() {
+      $('emailError').classList.remove('show'); $('passwordError').classList.remove('show');
+      $('email').removeAttribute('aria-invalid'); $('password').removeAttribute('aria-invalid');
+    }
+    function validEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+    function redirectAfterAuth() {
+      // Por agora regressa a esta página. Depois de criares dashboard.html, podes trocar por essa rota.
+      return window.location.origin + window.location.pathname;
+    }
+    function explainMissingConfig() {
+      showNotice('Falta ligar o Supabase: preenche SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no início do JavaScript e configura o fornecedor Google no painel do Supabase.');
+    }
+    $('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); hideNotice(); clearErrors();
+      const email = $('email').value.trim();
+      const password = $('password').value;
+      let valid = true;
+      if (!validEmail(email)) { $('emailError').classList.add('show'); $('email').setAttribute('aria-invalid','true'); valid = false; }
+      if (mode === 'password' && !password) { $('passwordError').classList.add('show'); $('password').setAttribute('aria-invalid','true'); valid = false; }
+      if (!valid) { (!validEmail(email) ? $('email') : $('password')).focus(); return; }
+      if (!supabaseClient) { explainMissingConfig(); return; }
 
-    btn.disabled = true; btn.classList.add('loading'); label.textContent = 'A entrar…';
+      $('submitButton').disabled = true;
+      const oldText = $('submitText').textContent;
+      $('submitText').textContent = 'A processar…';
+      try {
+        let result;
+        if (mode === 'magic') {
+          result = await supabaseClient.auth.signInWithOtp({
+            email,
+            options: { emailRedirectTo: redirectAfterAuth() }
+          });
+          if (result.error) throw result.error;
+          showNotice('Link de acesso enviado para ' + email + '. Abre o email para concluir a autenticação.', true);
+        } else if (intent === 'signup') {
+          result = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: { emailRedirectTo: redirectAfterAuth() }
+          });
+          if (result.error) throw result.error;
+          showNotice(result.data.session
+            ? 'Conta criada e sessão iniciada com sucesso.'
+            : 'Conta criada. Confirma o endereço através do link enviado para ' + email + '.', true);
+        } else {
+          result = await supabaseClient.auth.signInWithPassword({ email, password });
+          if (result.error) throw result.error;
+          showNotice('Sessão iniciada com sucesso para ' + (result.data.user?.email || email) + '.', true);
+        }
+      } catch (error) {
+        showNotice('Não foi possível concluir o acesso. ' + (error?.message || 'Verifica a configuração e tenta novamente.'));
+      } finally {
+        $('submitButton').disabled = false;
+        $('submitText').textContent = oldText;
+      }
+    });
+    $('forgotButton').addEventListener('click', () => { setMode('magic'); showNotice('Introduz o teu email e seleciona “Enviar link de acesso”.'); });
+    $('googleButton').addEventListener('click', async () => {
+      hideNotice();
+      if (!supabaseClient) { explainMissingConfig(); return; }
+      $('googleButton').disabled = true;
+      try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: redirectAfterAuth() }
+        });
+        if (error) throw error;
+      } catch (error) {
+        $('googleButton').disabled = false;
+        showNotice('Não foi possível iniciar o acesso com Google. ' + (error?.message || 'Confirma o OAuth no Supabase.'));
+      }
+    });
 
-    // Substitui este bloco pelo pedido real ao teu servidor (fetch/axios).
-    setTimeout(() => {
-      btn.disabled = false; btn.classList.remove('loading'); label.textContent = 'Iniciar sessão';
-      status.textContent = 'Sessão iniciada com sucesso.';
-    }, 1200);
-  });
-</script>
+    // Quando o utilizador regressa do Google ou abre um link mágico, verifica a sessão guardada.
+    if (supabaseClient) {
+      supabaseClient.auth.getSession().then(({ data, error }) => {
+        if (error) return;
+        if (data.session?.user?.email) {
+          showNotice('Sessão autenticada: ' + data.session.user.email + '. Liga este estado à tua área privada quando a criares.', true);
+        }
+      });
+    }
+    $('signupButton').addEventListener('click', () => {
+      intent = intent === 'login' ? 'signup' : 'login';
+      $('formTitle').textContent = intent === 'signup' ? 'Vamos começar.' : 'É bom ter-te aqui.';
+      $('welcomeText');
+      $('signupText').firstChild.textContent = intent === 'signup' ? 'Já tens conta?' : 'Ainda não tens conta?';
+      $('signupButton').textContent = intent === 'signup' ? 'Iniciar sessão' : 'Criar conta';
+      $('submitText').textContent = mode === 'magic' ? 'Enviar link de acesso' : (intent === 'signup' ? 'Criar a minha conta' : 'Entrar na conta');
+      hideNotice();
+    });
+  </script>
 </body>
 </html>
