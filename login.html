@@ -306,10 +306,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // 1) Cria um projeto em supabase.com e copia estes dois valores de Project Settings > API.
-    // Usa a Publishable key (sb_publishable_...) ou a anon public key antiga. NUNCA uses service_role/secret key no browser.
-    const SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_KEY';
+    // Configuração do projeto Supabase NOVA
+    const SUPABASE_URL = 'https://lgjhqxhndibcioxfjhqu.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_1BjkVW5OAifgmgWAnr_ZOA_FwnQD8Qf';
     const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_PUBLISHABLE_KEY.includes('YOUR_');
     const supabaseClient = supabaseConfigured && window.supabase
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
@@ -372,11 +371,11 @@
     }
     function validEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
     function redirectAfterAuth() {
-      // Por agora regressa a esta página. Depois de criares dashboard.html, podes trocar por essa rota.
+      // Regressa a esta página ou à página de destino configurada
       return window.location.origin + window.location.pathname;
     }
     function explainMissingConfig() {
-      showNotice('Falta ligar o Supabase: preenche SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no início do JavaScript e configura o fornecedor Google no painel do Supabase.');
+      showNotice('Falta inicializar o cliente Supabase. Verifica as credenciais e a ligação de rede.');
     }
     $('loginForm').addEventListener('submit', async (event) => {
       event.preventDefault(); hideNotice(); clearErrors();
@@ -399,7 +398,7 @@
             options: { emailRedirectTo: redirectAfterAuth() }
           });
           if (result.error) throw result.error;
-          showNotice('Link de acesso enviado para ' + email + '. Abre o email para concluir a autenticação.', true);
+          showNotice('Link de acesso enviado para ' + email + '. Abre o teu email para concluir a autenticação.', true);
         } else if (intent === 'signup') {
           result = await supabaseClient.auth.signUp({
             email,
@@ -435,16 +434,30 @@
         if (error) throw error;
       } catch (error) {
         $('googleButton').disabled = false;
-        showNotice('Não foi possível iniciar o acesso com Google. ' + (error?.message || 'Confirma o OAuth no Supabase.'));
+        showNotice('Não foi possível iniciar o acesso com Google. ' + (error?.message || 'Confirma a configuração do fornecedor Google no painel do Supabase.'));
       }
     });
 
-    // Quando o utilizador regressa do Google ou abre um link mágico, verifica a sessão guardada.
+    // Deteta eventuais mensagens de erro no retorno de autenticação (ex.: link expirado ou OAuth cancelado)
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
+    const authError = urlParams.get('error_description') || hashParams.get('error_description');
+    if (authError) {
+      showNotice(decodeURIComponent(authError.replace(/\+/g, ' ')));
+    }
+
+    // Quando o utilizador regressa do Google ou abre um link mágico, verifica a sessão e escuta mudanças de estado
     if (supabaseClient) {
       supabaseClient.auth.getSession().then(({ data, error }) => {
         if (error) return;
         if (data.session?.user?.email) {
           showNotice('Sessão autenticada: ' + data.session.user.email + '. Liga este estado à tua área privada quando a criares.', true);
+        }
+      });
+
+      supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session?.user?.email) {
+          showNotice('Sessão iniciada: ' + session.user.email, true);
         }
       });
     }
