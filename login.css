@@ -230,3 +230,6 @@
     }
     @media (prefers-reduced-motion: reduce) { .intro,.auth-wrap,.topbar { animation:none !important; } button,input { transition:none !important; } /* The cosmic backdrop keeps its deliberate motion: it is the central visual requested for this page. */ }
   
+/* Campos condicionais da autenticação */
+[hidden] { display: none !important; }
+#nameField, #confirmField { margin-bottom: 16px; }
