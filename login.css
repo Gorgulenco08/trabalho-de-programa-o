@@ -111,11 +111,6 @@
     .welcome { color:var(--muted); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; margin:0 0 10px; }
     h2 { font:700 28px/1.2 'Manrope',sans-serif; letter-spacing:-.045em; margin:0 0 9px; }
     .card-sub { color:var(--muted); font-size:13px; line-height:1.6; margin:0; }
-    .tabs { display:grid; grid-template-columns:1fr 1fr; gap:5px; padding:5px; border:1px solid var(--line); border-radius:13px; background:var(--field); margin-bottom:24px; }
-    .tab { display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid transparent; border-radius:9px; padding:11px 8px; background:transparent; color:var(--muted); font-size:12px; font-weight:700; cursor:pointer; transition:all .25s ease; }
-    .tab svg { width:15px;height:15px; }
-    .tab.active { background:var(--soft); border-color:rgba(151,127,255,.24); color:var(--text); box-shadow:0 3px 15px rgba(97,76,197,.08); }
-    .tab:hover:not(.active) { color:var(--text); }
     .field { margin-bottom:17px; }
     .field-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
     label { color:var(--text); font-size:12px; font-weight:700; }
@@ -226,7 +221,6 @@
       .mini-stats span:last-child { display:none; }
       .auth-card { padding:24px 20px; border-radius:22px; }
       h2 { font-size:25px; }
-      .tabs { margin-bottom:20px; }
     }
     @media (prefers-reduced-motion: reduce) { .intro,.auth-wrap,.topbar { animation:none !important; } button,input { transition:none !important; } /* The cosmic backdrop keeps its deliberate motion: it is the central visual requested for this page. */ }
   

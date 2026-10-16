@@ -46,10 +46,6 @@
           <h2 id="formTitle">É bom ter-te aqui.</h2>
           <p class="card-sub" id="formSubtitle">Entra na tua conta para continuares de onde ficaste.</p>
         </div>
-        <div class="tabs" role="tablist" aria-label="Método de acesso">
-          <button class="tab active" id="passwordTab" type="button" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Palavra-passe</button>
-          <button class="tab" id="magicTab" type="button" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8m-3 0h3v3m-8 8 2 2"/></svg>Link mágico</button>
-        </div>
         <div class="notice" id="notice" role="status" aria-live="polite"></div>
         <form id="loginForm" novalidate>
           <div class="field" id="nameField" hidden>
@@ -95,7 +91,6 @@
 
     const $ = (id) => document.getElementById(id);
     const body = document.body;
-    let mode = 'password';
     let intent = 'login';
 
     $('year').textContent = new Date().getFullYear();
@@ -122,34 +117,24 @@
     function updateForm() {
       const signup = intent === 'signup';
       const recovery = intent === 'recovery';
-      const magic = mode === 'magic' && !signup && !recovery;
       $('nameField').hidden = !signup;
       $('confirmField').hidden = !signup;
-      $('passwordField').hidden = recovery || magic;
+      $('passwordField').hidden = recovery;
       $('forgotButton').hidden = signup;
       $('fullName').required = signup;
       $('confirmPassword').required = signup;
-      $('password').required = signup || (!recovery && !magic);
+      $('password').required = !recovery;
       $('password').autocomplete = signup ? 'new-password' : 'current-password';
-      document.querySelector('.tabs').hidden = signup || recovery;
       $('formTitle').textContent = signup ? 'Cria o teu espaço.' : recovery ? 'Recuperar acesso.' : 'É bom ter-te aqui.';
       $('formSubtitle').textContent = signup
         ? 'Começa a organizar os teus dias e a evoluir com a NOVA.'
         : recovery ? 'Recebe no email as instruções para redefinir a palavra-passe.'
-        : magic ? 'Recebe um link seguro no teu email. Sem palavras-passe.'
         : 'Entra na tua conta para continuares de onde ficaste.';
-      $('submitText').textContent = signup ? 'Criar a minha conta' : recovery ? 'Enviar recuperação' : magic ? 'Enviar link de acesso' : 'Entrar na conta';
+      $('submitText').textContent = signup ? 'Criar a minha conta' : recovery ? 'Enviar recuperação' : 'Entrar na conta';
       $('signupText').firstChild.textContent = signup || recovery ? 'Já tens conta? ' : 'Ainda não tens conta? ';
       $('signupButton').textContent = signup || recovery ? 'Iniciar sessão' : 'Criar conta';
-      $('passwordTab').classList.toggle('active', !magic);
-      $('magicTab').classList.toggle('active', magic);
-      $('passwordTab').setAttribute('aria-selected', String(!magic));
-      $('magicTab').setAttribute('aria-selected', String(magic));
       clearErrors(); hideNotice();
     }
-    function setMode(nextMode) { mode = nextMode; updateForm(); }
-    $('passwordTab').addEventListener('click', () => setMode('password'));
-    $('magicTab').addEventListener('click', () => setMode('magic'));
     $('togglePassword').addEventListener('click', () => {
       const visible = $('password').type === 'password';
       $('password').type = visible ? 'text' : 'password';
@@ -180,7 +165,6 @@
       const fullName = $('fullName').value.trim();
       const signup = intent === 'signup';
       const recovery = intent === 'recovery';
-      const magic = mode === 'magic' && !signup && !recovery;
       let firstInvalid = null;
       function fail(inputId, errorId, message) {
         const input = $(inputId);
@@ -191,7 +175,7 @@
       }
       if (signup && fullName.length < 2) fail('fullName', 'nameError', 'Indica o teu nome (pelo menos 2 caracteres).');
       if (!validEmail(email)) fail('email', 'emailError', 'Introduz um endereço de email válido.');
-      if (!recovery && !magic) {
+      if (!recovery) {
         if (signup && password.length < 8) fail('password', 'passwordError', 'A palavra-passe deve ter pelo menos 8 caracteres.');
         if (!signup && !password) fail('password', 'passwordError', 'Introduz a tua palavra-passe.');
         if (signup && password !== $('confirmPassword').value) fail('confirmPassword', 'confirmError', 'As palavras-passe não coincidem.');
@@ -208,13 +192,6 @@
           });
           if (error) throw error;
           showNotice('Se existir uma conta com este email, vais receber as instruções de recuperação.', true);
-        } else if (magic) {
-          const { error } = await supabaseClient.auth.signInWithOtp({
-            email,
-            options: { emailRedirectTo: redirectAfterAuth(), shouldCreateUser: false }
-          });
-          if (error) throw error;
-          showNotice('Se existir uma conta com este email, receberás um link de acesso.', true);
         } else if (signup) {
           const { data, error } = await supabaseClient.auth.signUp({
             email, password,
@@ -236,7 +213,7 @@
         $('submitText').textContent = oldText;
       }
     });
-    $('forgotButton').addEventListener('click', () => { intent = 'recovery'; mode = 'password'; updateForm(); $('email').focus(); });
+    $('forgotButton').addEventListener('click', () => { intent = 'recovery'; updateForm(); $('email').focus(); });
     $('googleButton').addEventListener('click', async () => {
       hideNotice();
       if (!supabaseClient) { explainMissingConfig(); return; }
@@ -261,7 +238,7 @@
       showNotice(decodeURIComponent(authError.replace(/\+/g, ' ')));
     }
 
-    // Quando o utilizador regressa do Google ou abre um link mágico, verifica a sessão e escuta mudanças de estado
+    // Verifica a sessão quando o utilizador regressa do Google ou confirma o email
     if (supabaseClient) {
       supabaseClient.auth.getSession().then(({ data, error }) => {
         if (error) return;
@@ -278,7 +255,6 @@
     }
     $('signupButton').addEventListener('click', () => {
       intent = intent === 'login' ? 'signup' : 'login';
-      mode = 'password';
       updateForm();
     });
     updateForm();
