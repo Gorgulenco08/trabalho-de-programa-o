@@ -197,13 +197,14 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
   <script>
     // =====================================
     // CONFIGURAÇÃO SUPABASE
     // =====================================
 
-    const SUPABASE_URL = 'https://lgjhqxhndibcioxfjhqu.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_1BjkVW5OAifgmgWAnr_ZOA_FwnQD8Qf';
+    const SUPABASE_URL = window.NOVA_SUPABASE_URL;
+    const SUPABASE_PUBLISHABLE_KEY = window.NOVA_SUPABASE_KEY;
 
     const supabaseConfigured =
       !SUPABASE_URL.includes('YOUR_') &&
@@ -517,7 +518,7 @@
           }
 
           showNotice(
-            'Pedido de registo recebido. Verifica o email para confirmar a tua conta, caso a confirmação esteja ativada.',
+            'Registo efetuado. Se a confirmação por email estiver ativa, abre a mensagem recebida para ativar a conta antes de iniciares sessão.',
             true
           );
         }

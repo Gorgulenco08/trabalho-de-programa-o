@@ -1,11 +1,17 @@
-NOVA - AUTENTICACAO, ETAPA 1
+NOVA — AUTENTICAÇÃO COM SUPABASE (20/10/2026)
 
-1. Substitui login.html e login.css pelos ficheiros desta pasta.
-2. Junta redefinir-password.html na mesma pasta.
-3. Supabase > Authentication > URL Configuration: Site URL = origem da aplicacao; adiciona http://127.0.0.1:5500/** e http://localhost:5500/** aos Redirect URLs para desenvolvimento (ajusta a porta se necessario).
-4. Supabase > Authentication > Providers > Email: confirma que o registo por email esta ativo; recomendamos confirmacao de email.
-5. Para Google: configura o provider Google no Supabase, se quiseres usar esse botao.
-6. Testa registo, confirmacao, login, link magico e recuperacao de password.
-7. O dashboard ainda nao existe: o login mostra sucesso e nao redireciona para area privada.
+FICHEIROS: login.html, login.css, redefinir-password.html, menu_principal.html, supabase-config.js, index.html, README.md.
 
-Nota: a chave sb_publishable e publica por desenho; nunca colocar service_role no frontend.
+1. Faz uma cópia de segurança da pasta atual do projeto.
+2. Copia os ficheiros para a pasta do teu projeto, mantendo a pasta .git original (não há .git neste ZIP).
+3. Inicia o Live Server no login.html.
+4. Supabase > Authentication > Providers > Email: ativa registo com email; confirma se a confirmação de email está ligada.
+5. Supabase > Authentication > URL Configuration: adiciona o endereço de desenvolvimento, por exemplo http://127.0.0.1:5500/** e http://localhost:5500/** aos Redirect URLs. Define Site URL com a origem correta do site.
+6. Cria conta com nome/email/palavra-passe. Se existir confirmação, confirma o email recebido.
+7. Faz login; o site deve abrir menu_principal.html, uma página privada temporária (não o dashboard final).
+8. Testa Terminar sessão, login novamente e Esqueceste-te?.
+9. Google é opcional e só funciona depois de configurar o provider Google no Supabase.
+
+IMPORTANTE: a chave sb_publishable é pública e foi mantida do teu código. Nunca incluir service_role/secret no frontend.
+O SQL anterior só cria perfis para novos utilizadores.
+Os controlos de autenticação foram revistos no código, mas não foi possível testar uma sessão real sem acesso ao ambiente Supabase.
