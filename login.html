@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-PT">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,35 +8,76 @@
   <title>NOVA — Entra no teu espaço</title>
   <link rel="stylesheet" href="./login.css">
 </head>
+
 <body>
-  <div class="ambient" aria-hidden="true"><div class="grid"></div></div>
+  <div class="ambient" aria-hidden="true">
+    <div class="grid"></div>
+  </div>
   <div class="cosmos-stage" aria-hidden="true">
-    <div class="cosmic-nebula"></div><div class="starfield stars-one"></div><div class="starfield stars-two"></div>
+    <div class="cosmic-nebula"></div>
+    <div class="starfield stars-one"></div>
+    <div class="starfield stars-two"></div>
     <div class="cosmic-turntable">
       <div class="cosmic-sweep"></div>
-      <div class="orbit-track orbit-c"></div><div class="orbit-track orbit-a"></div>
+      <div class="orbit-track orbit-c"></div>
+      <div class="orbit-track orbit-a"></div>
       <div class="planet-halo"></div>
-      <div class="cosmic-planet"><span class="planet-texture"></span><span class="planet-cloud cloud-a"></span><span class="planet-cloud cloud-b"></span></div>
+      <div class="cosmic-planet">
+        <span class="planet-texture"></span>
+        <span class="planet-cloud cloud-a"></span>
+        <span class="planet-cloud cloud-b"></span>
+      </div>
       <div class="orbit-track orbit-b"></div>
     </div>
   </div>
+
   <header class="topbar" aria-label="NOVA">
-    <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 17.5V6.5L19 17.5V6.5" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M5 17.5V6.5L19 17.5V6.5" stroke="white" stroke-width="2.3" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </div>
     <span class="brand-name">NOVA</span>
   </header>
-  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar para modo claro" title="Alternar modo claro/escuro">
-    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></svg><span class="theme-label" id="themeLabel">Modo escuro</span>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Mudar para modo claro"
+    title="Alternar modo claro/escuro">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z" />
+    </svg>
+    <span class="theme-label" id="themeLabel">Modo escuro</span>
   </button>
 
   <main class="shell">
     <section class="intro" aria-labelledby="heroTitle">
       <div class="eyebrow">O teu próximo capítulo começa aqui</div>
       <h1 id="heroTitle">Entra no teu<br><span class="gradient-text">próprio espaço.</span></h1>
-      <p class="lead">Tudo o que precisas, num só lugar. Uma experiência simples, segura e feita para acompanhar as tuas ideias.</p>
+      <p class="lead">Tudo o que precisas, num só lugar. Uma experiência simples, segura e feita para acompanhar as tuas
+        ideias.</p>
       <div class="mini-stats">
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>Privacidade em primeiro lugar</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Acesso seguro</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7 10 17l-5-5"/><path d="M21 12a9 9 0 1 1-5.6-8.3"/></svg>Sem complicações</span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          Privacidade em primeiro lugar
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="4" y="10" width="16" height="11" rx="2" />
+            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+          </svg>
+          Acesso seguro
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 7 10 17l-5-5" />
+            <path d="M21 12a9 9 0 1 1-5.6-8.3" />
+          </svg>
+          Sem complicações
+        </span>
       </div>
     </section>
 
@@ -46,45 +88,127 @@
           <h2 id="formTitle">É bom ter-te aqui.</h2>
           <p class="card-sub" id="formSubtitle">Entra na tua conta para continuares de onde ficaste.</p>
         </div>
+
         <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
         <form id="loginForm" novalidate>
           <div class="field" id="nameField" hidden>
-            <div class="field-top"><label for="fullName">Nome</label></div>
-            <div class="input-wrap"><input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="O teu nome" maxlength="80" /></div>
+            <div class="field-top">
+              <label for="fullName">Nome</label>
+            </div>
+            <div class="input-wrap">
+              <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="O teu nome"
+                maxlength="80" />
+            </div>
             <div class="field-error" id="nameError">Indica o teu nome (pelo menos 2 caracteres).</div>
           </div>
+
           <div class="field">
-            <div class="field-top"><label for="email">Endereço de email</label></div>
-            <div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><input id="email" name="email" type="email" autocomplete="email" placeholder="tu@exemplo.com" required /></div>
+            <div class="field-top">
+              <label for="email">Endereço de email</label>
+            </div>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="tu@exemplo.com" required />
+            </div>
             <div class="field-error" id="emailError">Introduz um endereço de email válido.</div>
           </div>
+
           <div class="field" id="passwordField">
-            <div class="field-top"><label for="password">Palavra-passe</label><button type="button" class="text-link" id="forgotButton">Esqueceste-te?</button></div>
-            <div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><input id="password" name="password" type="password" autocomplete="current-password" placeholder="A tua palavra-passe" /><button type="button" class="eye" id="togglePassword" aria-label="Mostrar palavra-passe" title="Mostrar palavra-passe"><svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+            <div class="field-top">
+              <label for="password">Palavra-passe</label>
+              <button type="button" class="text-link" id="forgotButton">Esqueceste-te?</button>
+            </div>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="4" y="10" width="16" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              <input id="password" name="password" type="password" autocomplete="current-password"
+                placeholder="A tua palavra-passe" />
+              <button type="button" class="eye" id="togglePassword" aria-label="Mostrar palavra-passe"
+                title="Mostrar palavra-passe">
+                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
             <div class="field-error" id="passwordError">Introduz a tua palavra-passe.</div>
           </div>
+
           <div class="field" id="confirmField" hidden>
-            <div class="field-top"><label for="confirmPassword">Confirmar palavra-passe</label></div>
-            <div class="input-wrap"><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repete a palavra-passe" /></div>
+            <div class="field-top">
+              <label for="confirmPassword">Confirmar palavra-passe</label>
+            </div>
+            <div class="input-wrap">
+              <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password"
+                placeholder="Repete a palavra-passe" />
+            </div>
             <div class="field-error" id="confirmError">As palavras-passe não coincidem.</div>
           </div>
-          <button class="primary" id="submitButton" type="submit"><span id="submitText">Entrar na conta</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+
+          <button class="primary" id="submitButton" type="submit">
+            <span id="submitText">Entrar na conta</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+          </button>
         </form>
+
         <div class="separator">ou continua com</div>
-        <button class="google" id="googleButton" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.64 5.93c4.46-4.12 7.13-10.2 7.13-17.58Z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.87l-7.64-5.93c-2.13 1.43-4.87 2.28-8.27 2.28-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 43.62 14.62 48 24 48Z"/></svg>Continuar com Google</button>
-        <p class="signup" id="signupText">Ainda não tens conta?<button type="button" id="signupButton">Criar conta</button></p>
-        <div class="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>A tua segurança é uma prioridade.</div>
+
+        <button class="google" id="googleButton" type="button">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#EA4335"
+              d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z" />
+            <path fill="#4285F4"
+              d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.64 5.93c4.46-4.12 7.13-10.2 7.13-17.58Z" />
+            <path fill="#FBBC05"
+              d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19Z" />
+            <path fill="#34A853"
+              d="M24 48c6.48 0 11.93-2.13 15.91-5.87l-7.64-5.93c-2.13 1.43-4.87 2.28-8.27 2.28-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 43.62 14.62 48 24 48Z" />
+          </svg>
+          Continuar com Google
+        </button>
+
+        <p class="signup" id="signupText">
+          Ainda não tens conta?<button type="button" id="signupButton">Criar conta</button>
+        </p>
+
+        <div class="security">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          A tua segurança é uma prioridade.
+        </div>
       </div>
     </section>
   </main>
-  <footer class="footer">© <span id="year"></span> NOVA. Feito para o que vem a seguir.</footer>
+
+  <footer class="footer">
+    © <span id="year"></span> NOVA. Feito para o que vem a seguir.
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Configuração do projeto Supabase NOVA
+    // =====================================
+    // CONFIGURAÇÃO SUPABASE
+    // =====================================
+
     const SUPABASE_URL = 'https://lgjhqxhndibcioxfjhqu.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_1BjkVW5OAifgmgWAnr_ZOA_FwnQD8Qf';
-    const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_PUBLISHABLE_KEY.includes('YOUR_');
+
+    const supabaseConfigured =
+      !SUPABASE_URL.includes('YOUR_') &&
+      !SUPABASE_PUBLISHABLE_KEY.includes('YOUR_');
+
     const supabaseClient = supabaseConfigured && window.supabase
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
       : null;
@@ -95,169 +219,445 @@
 
     $('year').textContent = new Date().getFullYear();
 
+    // =====================================
+    // MODO CLARO / ESCURO
+    // =====================================
+
     function applyTheme(isLight, persist = true) {
       body.classList.toggle('light', isLight);
+
       $('themeLabel').textContent = isLight ? 'Modo claro' : 'Modo escuro';
-      $('themeToggle').setAttribute('aria-label', isLight ? 'Mudar para modo escuro' : 'Mudar para modo claro');
+
+      $('themeToggle').setAttribute(
+        'aria-label',
+        isLight ? 'Mudar para modo escuro' : 'Mudar para modo claro'
+      );
+
       $('themeIcon').innerHTML = isLight
         ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42 1.42"/>'
         : '<path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/>';
-      const metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f4f5fc' : '#080a13');
-      if (persist) { try { localStorage.setItem('nova-theme', isLight ? 'light' : 'dark'); } catch (_) {} }
-    }
-    try { applyTheme(localStorage.getItem('nova-theme') === 'light', false); } catch (_) { applyTheme(false, false); }
-    $('themeToggle').addEventListener('click', () => applyTheme(!body.classList.contains('light')));
 
-    function hideNotice() { $('notice').className = 'notice'; $('notice').textContent = ''; }
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+      if (metaTheme) {
+        metaTheme.setAttribute('content', isLight ? '#f4f5fc' : '#080a13');
+      }
+
+      if (persist) {
+        try {
+          localStorage.setItem('nova-theme', isLight ? 'light' : 'dark');
+        } catch (_) { }
+      }
+    }
+
+    try {
+      applyTheme(localStorage.getItem('nova-theme') === 'light', false);
+    } catch (_) {
+      applyTheme(false, false);
+    }
+
+    $('themeToggle').addEventListener('click', () => {
+      applyTheme(!body.classList.contains('light'));
+    });
+
+    // =====================================
+    // MENSAGENS
+    // =====================================
+
+    function hideNotice() {
+      $('notice').className = 'notice';
+      $('notice').textContent = '';
+    }
+
     function showNotice(message, success = false) {
       $('notice').textContent = message;
       $('notice').className = 'notice show' + (success ? ' success' : '');
     }
+
+    // =====================================
+    // FORMULÁRIO
+    // =====================================
+
     function updateForm() {
       const signup = intent === 'signup';
       const recovery = intent === 'recovery';
+
       $('nameField').hidden = !signup;
       $('confirmField').hidden = !signup;
       $('passwordField').hidden = recovery;
       $('forgotButton').hidden = signup;
+
       $('fullName').required = signup;
       $('confirmPassword').required = signup;
       $('password').required = !recovery;
-      $('password').autocomplete = signup ? 'new-password' : 'current-password';
-      $('formTitle').textContent = signup ? 'Cria o teu espaço.' : recovery ? 'Recuperar acesso.' : 'É bom ter-te aqui.';
+
+      $('password').autocomplete = signup
+        ? 'new-password'
+        : 'current-password';
+
+      $('formTitle').textContent = signup
+        ? 'Cria o teu espaço.'
+        : recovery
+          ? 'Recuperar acesso.'
+          : 'É bom ter-te aqui.';
+
       $('formSubtitle').textContent = signup
         ? 'Começa a organizar os teus dias e a evoluir com a NOVA.'
-        : recovery ? 'Recebe no email as instruções para redefinir a palavra-passe.'
-        : 'Entra na tua conta para continuares de onde ficaste.';
-      $('submitText').textContent = signup ? 'Criar a minha conta' : recovery ? 'Enviar recuperação' : 'Entrar na conta';
-      $('signupText').firstChild.textContent = signup || recovery ? 'Já tens conta? ' : 'Ainda não tens conta? ';
-      $('signupButton').textContent = signup || recovery ? 'Iniciar sessão' : 'Criar conta';
-      clearErrors(); hideNotice();
+        : recovery
+          ? 'Recebe no email as instruções para redefinir a palavra-passe.'
+          : 'Entra na tua conta para continuares de onde ficaste.';
+
+      $('submitText').textContent = signup
+        ? 'Criar a minha conta'
+        : recovery
+          ? 'Enviar recuperação'
+          : 'Entrar na conta';
+
+      $('signupText').firstChild.textContent =
+        signup || recovery ? 'Já tens conta? ' : 'Ainda não tens conta? ';
+
+      $('signupButton').textContent =
+        signup || recovery ? 'Iniciar sessão' : 'Criar conta';
+
+      clearErrors();
+      hideNotice();
     }
+
+    // =====================================
+    // MOSTRAR PALAVRA-PASSE
+    // =====================================
+
     $('togglePassword').addEventListener('click', () => {
       const visible = $('password').type === 'password';
+
       $('password').type = visible ? 'text' : 'password';
-      $('togglePassword').setAttribute('aria-label', visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe');
-      $('togglePassword').title = visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe';
+
+      $('togglePassword').setAttribute(
+        'aria-label',
+        visible ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe'
+      );
+
+      $('togglePassword').title = visible
+        ? 'Ocultar palavra-passe'
+        : 'Mostrar palavra-passe';
+
       $('eyeIcon').innerHTML = visible
         ? '<path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.4 0 2.7-.4 3.8-.9"/>'
         : '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
     });
+
     function clearErrors() {
-      for (const id of ['email','password','name','confirm']) {
+      for (const id of ['email', 'password', 'name', 'confirm']) {
         $(id + 'Error').classList.remove('show');
       }
-      for (const id of ['email','password','fullName','confirmPassword']) $(id).removeAttribute('aria-invalid');
+
+      for (const id of ['email', 'password', 'fullName', 'confirmPassword']) {
+        $(id).removeAttribute('aria-invalid');
+      }
     }
-    function validEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+
+    function validEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    // =====================================
+    // REDIRECIONAMENTO PARA O MENU
+    // =====================================
+
+    // O menu_principal.html deve estar
+    // na mesma pasta que login.html.
+
+    const MENU_URL = new URL(
+      './menu_principal.html',
+      window.location.href
+    ).href;
+
+    // Google e confirmação de email regressam
+    // primeiro ao login para concluir a sessão.
+
     function redirectAfterAuth() {
-      // Regressa a esta página ou à página de destino configurada
-      return window.location.origin + window.location.pathname;
+      return new URL('./login.html', window.location.href).href;
     }
+
+    let redirectingToMenu = false;
+
+    function irParaMenu() {
+      if (redirectingToMenu) return;
+
+      redirectingToMenu = true;
+
+      window.location.replace(MENU_URL);
+    }
+
     function explainMissingConfig() {
-      showNotice('Falta inicializar o cliente Supabase. Verifica as credenciais e a ligação de rede.');
+      showNotice(
+        'Falta inicializar o cliente Supabase. Verifica as credenciais e a ligação de rede.'
+      );
     }
+
+    // =====================================
+    // LOGIN, REGISTO E RECUPERAÇÃO
+    // =====================================
+
     $('loginForm').addEventListener('submit', async (event) => {
-      event.preventDefault(); hideNotice(); clearErrors();
+      event.preventDefault();
+
+      hideNotice();
+      clearErrors();
+
       const email = $('email').value.trim();
       const password = $('password').value;
       const fullName = $('fullName').value.trim();
+
       const signup = intent === 'signup';
       const recovery = intent === 'recovery';
+
       let firstInvalid = null;
+
       function fail(inputId, errorId, message) {
         const input = $(inputId);
+
         $(errorId).textContent = message;
         $(errorId).classList.add('show');
+
         input.setAttribute('aria-invalid', 'true');
+
         firstInvalid ||= input;
       }
-      if (signup && fullName.length < 2) fail('fullName', 'nameError', 'Indica o teu nome (pelo menos 2 caracteres).');
-      if (!validEmail(email)) fail('email', 'emailError', 'Introduz um endereço de email válido.');
-      if (!recovery) {
-        if (signup && password.length < 8) fail('password', 'passwordError', 'A palavra-passe deve ter pelo menos 8 caracteres.');
-        if (!signup && !password) fail('password', 'passwordError', 'Introduz a tua palavra-passe.');
-        if (signup && password !== $('confirmPassword').value) fail('confirmPassword', 'confirmError', 'As palavras-passe não coincidem.');
+
+      if (signup && fullName.length < 2) {
+        fail('fullName', 'nameError', 'Indica o teu nome (pelo menos 2 caracteres).');
       }
-      if (firstInvalid) { firstInvalid.focus(); return; }
-      if (!supabaseClient) { explainMissingConfig(); return; }
+
+      if (!validEmail(email)) {
+        fail('email', 'emailError', 'Introduz um endereço de email válido.');
+      }
+
+      if (!recovery) {
+        if (signup && password.length < 8) {
+          fail(
+            'password',
+            'passwordError',
+            'A palavra-passe deve ter pelo menos 8 caracteres.'
+          );
+        }
+
+        if (!signup && !password) {
+          fail(
+            'password',
+            'passwordError',
+            'Introduz a tua palavra-passe.'
+          );
+        }
+
+        if (signup && password !== $('confirmPassword').value) {
+          fail(
+            'confirmPassword',
+            'confirmError',
+            'As palavras-passe não coincidem.'
+          );
+        }
+      }
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      if (!supabaseClient) {
+        explainMissingConfig();
+        return;
+      }
+
       $('submitButton').disabled = true;
+
       const oldText = $('submitText').textContent;
       $('submitText').textContent = 'A processar…';
+
       try {
+
+        // RECUPERAR PALAVRA-PASSE
         if (recovery) {
-          const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-            redirectTo: new URL('redefinir-password.html', window.location.href).href
-          });
+          const { error } = await supabaseClient.auth.resetPasswordForEmail(
+            email,
+            {
+              redirectTo: new URL(
+                'redefinir-password.html',
+                window.location.href
+              ).href
+            }
+          );
+
           if (error) throw error;
-          showNotice('Se existir uma conta com este email, vais receber as instruções de recuperação.', true);
-        } else if (signup) {
-          const { data, error } = await supabaseClient.auth.signUp({
-            email, password,
-            options: { emailRedirectTo: redirectAfterAuth(), data: { full_name: fullName } }
-          });
-          if (error) throw error;
-          showNotice(data.session
-            ? 'Conta criada! A sessão já está iniciada.'
-            : 'Pedido de registo recebido. Verifica o email para confirmar a tua conta, caso a confirmação esteja ativada.', true);
-        } else {
-          const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-          if (error) throw error;
-          showNotice('Sessão iniciada com sucesso para ' + (data.user?.email || email) + '.', true);
+
+          showNotice(
+            'Se existir uma conta com este email, vais receber as instruções de recuperação.',
+            true
+          );
         }
+
+        // CRIAR CONTA
+        else if (signup) {
+          const { data, error } = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: redirectAfterAuth(),
+              data: {
+                full_name: fullName
+              }
+            }
+          });
+
+          if (error) throw error;
+
+          if (data.session) {
+            irParaMenu();
+            return;
+          }
+
+          showNotice(
+            'Pedido de registo recebido. Verifica o email para confirmar a tua conta, caso a confirmação esteja ativada.',
+            true
+          );
+        }
+
+        // ENTRAR NA CONTA
+        else {
+          const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+              email,
+              password
+            });
+
+          if (error) throw error;
+
+          if (!data.session) {
+            throw new Error('Não foi possível confirmar a sessão.');
+          }
+
+          // LOGIN CONFIRMADO:
+          // ABRE O MENU PRINCIPAL
+          irParaMenu();
+          return;
+        }
+
       } catch (error) {
-        showNotice('Não foi possível concluir a operação. ' + (error?.message || 'Tenta novamente.'));
+        showNotice(
+          'Não foi possível concluir a operação. ' +
+          (error?.message || 'Tenta novamente.')
+        );
+
       } finally {
         $('submitButton').disabled = false;
         $('submitText').textContent = oldText;
       }
     });
-    $('forgotButton').addEventListener('click', () => { intent = 'recovery'; updateForm(); $('email').focus(); });
+
+    // =====================================
+    // RECUPERAÇÃO DE PALAVRA-PASSE
+    // =====================================
+
+    $('forgotButton').addEventListener('click', () => {
+      intent = 'recovery';
+      updateForm();
+      $('email').focus();
+    });
+
+    // =====================================
+    // LOGIN GOOGLE
+    // =====================================
+
     $('googleButton').addEventListener('click', async () => {
       hideNotice();
-      if (!supabaseClient) { explainMissingConfig(); return; }
+
+      if (!supabaseClient) {
+        explainMissingConfig();
+        return;
+      }
+
       $('googleButton').disabled = true;
+
       try {
         const { error } = await supabaseClient.auth.signInWithOAuth({
           provider: 'google',
-          options: { redirectTo: redirectAfterAuth() }
+          options: {
+            redirectTo: redirectAfterAuth()
+          }
         });
+
         if (error) throw error;
+
       } catch (error) {
         $('googleButton').disabled = false;
-        showNotice('Não foi possível iniciar o acesso com Google. ' + (error?.message || 'Confirma a configuração do fornecedor Google no painel do Supabase.'));
+
+        showNotice(
+          'Não foi possível iniciar o acesso com Google. ' +
+          (error?.message ||
+            'Confirma a configuração do fornecedor Google no painel do Supabase.')
+        );
       }
     });
 
-    // Deteta eventuais mensagens de erro no retorno de autenticação (ex.: link expirado ou OAuth cancelado)
+    // =====================================
+    // VERIFICAR ERROS NO RETORNO
+    // =====================================
+
     const urlParams = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
-    const authError = urlParams.get('error_description') || hashParams.get('error_description');
+
+    const hashParams = new URLSearchParams(
+      window.location.hash.startsWith('#')
+        ? window.location.hash.substring(1)
+        : window.location.hash
+    );
+
+    const authError =
+      urlParams.get('error_description') ||
+      hashParams.get('error_description');
+
     if (authError) {
-      showNotice(decodeURIComponent(authError.replace(/\+/g, ' ')));
+      showNotice(
+        decodeURIComponent(authError.replace(/\+/g, ' '))
+      );
     }
 
-    // Verifica a sessão quando o utilizador regressa do Google ou confirma o email
-    if (supabaseClient) {
-      supabaseClient.auth.getSession().then(({ data, error }) => {
-        if (error) return;
-        if (data.session?.user?.email) {
-          showNotice('Sessão autenticada: ' + data.session.user.email + '. Liga este estado à tua área privada quando a criares.', true);
-        }
-      });
+    // =====================================
+    // SESSÃO EXISTENTE
+    // =====================================
 
+    if (supabaseClient && !authError) {
+      supabaseClient.auth.getSession()
+        .then(({ data, error }) => {
+          if (!error && data.session?.user) {
+            irParaMenu();
+          }
+        })
+        .catch(() => {
+          showNotice(
+            'Não foi possível verificar a sessão. Atualiza a página e tenta novamente.'
+          );
+        });
+
+      // REGRESSO DO GOOGLE / EMAIL
       supabaseClient.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_IN' && session?.user?.email) {
-          showNotice('Sessão iniciada: ' + session.user.email, true);
+        if (event === 'SIGNED_IN' && session?.user) {
+          irParaMenu();
         }
       });
     }
+
+    // =====================================
+    // ALTERNAR LOGIN / CRIAR CONTA
+    // =====================================
+
     $('signupButton').addEventListener('click', () => {
       intent = intent === 'login' ? 'signup' : 'login';
       updateForm();
     });
+
     updateForm();
+
   </script>
 </body>
+
 </html>
