@@ -1,66 +1,2389 @@
 <!doctype html>
-<html lang="pt-PT">
+<html lang="pt-PT" data-theme="dark">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NOVA — A tua área</title>
-  <link rel="stylesheet" href="./login.css">
+  <meta name="theme-color" content="#090f20">
+  <title>NOVA — O teu universo</title>
+
+  <script>
+    try {
+      const saved = localStorage.getItem('nova-theme');
+      document.documentElement.dataset.theme =
+        saved === 'light' ? 'light' : 'dark';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <style>
-    .private-layout { position:relative; z-index:10; max-width:1040px; margin:0 auto; padding:120px 24px 60px; }
-    .private-card { background:var(--panel); border:1px solid var(--line); box-shadow:var(--shadow); border-radius:26px; padding:clamp(28px,5vw,56px); backdrop-filter:blur(22px); }
-    .private-label { color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
-    .private-card h1 { font-size:clamp(32px,5vw,54px); margin:12px 0; letter-spacing:-.045em; }
-    .private-card p { color:var(--muted); line-height:1.8; }
-    .private-actions {display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:26px;}
-    .private-actions button {cursor:pointer; padding:14px 22px; border-radius:14px; font-weight:700; background:linear-gradient(120deg,#8864ed,#6781f5); border:0; color:white;}
-    .private-actions .secondary {background:var(--field);border:1px solid var(--line);color:var(--text)}
-    #accountEmail {overflow-wrap:anywhere;color:var(--text)}
+    :root {
+      --bg: #f5f7ff;
+      --surface: #ffffff;
+      --surface-2: #f1f3ff;
+      --sidebar: #fff;
+      --ink: #171a3a;
+      --muted: #747c9b;
+      --line: #e7eaf6;
+      --accent: #6d59ef;
+      --accent-2: #6ca6ff;
+      --gradient: linear-gradient(115deg, #7964fc, #6096fa);
+      --nav-hover: #f1efff;
+      --nav-active: #eceaff;
+      --shadow: 0 14px 40px rgba(48, 51, 117, .06);
+      --banner: linear-gradient(110deg, #fdf9ff 0%, #e9eeff 58%, #d9e7ff 100%);
+      --hero-text: #262577;
+      --track: #e9eaf9;
+      --ring-bg: #e8e9f9;
+      --good: #2aa882;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #070d1e;
+      --surface: #0e1930;
+      --surface-2: #121f3e;
+      --sidebar: #090f20;
+      --ink: #ecedff;
+      --muted: #929abf;
+      --line: #253253;
+      --accent: #a88bff;
+      --accent-2: #49bdff;
+      --gradient: linear-gradient(115deg, #9a63ff, #5489ff);
+      --nav-hover: #131d39;
+      --nav-active: #222762;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .16);
+      --banner: linear-gradient(110deg, #100f37 0%, #111b54 58%, #12234d 100%);
+      --hero-text: #f0d6ff;
+      --track: #1d2a48;
+      --ring-bg: #222d4f;
+      --good: #62ddba;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.5 'DM Sans', sans-serif;
+      transition: background .35s, color .35s;
+      min-width: 320px;
+    }
+
+    button,
+    input {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    /* VERIFICAÇÃO DA SESSÃO */
+    #authScreen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .auth-box {
+      max-width: 430px;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--surface);
+    }
+
+    .spinner {
+      height: 38px;
+      width: 38px;
+      margin: 0 auto 20px;
+      border: 3px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* ESTRUTURA */
+    #app {
+      min-height: 100vh;
+      display: flex
+    }
+
+    .sidebar {
+      position: fixed;
+      z-index: 40;
+      inset: 0 auto 0 0;
+      width: 238px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 13px 18px;
+      transition: background .3s, transform .3s;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 13px 30px;
+      font: 800 24px 'Manrope', sans-serif;
+      letter-spacing: -.07em;
+    }
+
+    .logo-star {
+      font-size: 33px;
+      line-height: 1;
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(133, 101, 255, .3);
+    }
+
+    .nav-section {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 18px 12px 12px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 4px
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 40px;
+      padding: 9px 13px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      text-align: left;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12.5px;
+      transition: .2s;
+    }
+
+    .nav-item:hover {
+      background: var(--nav-hover);
+      color: var(--ink);
+    }
+
+    .nav-item.active {
+      background: var(--nav-active);
+      color: var(--accent);
+    }
+
+    .nav-item .ico {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+    }
+
+    .appearance {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 100%;
+      padding: 11px 12px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
+      text-align: left;
+      border-radius: 11px;
+    }
+
+    .appearance:hover {
+      background: var(--nav-hover)
+    }
+
+    .appearance .ico {
+      width: 18px;
+      height: 18px
+    }
+
+    .theme-switch {
+      position: relative;
+      width: 41px;
+      height: 24px;
+      flex: none;
+      border-radius: 20px;
+      background: var(--gradient);
+      margin-left: auto;
+    }
+
+    .theme-switch:after {
+      content: '☀';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      height: 18px;
+      width: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: white;
+      color: #8567ee;
+      font-size: 12px;
+      transition: transform .25s;
+    }
+
+    html[data-theme="dark"] .theme-switch:after {
+      content: '☾';
+      transform: translateX(17px);
+    }
+
+    .workspace {
+      margin-left: 238px;
+      width: calc(100% - 238px);
+      min-width: 0;
+    }
+
+    /* BANNER */
+    .hero {
+      height: 146px;
+      background: var(--banner);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero:after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 54% 1%, rgba(255, 255, 255, .27), transparent 48%);
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 3;
+      padding: 32px 36px;
+      max-width: 580px;
+    }
+
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--hero-text);
+      font: 800 clamp(17px, 2.2vw, 27px)/1.15 Manrope, sans-serif;
+      letter-spacing: -.035em;
+    }
+
+    .hero-kicker span:first-child {
+      color: var(--accent);
+      font-size: 31px;
+    }
+
+    .hero-copy p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-scenery {
+      position: absolute;
+      right: -10px;
+      bottom: -1px;
+      height: 100%;
+      width: min(58%, 630px);
+    }
+
+    .light-scenery {
+      display: block
+    }
+
+    .dark-scenery {
+      display: none
+    }
+
+    html[data-theme="dark"] .light-scenery {
+      display: none
+    }
+
+    html[data-theme="dark"] .dark-scenery {
+      display: block
+    }
+
+    /* BARRA SUPERIOR */
+    .header {
+      min-height: 71px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 31px;
+    }
+
+    .header-left,
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--muted);
+      padding: 0 13px;
+      height: 40px;
+      width: min(315px, 34vw);
+    }
+
+    .search .ico {
+      width: 17px;
+      height: 17px;
+      flex: none;
+    }
+
+    .search input {
+      min-width: 0;
+      width: 100%;
+      background: none;
+      border: 0;
+      color: var(--ink);
+      outline: 0;
+      font-size: 12px;
+    }
+
+    .search input::placeholder {
+      color: var(--muted)
+    }
+
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 10px;
+    }
+
+    .icon-btn:hover {
+      color: var(--accent);
+      background: var(--nav-hover);
+    }
+
+    .icon-btn .ico {
+      height: 19px;
+      width: 19px
+    }
+
+    .user-chip {
+      border-left: 1px solid var(--line);
+      padding-left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #e6baff, #8298ff);
+      color: #251d53;
+      font-weight: 800;
+      border: 3px solid var(--surface);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+    }
+
+    .user-copy {
+      min-width: 90px
+    }
+
+    .user-copy span {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .user-copy strong {
+      display: block;
+      font-size: 12px;
+      white-space: nowrap;
+      max-width: 125px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTEÚDO */
+    .content {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 27px clamp(17px, 2.7vw, 39px) 52px;
+    }
+
+    .welcome {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 23px;
+    }
+
+    .welcome h1 {
+      font: 800 clamp(22px, 2.5vw, 30px)/1.2 Manrope, sans-serif;
+      letter-spacing: -.045em;
+      margin: 0 0 6px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .date-quote {
+      text-align: right;
+      display: grid;
+      justify-items: end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .today-date {
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .quote {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--muted);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 11px;
+      max-width: 244px;
+      text-align: left;
+    }
+
+    .quote b {
+      color: var(--accent);
+      font-size: 14px;
+      margin-right: 7px;
+    }
+
+    .stats,
+    .triple,
+    .lower {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .card {
+      min-width: 0;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      transition: border-color .2s, background .3s, transform .2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+    }
+
+    .stat {
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 90px;
+    }
+
+    .stat-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex: none;
+      font-size: 23px;
+      background: var(--surface-2);
+      position: relative;
+    }
+
+    .stat-icon:after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      opacity: .35;
+    }
+
+    .stat-icon.green {
+      color: var(--good);
+      background: rgba(50, 205, 158, .13);
+    }
+
+    .stat-icon.fire {
+      color: #ff765e;
+      background: rgba(255, 130, 111, .12);
+    }
+
+    .stat-icon.gold {
+      color: #e89c37;
+      background: rgba(255, 181, 93, .13);
+    }
+
+    .stat-info strong {
+      display: block;
+      font: 800 19px/1.2 Manrope, sans-serif;
+      white-space: nowrap;
+    }
+
+    .stat-info small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .stat-chevron {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 22px;
+    }
+
+    /* PAINÉIS */
+    .panel {
+      padding: 17px 18px;
+      min-height: 310px;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 17px;
+    }
+
+    .panel h2,
+    .quest h2 {
+      font: 800 14px/1.3 Manrope, sans-serif;
+      letter-spacing: -.025em;
+      margin: 0;
+    }
+
+    .text-action {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      background: none;
+      border: 0;
+      white-space: nowrap;
+    }
+
+    .text-action:hover {
+      text-decoration: underline
+    }
+
+    /* TAREFAS */
+    .task-list {
+      display: grid;
+      gap: 10px;
+      min-height: 164px;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      font-size: 12px;
+    }
+
+    .task input {
+      accent-color: var(--accent);
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      cursor: pointer;
+      flex: none;
+    }
+
+    .task span {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .task.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .task .flag {
+      font-size: 13px;
+      color: var(--accent);
+      margin-left: auto;
+    }
+
+    .add-task {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 3px 8px;
+      margin-top: 14px;
+    }
+
+    .add-task input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: none;
+      color: var(--ink);
+      height: 31px;
+      font-size: 11px;
+    }
+
+    .add-task button {
+      border: 0;
+      color: var(--accent);
+      background: transparent;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 5px;
+    }
+
+    /* HÁBITOS */
+    .habit-list {
+      display: grid;
+      gap: 13px
+    }
+
+    .habit {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .habit-icon {
+      width: 37px;
+      height: 37px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--surface-2);
+      font-size: 18px;
+      flex: none;
+    }
+
+    .habit-info {
+      flex: 1;
+      min-width: 0
+    }
+
+    .habit-caption {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 7px;
+      gap: 10px;
+    }
+
+    .habit-caption span:last-child {
+      color: var(--muted)
+    }
+
+    .track {
+      height: 6px;
+      border-radius: 50px;
+      background: var(--track);
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: inherit;
+    }
+
+    /* OBJETIVOS */
+    .goal-list {
+      display: grid;
+      gap: 15px
+    }
+
+    .goal {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .goal-icon {
+      font-size: 19px;
+      flex: none
+    }
+
+    .goal-desc {
+      flex: 1;
+      min-width: 0;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .goal-desc .track {
+      margin-top: 7px
+    }
+
+    .goal-desc .sub {
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .checkmark {
+      color: var(--good);
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    /* CALENDÁRIO */
+    .lower .panel {
+      min-height: 230px
+    }
+
+    .calendar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .calendar-head strong {
+      font-size: 12px
+    }
+
+    .calendar-buttons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      color: var(--accent);
+    }
+
+    .calendar-buttons button {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font-size: 18px;
+      padding: 0 5px;
+    }
+
+    .week-strip {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      text-align: center;
+      gap: 3px;
+    }
+
+    .week-strip .day-name {
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .week-strip .day-number {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 0;
+      border-radius: 7px;
+    }
+
+    .week-strip .current {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .event-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .event {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .event .pill {
+      width: 4px;
+      height: 13px;
+      border-radius: 3px;
+      background: var(--accent);
+    }
+
+    .event:nth-child(2) .pill {
+      background: #4aa9ef
+    }
+
+    .event:nth-child(3) .pill {
+      background: #ed9a5f
+    }
+
+    .event strong {
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    /* TEMPO DE ESTUDO */
+    .study-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .study-number {
+      font: 800 27px Manrope, sans-serif;
+      letter-spacing: -.05em;
+    }
+
+    .study-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .donut {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: none;
+      background: conic-gradient(var(--accent) 0 63%,
+          var(--ring-bg) 63% 100%);
+    }
+
+    .donut:before {
+      content: '63%';
+      display: grid;
+      place-items: center;
+      height: 65px;
+      width: 65px;
+      background: var(--surface);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .bar-chart {
+      height: 66px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 7px;
+      margin-top: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bar-chart span {
+      background: linear-gradient(180deg, var(--accent), #b6a9ff);
+      width: 12px;
+      min-width: 5px;
+      max-width: 16px;
+      border-radius: 4px 4px 0 0;
+      opacity: .8;
+    }
+
+    .chart-axis {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 9px;
+      margin-top: 6px;
+    }
+
+    /* DICAS */
+    .tip-illustration {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 157px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      padding: 20px 13px;
+      overflow: hidden;
+    }
+
+    .tip-art {
+      font-size: 58px;
+      flex: none;
+    }
+
+    .tip-illustration p {
+      font-size: 12px;
+      line-height: 1.65;
+      margin: 0;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .tip-dots {
+      text-align: center;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 5px;
+      margin-top: 9px;
+    }
+
+    /* NOVA QUEST */
+    .quest {
+      padding: 19px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .quest-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .quest-heading .q-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quest-heading .q-icon {
+      font-size: 25px;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .quest-heading p {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 3px 0 0;
+    }
+
+    .quest-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .92fr 1fr;
+      gap: 13px;
+    }
+
+    .quest-art {
+      border-radius: 13px;
+      background: radial-gradient(circle at 75% 20%,
+          #7a73f0 0,
+          #3c3e91 30%,
+          #111b4e 70%,
+          #0c1130 100%);
+      position: relative;
+      min-height: 204px;
+      overflow: hidden;
+      padding: 18px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    html[data-theme="light"] .quest-art {
+      background: radial-gradient(circle at 70% 15%,
+          #fce5ff, #d4d9ff 42%, #a4bbee 100%);
+    }
+
+    .quest-art:after {
+      content: '';
+      position: absolute;
+      bottom: -45px;
+      right: -30px;
+      width: 230px;
+      height: 130px;
+      border-radius: 50%;
+      background: linear-gradient(20deg, rgba(32, 20, 101, .24), rgba(147, 125, 255, .4));
+      transform: rotate(-20deg);
+    }
+
+    .quest-planet {
+      position: absolute;
+      right: 13%;
+      top: 15%;
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%,
+          #c9d6ff, #7589f2 34%, #3f45ad 72%, #222964);
+      box-shadow: 0 0 40px rgba(148, 125, 255, .5);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .quest-orbit {
+      position: absolute;
+      right: 4%;
+      top: 33%;
+      width: 156px;
+      height: 38px;
+      border: 2px solid rgba(225, 212, 255, .75);
+      border-radius: 50%;
+      transform: rotate(-28deg);
+      animation: orbit 30s linear infinite;
+    }
+
+    .quest-art strong {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      font: 800 20px/1.3 Manrope, sans-serif;
+      text-shadow: 0 2px 11px rgba(0, 0, 0, .4);
+    }
+
+    html[data-theme="light"] .quest-art strong {
+      color: #403a93;
+      text-shadow: none;
+    }
+
+    .quest-progress,
+    .quest-challenges {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .quest-level {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--surface-2);
+      border-radius: 12px;
+    }
+
+    .level-disc {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent);
+      flex: none;
+      font-weight: 800;
+      font-size: 11px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .level-details {
+      flex: 1;
+      min-width: 0
+    }
+
+    .level-details b {
+      font-size: 12px
+    }
+
+    .level-details small {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+      margin: 5px 0;
+    }
+
+    .mini-block {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--surface-2);
+      flex: 1;
+    }
+
+    .mini-block strong {
+      font-size: 11px
+    }
+
+    .mini-block p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 21px;
+    }
+
+    .quest-challenge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .quest-challenge:last-of-type {
+      border: 0
+    }
+
+    .quest-challenge b {
+      color: var(--accent);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .main-cta {
+      border: 0;
+      background: var(--gradient);
+      border-radius: 10px;
+      color: white;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 12px 14px;
+      margin-top: auto;
+      box-shadow: 0 6px 18px rgba(111, 91, 243, .19);
+    }
+
+    .main-cta:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      right: 24px;
+      bottom: 24px;
+      max-width: min(400px, calc(100% - 48px));
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      box-shadow: 0 18px 55px rgba(0, 0, 0, .15);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 12px;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: .25s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    i[data-lucide]:before {
+      content: '✧';
+      display: block;
+      font-size: 16px;
+      font-style: normal;
+      text-align: center;
+    }
+
+    /* DETALHES NEON NO MODO ESCURO */
+    html[data-theme="dark"] .card {
+      background: linear-gradient(155deg, #111d39 0%, #0b162c 100%);
+      border-color: #293969;
+      box-shadow:
+        0 10px 38px rgba(0, 0, 0, .17),
+        inset 0 1px rgba(142, 116, 255, .045);
+    }
+
+    html[data-theme="dark"] .card:hover {
+      border-color: #7659c6;
+      box-shadow: 0 12px 40px rgba(90, 61, 195, .13);
+    }
+
+    html[data-theme="dark"] .quest {
+      box-shadow:
+        0 0 0 1px rgba(158, 94, 255, .23),
+        0 0 35px rgba(103, 62, 240, .07);
+    }
+
+    html[data-theme="dark"] .stat-icon {
+      box-shadow: 0 0 20px rgba(125, 86, 250, .14);
+    }
+
+    .menu-toggle {
+      display: none
+    }
+
+    .mobile-overlay {
+      display: none
+    }
+
+    @keyframes float {
+      50% {
+        transform: translateY(-8px)
+      }
+    }
+
+    @keyframes orbit {
+      to {
+        transform: rotate(332deg)
+      }
+    }
+
+    /* RESPONSIVIDADE */
+    @media(max-width:1200px) {
+
+      .stats,
+      .triple,
+      .lower {
+        gap: 10px
+      }
+
+      .panel {
+        padding: 15px 13px
+      }
+
+      .quest-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .quest-challenges {
+        grid-column: 1/-1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+
+      .quest-challenges .main-cta {
+        grid-column: 1/-1
+      }
+    }
+
+    @media(max-width:1020px) {
+      .sidebar {
+        width: 210px
+      }
+
+      .workspace {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+      }
+
+      .triple,
+      .lower {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .triple>.panel:last-child,
+      .lower>.panel:last-child {
+        grid-column: 1/-1
+      }
+
+      .hero-scenery {
+        width: 54%;
+        opacity: .7
+      }
+
+      .hero-copy {
+        padding-left: 23px
+      }
+    }
+
+    @media(max-width:720px) {
+      .sidebar {
+        transform: translateX(-101%);
+        box-shadow: 20px 0 60px rgba(0, 0, 0, .18);
+      }
+
+      .sidebar.open {
+        transform: translateX(0)
+      }
+
+      .mobile-overlay.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(1, 3, 15, .6);
+        z-index: 30;
+      }
+
+      .workspace {
+        margin: 0;
+        width: 100%
+      }
+
+      .menu-toggle {
+        display: grid
+      }
+
+      .hero {
+        height: 129px
+      }
+
+      .hero-copy {
+        padding: 29px 20px;
+        max-width: 78%
+      }
+
+      .hero-copy p {
+        font-size: 11px
+      }
+
+      .hero-scenery {
+        width: 65%
+      }
+
+      .header {
+        padding: 10px 15px;
+        gap: 10px
+      }
+
+      .header-left {
+        gap: 7px
+      }
+
+      .search {
+        width: min(240px, 40vw)
+      }
+
+      .user-copy {
+        display: none
+      }
+
+      .user-chip {
+        padding-left: 8px
+      }
+
+      .content {
+        padding: 24px 15px 38px
+      }
+
+      .date-quote {
+        display: none
+      }
+
+      .welcome {
+        margin-bottom: 19px
+      }
+    }
+
+    @media(max-width:490px) {
+      .stats {
+        grid-template-columns: 1fr
+      }
+
+      .stat {
+        min-height: 73px
+      }
+
+      .triple,
+      .lower,
+      .quest-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .triple>.panel:last-child,
+      .lower>.panel:last-child,
+      .quest-challenges {
+        grid-column: auto
+      }
+
+      .quest-challenges {
+        display: flex
+      }
+
+      .quest-challenges .main-cta {
+        grid-column: auto
+      }
+
+      .hero-copy {
+        max-width: 100%;
+        padding: 27px 16px
+      }
+
+      .hero-kicker {
+        font-size: 18px
+      }
+
+      .hero-scenery {
+        opacity: .37;
+        width: 90%
+      }
+
+      .search {
+        width: 140px
+      }
+
+      .quest-heading .text-action {
+        display: none
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *:before,
+      *:after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="ambient" aria-hidden="true"><div class="grid"></div></div>
-  <header class="topbar" aria-label="NOVA"><div class="brand-mark">N</div><span class="brand-name">NOVA</span></header>
-  <main class="private-layout" id="privateArea" hidden>
-    <section class="private-card">
-      <div class="private-label">NOVA LIFE · Área privada</div>
-      <h1 id="greeting">Bem-vindo à NOVA!</h1>
-      <p>A tua conta está ligada ao Supabase. Esta é uma página temporária para testar o registo e a autenticação. O Dashboard NOVA Life será desenvolvido a seguir.</p>
-      <p>Conta: <strong id="accountEmail"></strong></p>
-      <div class="private-actions"><button id="logout" type="button">Terminar sessão</button><button class="secondary" id="theme" type="button">Alternar modo claro/escuro</button></div>
-      <p id="message" role="status" aria-live="polite"></p>
-    </section>
-  </main>
-  <main class="private-layout" id="loadingArea"><p>A confirmar a sessão...</p></main>
+
+  <!-- O DASHBOARD SÓ APARECE DEPOIS DE VALIDAR A SESSÃO -->
+  <div id="authScreen" role="status" aria-live="polite">
+    <div class="auth-box">
+      <div class="spinner" id="authSpinner"></div>
+      <h2 id="authTitle">A preparar o teu universo…</h2>
+      <p id="authMessage">Estamos a verificar a tua sessão com segurança.</p>
+      <button id="retryAuth" class="main-cta" hidden>
+        Tentar novamente
+      </button>
+    </div>
+  </div>
+
+  <div id="app" hidden>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <span class="logo-star">✦</span> NOVA
+      </div>
+
+      <nav class="nav-list" aria-label="Navegação principal">
+        <button type="button" class="nav-item active" data-page="Painel">
+          <i data-lucide="layout-dashboard" class="ico"></i>Painel
+        </button>
+        <button type="button" class="nav-item" data-page="Tarefas">
+          <i data-lucide="list-checks" class="ico"></i>Tarefas
+        </button>
+        <button type="button" class="nav-item" data-page="Hábitos">
+          <i data-lucide="check-circle-2" class="ico"></i>Hábitos
+        </button>
+        <button type="button" class="nav-item" data-page="Objetivos">
+          <i data-lucide="target" class="ico"></i>Objetivos
+        </button>
+        <button type="button" class="nav-item" data-page="Calendário">
+          <i data-lucide="calendar-days" class="ico"></i>Calendário
+        </button>
+        <button type="button" class="nav-item" data-page="Dicas">
+          <i data-lucide="lightbulb" class="ico"></i>Dicas
+        </button>
+      </nav>
+
+      <div class="nav-section">NOVA Quest / Zona de estudo</div>
+      <nav class="nav-list" aria-label="Zona de estudo">
+        <button type="button" class="nav-item" data-page="Centro de estudo">
+          <i data-lucide="book-open" class="ico"></i>Centro de estudo
+        </button>
+        <button type="button" class="nav-item" data-page="Missões">
+          <i data-lucide="shield-check" class="ico"></i>Missões
+        </button>
+        <button type="button" class="nav-item" data-page="Quizzes">
+          <i data-lucide="clipboard-list" class="ico"></i>Quizzes
+        </button>
+        <button type="button" class="nav-item" data-page="Conquistas">
+          <i data-lucide="trophy" class="ico"></i>Conquistas
+        </button>
+        <button type="button" class="nav-item" data-page="Ranking">
+          <i data-lucide="chart-no-axes-column-increasing" class="ico"></i>Ranking
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button type="button" class="nav-item" id="settingsButton" style="width:100%">
+          <i data-lucide="settings" class="ico"></i>Definições
+        </button>
+        <button type="button" class="appearance" id="themeToggle">
+          <i data-lucide="moon-star" class="ico"></i>Aparência
+          <span class="theme-switch" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="nav-item" id="logoutButton" style="width:100%;margin-top:6px">
+          <i data-lucide="log-out" class="ico"></i>Terminar sessão
+        </button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+
+      <!-- BANNER COM ILUSTRAÇÃO DIFERENTE EM CADA TEMA -->
+      <section class="hero" aria-label="Bem-vindo à NOVA">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <span>✦</span>
+            <span class="light-title">NOVA LIFE</span>
+            <span class="dark-title" hidden>NOVA QUEST</span>
+          </div>
+          <p id="heroSubtitle">
+            Organiza. Constrói. Evolui. Um dia de cada vez.
+          </p>
+        </div>
+
+        <!-- MONTANHAS DO MODO CLARO -->
+        <svg class="hero-scenery light-scenery" viewBox="0 0 600 150" preserveAspectRatio="xMidYMax slice"
+          aria-hidden="true">
+          <defs>
+            <linearGradient id="lm" x2="0" y2="1">
+              <stop stop-color="#b3c3ff" />
+              <stop offset="1" stop-color="#8b9fda" />
+            </linearGradient>
+          </defs>
+          <circle cx="445" cy="40" r="28" fill="#ffe4aa" />
+          <path d="M0 150 L110 86 185 118 305 26 365 105 445 52 550 129 600 150Z" fill="#d7dcff" />
+          <path d="M60 150 175 75 235 119 325 19 399 122 470 83 600 150Z" fill="url(#lm)" />
+          <path d="m278 65 47-46 45 74-34-21-15 12-18-19Z" fill="#fff" opacity=".87" />
+          <path d="M0 150 95 118 140 138 238 112 300 145 385 118 475 142 560 117 600 140V150Z" fill="#a9d5d5" />
+          <path d="m518 140 15-37 15 37m-5 0 13-28 12 28" stroke="#5ba4a2" stroke-width="7" stroke-linejoin="round" />
+          <g fill="white" opacity=".9">
+            <ellipse cx="210" cy="39" rx="25" ry="6" />
+            <ellipse cx="223" cy="34" rx="12" ry="10" />
+            <ellipse cx="231" cy="39" rx="26" ry="5" />
+          </g>
+        </svg>
+
+        <!-- CASTELO E LUA DO MODO ESCURO -->
+        <svg class="hero-scenery dark-scenery" viewBox="0 0 600 150" preserveAspectRatio="xMidYMax slice"
+          aria-hidden="true">
+          <defs>
+            <radialGradient id="dm">
+              <stop stop-color="#86abff" />
+              <stop offset="1" stop-color="#3d45be" />
+            </radialGradient>
+          </defs>
+          <circle cx="445" cy="44" r="49" fill="url(#dm)" opacity=".95" />
+          <circle cx="445" cy="44" r="53" fill="none" stroke="#887bff" opacity=".4" />
+          <g fill="#b7a8ff">
+            <circle cx="110" cy="32" r="2" />
+            <circle cx="220" cy="18" r="1.5" />
+            <circle cx="320" cy="52" r="1" />
+            <circle cx="545" cy="20" r="2" />
+          </g>
+          <path d="M0 150 125 86 230 135 310 74 398 130 475 85 600 150Z" fill="#21266f" />
+          <path d="M0 150 100 121 205 146 326 104 400 143 504 100 600 150Z" fill="#151848" />
+          <g fill="#0a1031" stroke="#9b66ff" stroke-width="1.3">
+            <path d="M418 127V49l13-16 13 16v78Z" />
+            <path d="M401 127V71l9-15 9 15v56Z" />
+            <path d="M442 127V70l9-20 9 20v57Z" />
+            <path d="M463 127V86l8-13 8 13v41Z" />
+            <path d="M407 82h67v45h-67Z" />
+          </g>
+          <path d="M431 20v25M410 41h43" stroke="#b56aff" stroke-width="2" />
+          <path d="M80 40 155 16" stroke="#b761fc" opacity=".8" stroke-width="2" />
+          <path d="M0 150 98 137 190 149 330 129 490 147 600 129V150Z" fill="#080e2b" />
+        </svg>
+      </section>
+
+      <header class="header">
+        <div class="header-left">
+          <button type="button" class="icon-btn menu-toggle" id="menuToggle" aria-label="Abrir menu">
+            <i data-lucide="menu" class="ico"></i>
+          </button>
+          <label class="search">
+            <i data-lucide="search" class="ico"></i>
+            <input type="search" id="searchInput" placeholder="Pesquisar tarefas…" aria-label="Pesquisar tarefas">
+          </label>
+        </div>
+        <div class="header-right">
+          <button type="button" class="icon-btn" id="notificationsButton" aria-label="Notificações">
+            <i data-lucide="bell" class="ico"></i>
+          </button>
+          <div class="user-chip">
+            <span class="avatar" id="avatar">N</span>
+            <div class="user-copy">
+              <span id="timeGreeting">Olá de novo,</span>
+              <strong id="userName">Estudante</strong>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="mainContent">
+        <div class="welcome">
+          <div>
+            <h1>Bem-vindo de volta, <span id="welcomeName">Estudante</span>! ✦</h1>
+            <p id="welcomeSubtitle">Um espaço para seres mais organizado, focado e consistente.</p>
+          </div>
+          <div class="date-quote">
+            <span class="today-date" id="todayDate"></span>
+            <div class="quote">
+              <b>✦</b>
+              <span id="quoteText">Pequenos passos todos os dias levam a grandes resultados.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ESTATÍSTICAS -->
+        <section class="stats" aria-label="Resumo">
+          <div class="card stat">
+            <div class="stat-icon green">✓</div>
+            <div class="stat-info">
+              <strong id="taskStat">0 / 0</strong>
+              <small>Tarefas concluídas</small>
+            </div>
+            <span class="stat-chevron">›</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-icon fire">🔥</div>
+            <div class="stat-info">
+              <strong>7 dias</strong>
+              <small>Sequência de hábitos*</small>
+            </div>
+            <span class="stat-chevron">›</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-icon gold">★</div>
+            <div class="stat-info">
+              <strong>2 / 4</strong>
+              <small>Objetivos semanais*</small>
+            </div>
+            <span class="stat-chevron">›</span>
+          </div>
+        </section>
+
+        <section class="triple" aria-label="Organização diária">
+          <!-- TAREFAS -->
+          <article class="card panel">
+            <div class="panel-heading">
+              <h2>Tarefas de hoje</h2>
+              <button type="button" class="text-action" data-page="Tarefas">Ver todas →</button>
+            </div>
+            <div class="task-list" id="taskList"></div>
+            <form class="add-task" id="addTaskForm">
+              <input id="newTask" maxlength="90" placeholder="+ Adicionar nova tarefa…" aria-label="Nova tarefa"
+                required>
+              <button type="submit" aria-label="Adicionar tarefa">+</button>
+            </form>
+          </article>
+
+          <!-- HÁBITOS -->
+          <article class="card panel">
+            <div class="panel-heading">
+              <h2>Progresso dos hábitos*</h2>
+              <button type="button" class="text-action" data-page="Hábitos">Ver mais →</button>
+            </div>
+            <div class="habit-list">
+              <div class="habit">
+                <div class="habit-icon">🎓</div>
+                <div class="habit-info">
+                  <div class="habit-caption"><span>Estudar</span><span>3/4</span></div>
+                  <div class="track">
+                    <div class="fill" style="width:75%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="habit">
+                <div class="habit-icon">💪</div>
+                <div class="habit-info">
+                  <div class="habit-caption"><span>Exercício</span><span>2/4</span></div>
+                  <div class="track">
+                    <div class="fill" style="width:50%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="habit">
+                <div class="habit-icon">📖</div>
+                <div class="habit-info">
+                  <div class="habit-caption"><span>Leitura</span><span>3/4</span></div>
+                  <div class="track">
+                    <div class="fill" style="width:75%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="habit">
+                <div class="habit-icon">🌿</div>
+                <div class="habit-info">
+                  <div class="habit-caption"><span>Meditação</span><span>1/4</span></div>
+                  <div class="track">
+                    <div class="fill" style="width:25%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- OBJETIVOS -->
+          <article class="card panel">
+            <div class="panel-heading">
+              <h2>Objetivos semanais*</h2>
+              <button type="button" class="text-action" data-page="Objetivos">Ver mais →</button>
+            </div>
+            <div class="goal-list">
+              <div class="goal">
+                <span class="goal-icon">🎯</span>
+                <div class="goal-desc">
+                  Manter uma sequência de 7 dias de estudo
+                  <div class="sub">5/7 dias</div>
+                  <div class="track">
+                    <div class="fill" style="width:71%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="goal">
+                <span class="goal-icon">✅</span>
+                <div class="goal-desc">Concluir uma etapa do projeto</div>
+                <span class="checkmark">✓</span>
+              </div>
+              <div class="goal">
+                <span class="goal-icon">🏃</span>
+                <div class="goal-desc">
+                  Fazer exercício 3 vezes
+                  <div class="sub">2/3 vezes</div>
+                  <div class="track">
+                    <div class="fill" style="width:67%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="goal">
+                <span class="goal-icon">📗</span>
+                <div class="goal-desc">Ler um livro este mês</div>
+                <span class="checkmark">✓</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="lower" aria-label="Planeamento e estudo">
+          <!-- CALENDÁRIO -->
+          <article class="card panel">
+            <div class="calendar-head">
+              <h2>Calendário</h2>
+              <div class="calendar-buttons">
+                <button id="prevWeek" type="button" aria-label="Semana anterior">‹</button>
+                <strong id="calendarMonth"></strong>
+                <button id="nextWeek" type="button" aria-label="Semana seguinte">›</button>
+              </div>
+            </div>
+            <div class="week-strip" id="weekStrip"></div>
+            <div class="event-list">
+              <div class="event">
+                <span>10:00</span><i class="pill"></i>
+                <strong>Sessão de estudo*</strong><span>1 h</span>
+              </div>
+              <div class="event">
+                <span>13:00</span><i class="pill"></i>
+                <strong>Trabalho de grupo*</strong><span>1 h</span>
+              </div>
+              <div class="event">
+                <span>16:00</span><i class="pill"></i>
+                <strong>Exercício*</strong><span>1 h</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- TEMPO DE ESTUDO -->
+          <article class="card panel">
+            <div class="panel-heading">
+              <h2>Tempo de estudo*</h2>
+              <span style="font-size:11px;color:var(--muted)">Hoje</span>
+            </div>
+            <div class="study-body">
+              <div>
+                <div class="study-number">2h 30m</div>
+                <div class="study-sub">de um objetivo de 4 h</div>
+              </div>
+              <div class="donut" aria-label="63% do objetivo"></div>
+            </div>
+            <div class="bar-chart" aria-hidden="true">
+              <span style="height:21%"></span>
+              <span style="height:48%"></span>
+              <span style="height:34%"></span>
+              <span style="height:77%"></span>
+              <span style="height:43%"></span>
+              <span style="height:60%"></span>
+              <span style="height:26%"></span>
+              <span style="height:18%"></span>
+            </div>
+            <div class="chart-axis">
+              <span>06h</span><span>12h</span><span>18h</span><span>22h</span>
+            </div>
+          </article>
+
+          <!-- DICAS -->
+          <article class="card panel">
+            <div class="panel-heading">
+              <h2>Dicas para ti</h2>
+              <button type="button" class="text-action" id="nextTip">Outra dica →</button>
+            </div>
+            <div class="tip-illustration">
+              <span class="tip-art" id="tipEmoji">🌱</span>
+              <p id="tipText">
+                Faz pequenas pausas para recarregar a mente.
+                Estudar com equilíbrio ajuda a aprender melhor.
+              </p>
+            </div>
+            <div class="tip-dots" aria-hidden="true">● ○ ○</div>
+          </article>
+        </section>
+
+        <!-- ZONA GAMIFICADA -->
+        <section class="card quest" aria-label="NOVA Quest">
+          <div class="quest-heading">
+            <div class="q-title">
+              <span class="q-icon">🎮</span>
+              <div>
+                <h2>NOVA Quest
+                  <span style="font-size:11px;color:var(--accent)">· Zona de estudo</span>
+                </h2>
+                <p>Transforma o teu tempo de estudo em progresso. Conclui missões e ganha XP.</p>
+              </div>
+            </div>
+            <button type="button" class="text-action" data-page="Centro de estudo">
+              Ir para o estudo →
+            </button>
+          </div>
+
+          <div class="quest-grid">
+            <div class="quest-art">
+              <div class="quest-planet"></div>
+              <div class="quest-orbit"></div>
+              <strong>Estuda hoje.<br>Evolui amanhã.<br>✦</strong>
+            </div>
+
+            <div class="quest-progress">
+              <div class="quest-level">
+                <div class="level-disc">LV. 12<br>✦</div>
+                <div class="level-details">
+                  <b>Explorador NOVA*</b>
+                  <small><span>Experiência</span><span>320 / 500 XP</span></small>
+                  <div class="track">
+                    <div class="fill" style="width:64%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mini-block">
+                <strong>⭐ Desafio diário*</strong>
+                <p>Completa uma sessão de estudo e aproxima-te do próximo nível.</p>
+                <div class="track" style="margin-top:12px">
+                  <div class="fill" style="width:52%"></div>
+                </div>
+              </div>
+              <div class="mini-block">
+                <strong>Conquistas*</strong>
+                <div class="badges">🥇 🛡️ 💎 🌟</div>
+              </div>
+            </div>
+
+            <div class="quest-challenges">
+              <div class="mini-block">
+                <strong>Missões ativas*</strong>
+                <div class="quest-challenge">
+                  <span>⌛ Estudar durante 2 horas</span><b>50 XP</b>
+                </div>
+                <div class="quest-challenge">
+                  <span>🧠 Terminar um quiz</span><b>30 XP</b>
+                </div>
+                <div class="quest-challenge">
+                  <span>📚 Ler 30 páginas</span><b>30 XP</b>
+                </div>
+              </div>
+              <div class="mini-block">
+                <strong>Ranking semanal*</strong>
+                <p>
+                  🥇 Luna · 1240 XP<br>
+                  🥈 Alex · 980 XP<br>
+                  🥉 Riko · 860 XP
+                </p>
+              </div>
+              <button type="button" class="main-cta" data-page="Missões">
+                Começar uma missão →
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <p style="font-size:10px;text-align:right;color:var(--muted);margin-top:10px">
+          * Valores ilustrativos da interface; estas funcionalidades serão ligadas
+          à base de dados nas próximas etapas.
+        </p>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- BIBLIOTECAS -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase-config.js"></script>
+
   <script>
-    const client = window.supabase?.createClient(window.NOVA_SUPABASE_URL, window.NOVA_SUPABASE_KEY);
-    const refreshTheme = () => { try {document.body.classList.toggle('light', localStorage.getItem('nova-theme') === 'light');} catch (_) {} };
-    refreshTheme();
-    document.getElementById('theme').addEventListener('click', () => {
-      const next = !document.body.classList.contains('light');
-      document.body.classList.toggle('light', next);
-      try {localStorage.setItem('nova-theme', next ? 'light' : 'dark');} catch (_) {}
-    });
-    async function initialize() {
-      if (!client) { document.getElementById('loadingArea').textContent = 'Não foi possível ligar ao Supabase.'; return; }
-      try {
-        const {data, error} = await client.auth.getUser();
-        if (error || !data.user) { window.location.replace('./login.html'); return; }
-        document.getElementById('accountEmail').textContent = data.user.email || 'Email indisponível';
-        const name = data.user.user_metadata?.full_name;
-        if (name) document.getElementById('greeting').textContent = `Olá, ${name}!`;
-        document.getElementById('loadingArea').hidden = true;
-        document.getElementById('privateArea').hidden = false;
-      } catch (_) { document.getElementById('loadingArea').textContent = 'Erro de ligação. Verifica a internet e atualiza a página.'; }
+    'use strict';
+
+    const $ = id => document.getElementById(id);
+
+    const client =
+      window.supabase &&
+        window.NOVA_SUPABASE_URL &&
+        window.NOVA_SUPABASE_KEY
+        ? window.supabase.createClient(
+          window.NOVA_SUPABASE_URL,
+          window.NOVA_SUPABASE_KEY
+        )
+        : null;
+
+    let currentUser = null;
+    let tasks = [];
+    let toastTimer;
+    let calendarOffset = 0;
+    let activeSearch = '';
+
+    /* NOTIFICAÇÕES DA INTERFACE */
+    function notify(message) {
+      $('toast').textContent = message;
+      $('toast').classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        $('toast').classList.remove('show');
+      }, 3300);
     }
-    document.getElementById('logout').addEventListener('click', async () => {
-      const btn = document.getElementById('logout'); btn.disabled = true;
-      const {error} = await client.auth.signOut();
-      if (error) { document.getElementById('message').textContent = 'Não foi possível terminar sessão: ' + error.message; btn.disabled = false; return; }
-      window.location.replace('./login.html');
+
+    /* MODO CLARO / ESCURO */
+    function setTheme(theme) {
+      const value = theme === 'light' ? 'light' : 'dark';
+
+      document.documentElement.dataset.theme = value;
+      document.querySelector('meta[name="theme-color"]').content =
+        value === 'light' ? '#f5f7ff' : '#090f20';
+
+      try {
+        localStorage.setItem('nova-theme', value);
+      } catch (_) { }
+
+      document.querySelector('.light-title').hidden = value === 'dark';
+      document.querySelector('.dark-title').hidden = value !== 'dark';
+
+      $('heroSubtitle').textContent = value === 'dark'
+        ? 'Estuda. Conquista. Sobe de nível. O teu potencial não tem limites.'
+        : 'Organiza. Constrói. Evolui. Um dia de cada vez.';
+
+      $('welcomeSubtitle').textContent = value === 'dark'
+        ? 'Dias diferentes, o mesmo objetivo: uma versão mais forte de ti.'
+        : 'Um espaço para seres mais organizado, focado e consistente.';
+
+      $('quoteText').textContent = value === 'dark'
+        ? 'A disciplina de hoje cria a liberdade de amanhã.'
+        : 'Pequenos passos todos os dias levam a grandes resultados.';
+    }
+
+    $('themeToggle').addEventListener('click', () => {
+      setTheme(
+        document.documentElement.dataset.theme === 'dark'
+          ? 'light' : 'dark'
+      );
     });
+
+    /* DADOS DO UTILIZADOR */
+    function showApp(user) {
+      currentUser = user;
+
+      const rawName = String(
+        user.user_metadata?.full_name ||
+        user.user_metadata?.name ||
+        user.email?.split('@')[0] ||
+        'Estudante'
+      ).trim();
+
+      const firstName = rawName.split(/\s+/)[0].slice(0, 24);
+
+      $('welcomeName').textContent = firstName;
+      $('userName').textContent = firstName;
+      $('avatar').textContent = firstName[0]?.toUpperCase() || 'N';
+
+      const hour = new Date().getHours();
+      $('timeGreeting').textContent =
+        hour < 12 ? 'Bom dia,' :
+          hour < 20 ? 'Boa tarde,' : 'Boa noite,';
+
+      $('todayDate').textContent =
+        new Intl.DateTimeFormat('pt-PT', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }).format(new Date());
+
+      loadTasks();
+      renderTasks();
+      renderCalendar();
+      setTheme(document.documentElement.dataset.theme);
+
+      $('authScreen').hidden = true;
+      $('app').hidden = false;
+
+      if (window.lucide?.createIcons) {
+        window.lucide.createIcons();
+      }
+    }
+
+    /* VERIFICAÇÃO SUPABASE */
+    async function initialize() {
+      $('retryAuth').hidden = true;
+      $('authSpinner').hidden = false;
+      $('authTitle').textContent = 'A preparar o teu universo…';
+      $('authMessage').textContent =
+        'Estamos a verificar a tua sessão com segurança.';
+
+      if (!client) {
+        showAuthError(
+          'Não foi possível carregar a configuração do Supabase. ' +
+          'Confirma que supabase-config.js está na mesma pasta ' +
+          'e contém as chaves públicas.'
+        );
+        return;
+      }
+
+      try {
+        const { data, error } = await client.auth.getUser();
+
+        if (error || !data?.user) {
+          window.location.replace('./login.html');
+          return;
+        }
+
+        showApp(data.user);
+
+      } catch (_) {
+        showAuthError(
+          'Não conseguimos contactar o Supabase. ' +
+          'Verifica a internet e tenta novamente.'
+        );
+      }
+    }
+
+    function showAuthError(message) {
+      $('authSpinner').hidden = true;
+      $('authTitle').textContent = 'Não foi possível abrir a NOVA';
+      $('authMessage').textContent = message;
+      $('retryAuth').hidden = false;
+    }
+
+    $('retryAuth').addEventListener('click', initialize);
+
+    /* TERMINAR SESSÃO */
+    $('logoutButton').addEventListener('click', async () => {
+      const btn = $('logoutButton');
+      btn.disabled = true;
+
+      if (!client) {
+        btn.disabled = false;
+        notify('Ligação ao Supabase indisponível.');
+        return;
+      }
+
+      try {
+        const { error } = await client.auth.signOut();
+        if (error) throw error;
+
+        window.location.replace('./login.html');
+      } catch (error) {
+        notify(
+          'Não foi possível terminar a sessão: ' +
+          (error?.message || 'Tenta novamente.')
+        );
+        btn.disabled = false;
+      }
+    });
+
+    /* TAREFAS GUARDADAS POR UTILIZADOR NO NAVEGADOR */
+    function taskStorageKey() {
+      return 'nova-tasks-' + currentUser.id;
+    }
+
+    function loadTasks() {
+      const demo = [
+        { id: 'a', name: 'Terminar o trabalho de Matemática', done: true },
+        { id: 'b', name: 'Ler 20 páginas de um livro', done: true },
+        { id: 'c', name: 'Planear a próxima semana', done: false },
+        { id: 'd', name: 'Avançar com o projeto de grupo', done: true },
+        { id: 'e', name: 'Fazer uma caminhada', done: false }
+      ];
+
+      try {
+        const saved = localStorage.getItem(taskStorageKey());
+        tasks = saved ? JSON.parse(saved) : demo;
+
+        if (!Array.isArray(tasks)) tasks = demo;
+      } catch (_) {
+        tasks = demo;
+      }
+    }
+
+    function saveTasks() {
+      try {
+        localStorage.setItem(taskStorageKey(), JSON.stringify(tasks));
+      } catch (_) { }
+    }
+
+    function renderTasks() {
+      const container = $('taskList');
+      container.replaceChildren();
+
+      const visible = tasks.filter(t =>
+        String(t.name)
+          .toLocaleLowerCase('pt-PT')
+          .includes(activeSearch)
+      );
+
+      for (const task of visible) {
+        const label = document.createElement('label');
+        label.className = 'task' + (task.done ? ' done' : '');
+
+        const box = document.createElement('input');
+        box.type = 'checkbox';
+        box.checked = !!task.done;
+
+        box.addEventListener('change', () => {
+          task.done = box.checked;
+          saveTasks();
+          renderTasks();
+        });
+
+        const name = document.createElement('span');
+        name.textContent = task.name;
+
+        const flag = document.createElement('span');
+        flag.className = 'flag';
+        flag.textContent = '⚑';
+        flag.setAttribute('aria-hidden', 'true');
+
+        label.append(box, name, flag);
+        container.append(label);
+      }
+
+      if (!visible.length) {
+        const empty = document.createElement('p');
+        empty.style.cssText =
+          'color:var(--muted);font-size:12px;margin:5px 0';
+        empty.textContent = 'Não foram encontradas tarefas.';
+        container.append(empty);
+      }
+
+      $('taskStat').textContent =
+        tasks.filter(t => t.done).length + ' / ' + tasks.length;
+    }
+
+    $('addTaskForm').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const field = $('newTask');
+      const value = field.value.trim();
+      if (!value) return;
+
+      tasks.push({
+        id: String(Date.now()) + '-' +
+          Math.random().toString(36).slice(2, 7),
+        name: value,
+        done: false
+      });
+
+      field.value = '';
+      activeSearch = '';
+      $('searchInput').value = '';
+
+      saveTasks();
+      renderTasks();
+      notify('Tarefa adicionada! ✨');
+    });
+
+    $('searchInput').addEventListener('input', e => {
+      activeSearch = e.target.value
+        .trim()
+        .toLocaleLowerCase('pt-PT');
+      renderTasks();
+    });
+
+    /* CALENDÁRIO */
+    function renderCalendar() {
+      const date = new Date();
+      date.setDate(date.getDate() + calendarOffset * 7);
+
+      const monday = new Date(date);
+      monday.setDate(
+        date.getDate() - (date.getDay() + 6) % 7
+      );
+
+      $('calendarMonth').textContent =
+        new Intl.DateTimeFormat('pt-PT', {
+          month: 'short',
+          year: 'numeric'
+        }).format(date);
+
+      const strip = $('weekStrip');
+      strip.replaceChildren();
+
+      const names = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
+      for (const name of names) {
+        const n = document.createElement('span');
+        n.className = 'day-name';
+        n.textContent = name;
+        strip.append(n);
+      }
+
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+
+        const n = document.createElement('span');
+        n.className = 'day-number';
+        n.textContent = d.getDate();
+
+        if (d.toDateString() === new Date().toDateString()) {
+          n.classList.add('current');
+        }
+
+        strip.append(n);
+      }
+    }
+
+    $('prevWeek').addEventListener('click', () => {
+      calendarOffset--;
+      renderCalendar();
+    });
+
+    $('nextWeek').addEventListener('click', () => {
+      calendarOffset++;
+      renderCalendar();
+    });
+
+    /* DICAS */
+    const tips = [
+      ['🌱', 'Faz pequenas pausas para recarregar a mente. Estudar com equilíbrio ajuda a aprender melhor.'],
+      ['💧', 'Bebe água e mantém uma rotina de sono regular. A energia também faz parte do progresso.'],
+      ['🎯', 'Escolhe uma tarefa importante de cada vez. A consistência vale mais do que a perfeição.']
+    ];
+
+    let tipIndex = 0;
+
+    $('nextTip').addEventListener('click', () => {
+      tipIndex = (tipIndex + 1) % tips.length;
+
+      $('tipEmoji').textContent = tips[tipIndex][0];
+      $('tipText').textContent = tips[tipIndex][1];
+
+      document.querySelector('.tip-dots').textContent =
+        tips.map((_, i) => i === tipIndex ? '●' : '○').join(' ');
+    });
+
+    /* MENU MOBILE */
+    function closeSidebar() {
+      $('sidebar').classList.remove('open');
+      $('mobileOverlay').classList.remove('show');
+    }
+
+    $('menuToggle').addEventListener('click', () => {
+      $('sidebar').classList.add('open');
+      $('mobileOverlay').classList.add('show');
+    });
+
+    $('mobileOverlay').addEventListener('click', closeSidebar);
+
+    /* PREPARAÇÃO DAS FUTURAS ABAS */
+    document.querySelectorAll('[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = btn.dataset.page;
+        closeSidebar();
+
+        if (page === 'Painel') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        notify(
+          'A página «' + page +
+          '» será desenvolvida na próxima fase.'
+        );
+      });
+    });
+
+    $('settingsButton').addEventListener('click', () => {
+      notify('As definições chegam numa próxima atualização.');
+    });
+
+    $('notificationsButton').addEventListener('click', () => {
+      notify('Ainda não tens notificações nesta versão da NOVA.');
+    });
+
+    /* INICIAR A APLICAÇÃO */
     initialize();
   </script>
+
 </body>
+
 </html>
