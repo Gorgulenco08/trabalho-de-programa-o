@@ -108,13 +108,15 @@
       display: none !important
     }
 
-    /* VERIFICAÇÃO DA SESSÃO */
+    /* AUTENTICAÇÃO */
+
     #authScreen {
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 24px;
       text-align: center;
+      background: var(--bg);
     }
 
     .auth-box {
@@ -142,9 +144,10 @@
     }
 
     /* ESTRUTURA */
+
     #app {
       min-height: 100vh;
-      display: flex
+      display: flex;
     }
 
     .sidebar {
@@ -187,7 +190,7 @@
 
     .nav-list {
       display: grid;
-      gap: 4px
+      gap: 4px;
     }
 
     .nav-item {
@@ -244,12 +247,12 @@
     }
 
     .appearance:hover {
-      background: var(--nav-hover)
+      background: var(--nav-hover);
     }
 
     .appearance .ico {
       width: 18px;
-      height: 18px
+      height: 18px;
     }
 
     .theme-switch {
@@ -290,6 +293,7 @@
     }
 
     /* BANNER */
+
     .hero {
       height: 146px;
       background: var(--banner);
@@ -357,7 +361,8 @@
       display: block
     }
 
-    /* BARRA SUPERIOR */
+    /* CABEÇALHO */
+
     .header {
       min-height: 71px;
       background: var(--surface);
@@ -427,7 +432,7 @@
 
     .icon-btn .ico {
       height: 19px;
-      width: 19px
+      width: 19px;
     }
 
     .user-chip {
@@ -470,6 +475,7 @@
     }
 
     /* CONTEÚDO */
+
     .content {
       max-width: 1560px;
       margin: 0 auto;
@@ -506,7 +512,7 @@
 
     .today-date {
       color: var(--muted);
-      font-size: 11px
+      font-size: 11px;
     }
 
     .quote {
@@ -612,6 +618,7 @@
     }
 
     /* PAINÉIS */
+
     .panel {
       padding: 17px 18px;
       min-height: 310px;
@@ -646,6 +653,7 @@
     }
 
     /* TAREFAS */
+
     .task-list {
       display: grid;
       gap: 10px;
@@ -720,6 +728,7 @@
     }
 
     /* HÁBITOS */
+
     .habit-list {
       display: grid;
       gap: 13px
@@ -744,7 +753,7 @@
 
     .habit-info {
       flex: 1;
-      min-width: 0
+      min-width: 0;
     }
 
     .habit-caption {
@@ -774,6 +783,7 @@
     }
 
     /* OBJETIVOS */
+
     .goal-list {
       display: grid;
       gap: 15px
@@ -815,6 +825,7 @@
     }
 
     /* CALENDÁRIO */
+
     .lower .panel {
       min-height: 230px
     }
@@ -906,6 +917,7 @@
     }
 
     /* TEMPO DE ESTUDO */
+
     .study-body {
       display: flex;
       justify-content: space-between;
@@ -974,6 +986,7 @@
     }
 
     /* DICAS */
+
     .tip-illustration {
       display: flex;
       align-items: center;
@@ -1007,6 +1020,7 @@
     }
 
     /* NOVA QUEST */
+
     .quest {
       padding: 19px;
       overflow: hidden;
@@ -1217,7 +1231,6 @@
       font-size: 12px;
       padding: 12px 14px;
       margin-top: auto;
-      box-shadow: 0 6px 18px rgba(111, 91, 243, .19);
     }
 
     .main-cta:hover {
@@ -1257,7 +1270,8 @@
       text-align: center;
     }
 
-    /* DETALHES NEON NO MODO ESCURO */
+    /* VISUAL NEON */
+
     html[data-theme="dark"] .card {
       background: linear-gradient(155deg, #111d39 0%, #0b162c 100%);
       border-color: #293969;
@@ -1281,6 +1295,112 @@
       box-shadow: 0 0 20px rgba(125, 86, 250, .14);
     }
 
+    /* NOVA JANELA DE LOGOUT */
+
+    .logout-dialog {
+      width: min(420px, calc(100% - 32px));
+      max-width: none;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px 27px;
+      background: var(--surface);
+      color: var(--ink);
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, .35);
+      animation: logoutAppear .25s ease both;
+    }
+
+    .logout-dialog::backdrop {
+      background: rgba(3, 6, 20, .68);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .logout-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 18px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--nav-active);
+      color: var(--accent);
+    }
+
+    .logout-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .logout-dialog h2 {
+      font: 800 22px/1.25 Manrope, sans-serif;
+      margin: 0 0 12px;
+    }
+
+    .logout-dialog p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 24px;
+    }
+
+    .logout-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .logout-actions button {
+      border-radius: 12px;
+      padding: 13px 9px;
+      font-weight: 800;
+      font-size: 12px;
+      transition: transform .2s, filter .2s;
+    }
+
+    .logout-actions button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .logout-actions button:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .logout-cancel {
+      color: var(--ink);
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+
+    .logout-confirm {
+      color: #fff;
+      background: var(--gradient);
+      border: 0;
+    }
+
+    .logout-error {
+      color: #ef6c86 !important;
+      font-size: 12px;
+      margin: 14px 0 0 !important;
+    }
+
+    @keyframes logoutAppear {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* RESPONSIVO */
+
     .menu-toggle {
       display: none
     }
@@ -1301,7 +1421,6 @@
       }
     }
 
-    /* RESPONSIVIDADE */
     @media(max-width:1200px) {
 
       .stats,
@@ -1505,7 +1624,7 @@
 
 <body>
 
-  <!-- O DASHBOARD SÓ APARECE DEPOIS DE VALIDAR A SESSÃO -->
+  <!-- AUTENTICAÇÃO -->
   <div id="authScreen" role="status" aria-live="polite">
     <div class="auth-box">
       <div class="spinner" id="authSpinner"></div>
@@ -1548,6 +1667,7 @@
       </nav>
 
       <div class="nav-section">NOVA Quest / Zona de estudo</div>
+
       <nav class="nav-list" aria-label="Zona de estudo">
         <button type="button" class="nav-item" data-page="Centro de estudo">
           <i data-lucide="book-open" class="ico"></i>Centro de estudo
@@ -1570,10 +1690,12 @@
         <button type="button" class="nav-item" id="settingsButton" style="width:100%">
           <i data-lucide="settings" class="ico"></i>Definições
         </button>
+
         <button type="button" class="appearance" id="themeToggle">
           <i data-lucide="moon-star" class="ico"></i>Aparência
           <span class="theme-switch" aria-hidden="true"></span>
         </button>
+
         <button type="button" class="nav-item" id="logoutButton" style="width:100%;margin-top:6px">
           <i data-lucide="log-out" class="ico"></i>Terminar sessão
         </button>
@@ -1582,7 +1704,7 @@
 
     <div class="workspace">
 
-      <!-- BANNER COM ILUSTRAÇÃO DIFERENTE EM CADA TEMA -->
+      <!-- BANNER -->
       <section class="hero" aria-label="Bem-vindo à NOVA">
         <div class="hero-copy">
           <div class="hero-kicker">
@@ -1595,7 +1717,7 @@
           </p>
         </div>
 
-        <!-- MONTANHAS DO MODO CLARO -->
+        <!-- MONTANHAS -->
         <svg class="hero-scenery light-scenery" viewBox="0 0 600 150" preserveAspectRatio="xMidYMax slice"
           aria-hidden="true">
           <defs>
@@ -1617,7 +1739,7 @@
           </g>
         </svg>
 
-        <!-- CASTELO E LUA DO MODO ESCURO -->
+        <!-- CASTELO E LUA -->
         <svg class="hero-scenery dark-scenery" viewBox="0 0 600 150" preserveAspectRatio="xMidYMax slice"
           aria-hidden="true">
           <defs>
@@ -1649,6 +1771,7 @@
         </svg>
       </section>
 
+      <!-- BARRA SUPERIOR -->
       <header class="header">
         <div class="header-left">
           <button type="button" class="icon-btn menu-toggle" id="menuToggle" aria-label="Abrir menu">
@@ -1659,6 +1782,7 @@
             <input type="search" id="searchInput" placeholder="Pesquisar tarefas…" aria-label="Pesquisar tarefas">
           </label>
         </div>
+
         <div class="header-right">
           <button type="button" class="icon-btn" id="notificationsButton" aria-label="Notificações">
             <i data-lucide="bell" class="ico"></i>
@@ -1674,6 +1798,7 @@
       </header>
 
       <main class="content" id="mainContent">
+
         <div class="welcome">
           <div>
             <h1>Bem-vindo de volta, <span id="welcomeName">Estudante</span>! ✦</h1>
@@ -1716,8 +1841,9 @@
           </div>
         </section>
 
+        <!-- TAREFAS / HÁBITOS / OBJETIVOS -->
         <section class="triple" aria-label="Organização diária">
-          <!-- TAREFAS -->
+
           <article class="card panel">
             <div class="panel-heading">
               <h2>Tarefas de hoje</h2>
@@ -1731,7 +1857,6 @@
             </form>
           </article>
 
-          <!-- HÁBITOS -->
           <article class="card panel">
             <div class="panel-heading">
               <h2>Progresso dos hábitos*</h2>
@@ -1777,7 +1902,6 @@
             </div>
           </article>
 
-          <!-- OBJETIVOS -->
           <article class="card panel">
             <div class="panel-heading">
               <h2>Objetivos semanais*</h2>
@@ -1816,10 +1940,12 @@
               </div>
             </div>
           </article>
+
         </section>
 
+        <!-- CALENDÁRIO / ESTUDO / DICAS -->
         <section class="lower" aria-label="Planeamento e estudo">
-          <!-- CALENDÁRIO -->
+
           <article class="card panel">
             <div class="calendar-head">
               <h2>Calendário</h2>
@@ -1846,7 +1972,6 @@
             </div>
           </article>
 
-          <!-- TEMPO DE ESTUDO -->
           <article class="card panel">
             <div class="panel-heading">
               <h2>Tempo de estudo*</h2>
@@ -1870,11 +1995,13 @@
               <span style="height:18%"></span>
             </div>
             <div class="chart-axis">
-              <span>06h</span><span>12h</span><span>18h</span><span>22h</span>
+              <span>06h</span>
+              <span>12h</span>
+              <span>18h</span>
+              <span>22h</span>
             </div>
           </article>
 
-          <!-- DICAS -->
           <article class="card panel">
             <div class="panel-heading">
               <h2>Dicas para ti</h2>
@@ -1889,9 +2016,10 @@
             </div>
             <div class="tip-dots" aria-hidden="true">● ○ ○</div>
           </article>
+
         </section>
 
-        <!-- ZONA GAMIFICADA -->
+        <!-- NOVA QUEST -->
         <section class="card quest" aria-label="NOVA Quest">
           <div class="quest-heading">
             <div class="q-title">
@@ -1968,12 +2096,46 @@
         </section>
 
         <p style="font-size:10px;text-align:right;color:var(--muted);margin-top:10px">
-          * Valores ilustrativos da interface; estas funcionalidades serão ligadas
-          à base de dados nas próximas etapas.
+          * Valores ilustrativos da interface. Estas funcionalidades
+          serão ligadas à base de dados nas próximas etapas.
         </p>
+
       </main>
     </div>
   </div>
+
+  <!-- NOVA JANELA DE CONFIRMAÇÃO DE LOGOUT -->
+
+  <dialog id="logoutDialog" class="logout-dialog" aria-labelledby="logoutTitle" aria-describedby="logoutDescription">
+
+    <div class="logout-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        <path d="m16 17 5-5-5-5" />
+        <path d="M21 12H9" />
+      </svg>
+    </div>
+
+    <h2 id="logoutTitle">Terminar sessão?</h2>
+
+    <p id="logoutDescription">
+      Tens a certeza de que queres terminar a tua sessão na NOVA?
+      Podes voltar quando quiseres.
+    </p>
+
+    <div class="logout-actions">
+      <button type="button" class="logout-cancel" id="cancelLogout">
+        Cancelar
+      </button>
+
+      <button type="button" class="logout-confirm" id="confirmLogout">
+        Sim, sair
+      </button>
+    </div>
+
+    <p class="logout-error" id="logoutError" role="alert" hidden></p>
+  </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -2003,21 +2165,26 @@
     let calendarOffset = 0;
     let activeSearch = '';
 
-    /* NOTIFICAÇÕES DA INTERFACE */
+    /* NOTIFICAÇÕES */
+
     function notify(message) {
       $('toast').textContent = message;
       $('toast').classList.add('show');
+
       clearTimeout(toastTimer);
+
       toastTimer = setTimeout(() => {
         $('toast').classList.remove('show');
       }, 3300);
     }
 
-    /* MODO CLARO / ESCURO */
+    /* TEMA */
+
     function setTheme(theme) {
       const value = theme === 'light' ? 'light' : 'dark';
 
       document.documentElement.dataset.theme = value;
+
       document.querySelector('meta[name="theme-color"]').content =
         value === 'light' ? '#f5f7ff' : '#090f20';
 
@@ -2048,7 +2215,8 @@
       );
     });
 
-    /* DADOS DO UTILIZADOR */
+    /* UTILIZADOR */
+
     function showApp(user) {
       currentUser = user;
 
@@ -2066,6 +2234,7 @@
       $('avatar').textContent = firstName[0]?.toUpperCase() || 'N';
 
       const hour = new Date().getHours();
+
       $('timeGreeting').textContent =
         hour < 12 ? 'Bom dia,' :
           hour < 20 ? 'Boa tarde,' : 'Boa noite,';
@@ -2091,19 +2260,20 @@
       }
     }
 
-    /* VERIFICAÇÃO SUPABASE */
+    /* AUTENTICAÇÃO SUPABASE */
+
     async function initialize() {
       $('retryAuth').hidden = true;
       $('authSpinner').hidden = false;
       $('authTitle').textContent = 'A preparar o teu universo…';
+
       $('authMessage').textContent =
         'Estamos a verificar a tua sessão com segurança.';
 
       if (!client) {
         showAuthError(
           'Não foi possível carregar a configuração do Supabase. ' +
-          'Confirma que supabase-config.js está na mesma pasta ' +
-          'e contém as chaves públicas.'
+          'Confirma que supabase-config.js está na mesma pasta.'
         );
         return;
       }
@@ -2135,32 +2305,65 @@
 
     $('retryAuth').addEventListener('click', initialize);
 
-    /* TERMINAR SESSÃO */
-    $('logoutButton').addEventListener('click', async () => {
-      const btn = $('logoutButton');
-      btn.disabled = true;
+    /* =====================================
+       CONFIRMAÇÃO PARA TERMINAR SESSÃO
+       ===================================== */
 
-      if (!client) {
-        btn.disabled = false;
-        notify('Ligação ao Supabase indisponível.');
-        return;
-      }
+    const logoutDialog = $('logoutDialog');
+    const cancelLogout = $('cancelLogout');
+    const confirmLogout = $('confirmLogout');
+    const logoutError = $('logoutError');
+
+    /* ABRIR A JANELA */
+
+    $('logoutButton').addEventListener('click', () => {
+      logoutError.hidden = true;
+      logoutError.textContent = '';
+
+      logoutDialog.showModal();
+    });
+
+    /* CANCELAR */
+
+    cancelLogout.addEventListener('click', () => {
+      logoutDialog.close();
+    });
+
+    /* SIM, SAIR */
+
+    confirmLogout.addEventListener('click', async () => {
+      confirmLogout.disabled = true;
+      cancelLogout.disabled = true;
+
+      confirmLogout.textContent = 'A sair…';
 
       try {
+        if (!client) {
+          throw new Error('Ligação ao Supabase indisponível.');
+        }
+
         const { error } = await client.auth.signOut();
+
         if (error) throw error;
 
         window.location.replace('./login.html');
+
       } catch (error) {
-        notify(
+        logoutError.textContent =
           'Não foi possível terminar a sessão: ' +
-          (error?.message || 'Tenta novamente.')
-        );
-        btn.disabled = false;
+          (error?.message || 'Tenta novamente.');
+
+        logoutError.hidden = false;
+
+        confirmLogout.disabled = false;
+        cancelLogout.disabled = false;
+
+        confirmLogout.textContent = 'Sim, sair';
       }
     });
 
-    /* TAREFAS GUARDADAS POR UTILIZADOR NO NAVEGADOR */
+    /* TAREFAS */
+
     function taskStorageKey() {
       return 'nova-tasks-' + currentUser.id;
     }
@@ -2178,7 +2381,10 @@
         const saved = localStorage.getItem(taskStorageKey());
         tasks = saved ? JSON.parse(saved) : demo;
 
-        if (!Array.isArray(tasks)) tasks = demo;
+        if (!Array.isArray(tasks)) {
+          tasks = demo;
+        }
+
       } catch (_) {
         tasks = demo;
       }
@@ -2228,8 +2434,10 @@
 
       if (!visible.length) {
         const empty = document.createElement('p');
+
         empty.style.cssText =
           'color:var(--muted);font-size:12px;margin:5px 0';
+
         empty.textContent = 'Não foram encontradas tarefas.';
         container.append(empty);
       }
@@ -2243,6 +2451,7 @@
 
       const field = $('newTask');
       const value = field.value.trim();
+
       if (!value) return;
 
       tasks.push({
@@ -2265,15 +2474,19 @@
       activeSearch = e.target.value
         .trim()
         .toLocaleLowerCase('pt-PT');
+
       renderTasks();
     });
 
     /* CALENDÁRIO */
+
     function renderCalendar() {
       const date = new Date();
+
       date.setDate(date.getDate() + calendarOffset * 7);
 
       const monday = new Date(date);
+
       monday.setDate(
         date.getDate() - (date.getDay() + 6) % 7
       );
@@ -2323,10 +2536,20 @@
     });
 
     /* DICAS */
+
     const tips = [
-      ['🌱', 'Faz pequenas pausas para recarregar a mente. Estudar com equilíbrio ajuda a aprender melhor.'],
-      ['💧', 'Bebe água e mantém uma rotina de sono regular. A energia também faz parte do progresso.'],
-      ['🎯', 'Escolhe uma tarefa importante de cada vez. A consistência vale mais do que a perfeição.']
+      [
+        '🌱',
+        'Faz pequenas pausas para recarregar a mente. Estudar com equilíbrio ajuda a aprender melhor.'
+      ],
+      [
+        '💧',
+        'Bebe água e mantém uma rotina de sono regular. A energia também faz parte do progresso.'
+      ],
+      [
+        '🎯',
+        'Escolhe uma tarefa importante de cada vez. A consistência vale mais do que a perfeição.'
+      ]
     ];
 
     let tipIndex = 0;
@@ -2338,10 +2561,13 @@
       $('tipText').textContent = tips[tipIndex][1];
 
       document.querySelector('.tip-dots').textContent =
-        tips.map((_, i) => i === tipIndex ? '●' : '○').join(' ');
+        tips.map((_, i) =>
+          i === tipIndex ? '●' : '○'
+        ).join(' ');
     });
 
     /* MENU MOBILE */
+
     function closeSidebar() {
       $('sidebar').classList.remove('open');
       $('mobileOverlay').classList.remove('show');
@@ -2354,7 +2580,8 @@
 
     $('mobileOverlay').addEventListener('click', closeSidebar);
 
-    /* PREPARAÇÃO DAS FUTURAS ABAS */
+    /* FUTURAS PÁGINAS */
+
     document.querySelectorAll('[data-page]').forEach(btn => {
       btn.addEventListener('click', () => {
         const page = btn.dataset.page;
@@ -2380,10 +2607,11 @@
       notify('Ainda não tens notificações nesta versão da NOVA.');
     });
 
-    /* INICIAR A APLICAÇÃO */
-    initialize();
-  </script>
+    /* INICIAR APLICAÇÃO */
 
+    initialize();
+
+  </script>
 </body>
 
 </html>
