@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-PT" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090f20"><title>Definições — NOVA</title>
+<script>try {document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='light'?'light':'dark'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./definicoes.css"></head><body>
+<div id="loading" class="loading" role="status">A verificar a tua sessão…</div>
+<div id="app" hidden>
+<aside class="sidebar"><a class="brand" href="./menu_principal.html"><span class="brandstar">✦</span> NOVA</a>
+<div class="navlabel">NOVA LIFE</div>
+<a class="navlink" href="./menu_principal.html">⌂ <span>Dashboard</span></a>
+<a class="navlink active" href="./Definicoes.html">⚙ <span>Definições</span></a>
+<div class="sidebar-bottom"><div class="small muted">NOVA — Organize your life.<br>Level up your future.</div><button class="sidebutton" id="logout">Terminar sessão ↗</button></div></aside>
+<main class="main"><header class="top"><a class="mobile-back" href="./menu_principal.html">← Dashboard</a><div class="topbadge">✦ NOVA LIFE <span> / </span> NOVA QUEST</div><div class="topaccount" id="topName">Conta NOVA</div></header>
+<div class="content"><div class="eyebrow">O TEU ESPAÇO, À TUA MANEIRA</div><h1>Definições<span class="dot">.</span></h1><p class="lead">Personaliza a tua experiência e gere a tua conta NOVA.</p>
+<div id="message" class="message" role="status" aria-live="polite" hidden></div>
+<section class="panel"><div class="sectionhead"><div class="roundicon">👤</div><div><h2>O meu perfil</h2><p>Os dados que aparecem na tua conta e no Dashboard.</p></div></div>
+<form id="profileForm"><label for="fullName">Nome de apresentação</label><input id="fullName" name="fullName" maxlength="80" autocomplete="name" placeholder="O teu nome" required>
+<label for="email">Endereço de email</label><input id="email" type="email" disabled><p class="hint">O email não pode ser alterado nesta versão. Se entraste com Google, é o email dessa conta.</p>
+<div class="actions"><button class="primary" type="submit" id="saveProfile">Guardar alterações <span>→</span></button></div></form></section>
+<section class="panel"><div class="sectionhead"><div class="roundicon">☼</div><div><h2>Aparência</h2><p>O mesmo universo, duas formas de o explorar.</p></div></div>
+<div class="themes"><button type="button" class="theme-choice" data-choice="light" aria-pressed="false"><span class="preview lightpreview"><span></span><i></i><b></b></span><strong>☀ NOVA Life</strong><span class="muted">Modo claro · Leve e organizado</span></button>
+<button type="button" class="theme-choice" data-choice="dark" aria-pressed="false"><span class="preview darkpreview"><span></span><i></i><b></b></span><strong>☾ NOVA Quest</strong><span class="muted">Modo escuro · Futurista e imersivo</span></button></div><p class="hint">A tua escolha fica guardada neste navegador e será usada também no Dashboard.</p></section>
+<section class="panel"><div class="sectionhead"><div class="roundicon">🔒</div><div><h2>Segurança</h2><p>Controla a forma como acedes à tua conta.</p></div></div>
+<div class="settingrow"><div><strong>Alterar palavra-passe</strong><p>Enviamos um email com as instruções de recuperação.</p></div><button type="button" class="outline" id="resetPassword">Enviar email</button></div>
+<div class="settingrow"><div><strong>Método de acesso</strong><p id="providerText">A verificar…</p></div><span class="pill">Supabase Auth</span></div>
+<p class="hint">Caso uses Google, podes continuar a entrar através de «Continuar com Google».</p></section>
+<section class="panel"><div class="sectionhead"><div class="roundicon">↗</div><div><h2>Sessão</h2><p>Termina a sessão neste dispositivo.</p></div></div><div class="settingrow"><div><strong>Terminar sessão</strong><p>Terás de iniciar sessão novamente para aceder ao Dashboard.</p></div><button class="danger" type="button" id="logoutSecondary">Sair da conta</button></div></section>
+<p class="footnote">NOVA — Organize your life. Level up your future.</p></div></main></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script><script src="./definicoes.js"></script></body></html>

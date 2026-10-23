@@ -1,0 +1,15 @@
+NOVA - DEFINICOES
+
+Copiar para a mesma pasta do projeto: Definicoes.html, definicoes.css, definicoes.js e menu_principal.html.
+Manter o ficheiro supabase-config.js EXISTENTE (nao e necessario substitui-lo).
+
+1. Abrir a NOVA e iniciar sessao.
+2. No Dashboard, clicar em Definicoes.
+3. Testar o nome de apresentacao, regressar ao Dashboard e confirmar.
+4. Testar o tema claro/escuro; o valor e guardado neste navegador.
+5. Se quiseres testar recuperacao, confirma em Supabase > Authentication > URL Configuration que a URL redefinir-password.html esta permitida.
+6. Se a conta foi criada com Google, a alteracao de palavra-passe por email pode nao ser relevante; usar Google para entrar.
+
+Esta etapa nao implementa eliminar conta, alterar email ou guardar o tema na base de dados.
+A pagina verifica a sessao com auth.getUser() e usa as politicas RLS existentes.
+O codigo nao foi testado contra o teu projeto Supabase ao vivo.
