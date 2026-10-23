@@ -2574,10 +2574,22 @@
           return;
         }
 
-        notify(
-          'A página «' + page +
-          '» será desenvolvida na próxima fase.'
-        );
+        const paginas = {
+          'Tarefas': 'paginas_dashboard/tarefas.html',
+          'Hábitos': 'paginas_dashboard/habitos.html',
+          'Objetivos': 'paginas_dashboard/objetivos.html',
+          'Calendário': 'paginas_dashboard/calendário.html',
+          'Dicas': 'paginas_dashboard/dicas.html',
+          'Centro de estudo': 'Nova Quest/Centro_estudo.html',
+          'Missões': 'Nova Quest/Missões.html',
+          'Quizzes': 'Nova Quest/quizzes.html',
+          'Conquistas': 'Nova Quest/Conquistas.html',
+          'Ranking': 'Nova Quest/Ranking.html',
+          'Definições': 'Definicoes.html',
+        };
+        if (paginas[page]) {
+          window.location.href = new URL(paginas[page], window.location.href).href;
+        }
       });
     });
 
