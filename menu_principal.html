@@ -2248,7 +2248,6 @@
         }).format(new Date());
 
       loadTasks();
-      renderTasks();
       renderCalendar();
       setTheme(document.documentElement.dataset.theme);
 
@@ -2364,110 +2363,93 @@
 
     /* TAREFAS */
 
-    function taskStorageKey() {
-      return 'nova-tasks-' + currentUser.id;
-    }
-
-    function loadTasks() {
-      const demo = [
-        { id: 'a', name: 'Terminar o trabalho de Matemática', done: true },
-        { id: 'b', name: 'Ler 20 páginas de um livro', done: true },
-        { id: 'c', name: 'Planear a próxima semana', done: false },
-        { id: 'd', name: 'Avançar com o projeto de grupo', done: true },
-        { id: 'e', name: 'Fazer uma caminhada', done: false }
-      ];
-
-      try {
-        const saved = localStorage.getItem(taskStorageKey());
-        tasks = saved ? JSON.parse(saved) : demo;
-
-        if (!Array.isArray(tasks)) {
-          tasks = demo;
-        }
-
-      } catch (_) {
-        tasks = demo;
+    // As tarefas ficam no Supabase, associadas ao utilizador autenticado.
+    async function loadTasks() {
+      if (!client || !currentUser) return;
+      const { data, error } = await client.from('tasks')
+        .select('id,title,status,priority,due_at,created_at')
+        .eq('user_id', currentUser.id)
+        .order('created_at', { ascending: false });
+      if (error) {
+        notify('Não foi possível carregar tarefas: ' + error.message);
+        return;
       }
-    }
-
-    function saveTasks() {
-      try {
-        localStorage.setItem(taskStorageKey(), JSON.stringify(tasks));
-      } catch (_) { }
+      tasks = (data || []).map(t => ({
+        id: t.id, name: t.title, done: t.status === 'concluida'
+      }));
+      renderTasks();
     }
 
     function renderTasks() {
       const container = $('taskList');
       container.replaceChildren();
-
       const visible = tasks.filter(t =>
-        String(t.name)
-          .toLocaleLowerCase('pt-PT')
-          .includes(activeSearch)
+        String(t.name).toLocaleLowerCase('pt-PT').includes(activeSearch)
       );
-
       for (const task of visible) {
         const label = document.createElement('label');
         label.className = 'task' + (task.done ? ' done' : '');
-
         const box = document.createElement('input');
         box.type = 'checkbox';
         box.checked = !!task.done;
-
-        box.addEventListener('change', () => {
-          task.done = box.checked;
-          saveTasks();
+        box.addEventListener('change', async () => {
+          box.disabled = true;
+          const newDone = box.checked;
+          const { error } = await client.from('tasks')
+            .update({
+              status: newDone ? 'concluida' : 'pendente',
+              completed_at: newDone ? new Date().toISOString() : null
+            }).eq('id', task.id).eq('user_id', currentUser.id);
+          if (error) {
+            box.checked = !newDone;
+            box.disabled = false;
+            notify('Não foi possível atualizar a tarefa: ' + error.message);
+            return;
+          }
+          task.done = newDone;
           renderTasks();
         });
-
         const name = document.createElement('span');
         name.textContent = task.name;
-
         const flag = document.createElement('span');
         flag.className = 'flag';
         flag.textContent = '⚑';
         flag.setAttribute('aria-hidden', 'true');
-
         label.append(box, name, flag);
         container.append(label);
       }
-
       if (!visible.length) {
         const empty = document.createElement('p');
-
-        empty.style.cssText =
-          'color:var(--muted);font-size:12px;margin:5px 0';
-
+        empty.style.cssText = 'color:var(--muted);font-size:12px;margin:5px 0';
         empty.textContent = 'Não foram encontradas tarefas.';
         container.append(empty);
       }
-
       $('taskStat').textContent =
         tasks.filter(t => t.done).length + ' / ' + tasks.length;
     }
 
-    $('addTaskForm').addEventListener('submit', e => {
+    $('addTaskForm').addEventListener('submit', async e => {
       e.preventDefault();
-
       const field = $('newTask');
       const value = field.value.trim();
-
-      if (!value) return;
-
-      tasks.push({
-        id: String(Date.now()) + '-' +
-          Math.random().toString(36).slice(2, 7),
-        name: value,
-        done: false
-      });
-
+      if (!value || !currentUser || !client) return;
+      const submitButton = $('addTaskForm').querySelector('button');
+      if (submitButton) submitButton.disabled = true;
+      const { data, error } = await client.from('tasks')
+        .insert({user_id: currentUser.id, title: value,
+          status: 'pendente', priority: 'media'})
+        .select('id,title,status').single();
+      if (submitButton) submitButton.disabled = false;
+      if (error) {
+        notify('Erro ao guardar tarefa: ' + error.message);
+        return;
+      }
+      tasks.unshift({id: data.id, name: data.title, done: false});
       field.value = '';
       activeSearch = '';
       $('searchInput').value = '';
-
-      saveTasks();
       renderTasks();
-      notify('Tarefa adicionada! ✨');
+      notify('Tarefa guardada no Supabase! ✨');
     });
 
     $('searchInput').addEventListener('input', e => {
