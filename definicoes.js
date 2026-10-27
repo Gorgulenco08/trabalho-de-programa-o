@@ -65,11 +65,15 @@
     finally {setBusy('resetPassword',false);}
   });
   async function logout() {
-    $('logout').disabled = true; $('logoutSecondary').disabled = true;
+    const logoutPrimary = $('logout') || $('logoutButton');
+    const logoutSecondary = $('logoutSecondary');
+    if (logoutPrimary) logoutPrimary.disabled = true;
+    if (logoutSecondary) logoutSecondary.disabled = true;
     try { const {error} = await supa.auth.signOut(); if(error) throw error; location.replace('./login.html'); }
-    catch(err) { message('Não foi possível terminar sessão: '+(err?.message || 'erro desconhecido'),true);$('logout').disabled=false;$('logoutSecondary').disabled=false; }
+    catch(err) { message('Não foi possível terminar sessão: '+(err?.message || 'erro desconhecido'),true); if (logoutPrimary) logoutPrimary.disabled=false; if (logoutSecondary) logoutSecondary.disabled=false; }
   }
-  $('logout').addEventListener('click',logout);
-  $('logoutSecondary').addEventListener('click',logout);
+  const logoutPrimary = $('logout') || $('logoutButton');
+  if (logoutPrimary) logoutPrimary.addEventListener('click',logout);
+  if ($('logoutSecondary')) $('logoutSecondary').addEventListener('click',logout);
   init();
 })();

@@ -1,1 +1,51 @@
-<!doctype html><html lang="pt-PT" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ranking — NOVA</title><script>try{document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='dark'?'dark':'light'}catch(e){}</script><link rel="stylesheet" href="../navegacao.css"></head><body><div class="layout"><aside class="sidebar"><a class="brand" href="../menu_principal.html"><span>✦</span> NOVA</a><div class="section">NOVA LIFE</div><nav aria-label="NOVA Life"><a class="navlink" href="../menu_principal.html"><span class="symbol">⌂</span>Painel</a><a class="navlink" href="../paginas_dashboard/tarefas.html"><span class="symbol">☑</span>Tarefas</a><a class="navlink" href="../paginas_dashboard/habitos.html"><span class="symbol">◉</span>Hábitos</a><a class="navlink" href="../paginas_dashboard/objetivos.html"><span class="symbol">◎</span>Objetivos</a><a class="navlink" href="../paginas_dashboard/calendário.html"><span class="symbol">▦</span>Calendário</a><a class="navlink" href="../paginas_dashboard/dicas.html"><span class="symbol">✧</span>Dicas</a></nav><div class="section">NOVA QUEST — ESTUDOS</div><nav aria-label="NOVA Quest"><a class="navlink" href="../Nova Quest/Centro_estudo.html"><span class="symbol">▤</span>Centro de estudo</a><a class="navlink" href="../Nova Quest/Missões.html"><span class="symbol">⬡</span>Missões</a><a class="navlink" href="../Nova Quest/quizzes.html"><span class="symbol">◇</span>Quizzes</a><a class="navlink" href="../Nova Quest/Conquistas.html"><span class="symbol">★</span>Conquistas</a><a class="navlink active" href="../Nova Quest/Ranking.html"><span class="symbol">▥</span>Ranking</a></nav><div class="section">CONTA</div><nav aria-label="Conta"><a class="navlink" href="../Definicoes.html"><span class="symbol">⚙</span>Definições</a></nav><button class="theme-btn" id="themeBtn" type="button">◐ Alternar modo claro / escuro</button></aside><main class="content"><div class="eyebrow">NOVA — Organize your life. Level up your future.</div><h1>Ranking</h1><p class="lead">Esta secção já está ligada ao resto da aplicação.</p><section class="card"><h2>Secção em desenvolvimento</h2><p class="lead">A funcionalidade será desenvolvida mais tarde. Podes navegar entre as páginas utilizando o menu.</p><div class="actions"><a class="action" href="../menu_principal.html">Voltar ao Dashboard</a><a class="action secondary" href="../Definicoes.html">Abrir Definições</a></div></section></main></div><script>document.getElementById('themeBtn').addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;localStorage.setItem('nova-theme',t)});</script></body></html>
+<!doctype html>
+<html lang="pt-PT" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090f20">
+  <title>Ranking — NOVA</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='light'?'light':'dark';}catch(_ ){document.documentElement.dataset.theme='dark';}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../nova-uniform.css">
+</head>
+<body data-prefix="../">
+  <div id="loading" class="loading" role="status">A verificar a tua sessão…</div>
+  <div id="app" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="logo" href="../menu_principal.html"><span class="logo-star">✦</span> NOVA</a>
+      <div class="nav-section">NOVA Life</div>
+      <nav class="nav-list" aria-label="Navegação principal"><a class="nav-item" href="../menu_principal.html"><i data-lucide="layout-dashboard" class="ico"></i>Painel</a><a class="nav-item" href="../paginas_dashboard/tarefas.html"><i data-lucide="list-checks" class="ico"></i>Tarefas</a><a class="nav-item" href="../paginas_dashboard/habitos.html"><i data-lucide="check-circle-2" class="ico"></i>Hábitos</a><a class="nav-item" href="../paginas_dashboard/objetivos.html"><i data-lucide="target" class="ico"></i>Objetivos</a><a class="nav-item" href="../paginas_dashboard/calend%C3%A1rio.html"><i data-lucide="calendar-days" class="ico"></i>Calendário</a><a class="nav-item" href="../paginas_dashboard/dicas.html"><i data-lucide="lightbulb" class="ico"></i>Dicas</a></nav>
+      <div class="nav-section">NOVA Quest / Zona de estudo</div>
+      <nav class="nav-list" aria-label="Zona de estudo"><a class="nav-item" href="Centro_estudo.html"><i data-lucide="book-open" class="ico"></i>Centro de estudo</a><a class="nav-item" href="Miss%C3%B5es.html"><i data-lucide="shield-check" class="ico"></i>Missões</a><a class="nav-item" href="quizzes.html"><i data-lucide="clipboard-list" class="ico"></i>Quizzes</a><a class="nav-item" href="Conquistas.html"><i data-lucide="trophy" class="ico"></i>Conquistas</a><a class="nav-item active" href="Ranking.html"><i data-lucide="chart-no-axes-column-increasing" class="ico"></i>Ranking</a></nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../Definicoes.html"><i data-lucide="settings" class="ico"></i>Definições</a>
+        <button class="appearance" id="themeToggle" type="button"><i data-lucide="moon-star" class="ico"></i><span id="themeLabel">Modo escuro</span><span class="theme-switch" aria-hidden="true"></span></button>
+        <button class="nav-item" id="logoutButton" type="button"><i data-lucide="log-out" class="ico"></i>Terminar sessão</button>
+      </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+    <main class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
+          <div class="topbar-copy">
+            <div class="eyebrow">NOVA QUEST — Zona de estudo</div>
+            <h1>Ranking</h1>
+            <p class="subtitle">Consulta a tua posição, compara progresso e acompanha a tua evolução dentro da experiência gamificada.</p>
+          </div>
+        </div>
+        <div class="user-chip"><span class="avatar" id="avatar">N</span><span id="userName">Utilizador</span></div>
+      </header>
+      <div class="page-wrap">
+      <div class="stack"><section class="hero-card"><p>O ranking vai mostrar a classificação e o progresso dos utilizadores, mantendo a estética consistente do NOVA Quest.</p></section><section class="panel"><div class="sectionhead"><div class="roundicon"><i data-lucide="chart-no-axes-column-increasing"></i></div><div><h2>Ranking em desenvolvimento</h2><p>Tal como nas restantes páginas, o menu lateral e a paleta já foram uniformizados com o painel principal.</p></div></div><div class="actions"><a class="btn-primary" href="../menu_principal.html">Voltar ao Painel</a><a class="btn-secondary" href="Conquistas.html">Ver Conquistas</a></div></section></div></div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="../nova-uniform.js"></script>
+</body>
+</html>
