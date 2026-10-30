@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-PT" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NOVA AI — Teste de ligação</title>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='light'?'light':'dark'}catch(_){}</script>
+  <link rel="stylesheet" href="./nova-ai-teste.css">
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">✦ NOVA AI · Teste privado</div>
+    <h1>Testar ligação à Inteligência Artificial</h1>
+    <p>Este ecrã verifica a tua sessão NOVA e envia uma pergunta à função <code>nova-ai</code> do Supabase. Não mostra nem copia tokens.</p>
+    <div id="sessionInfo" class="state" role="status">A verificar a sessão...</div>
+    <label for="mode">Modo</label>
+    <select id="mode"><option value="quest">NOVA Quest — estudos</option><option value="life">NOVA Life — produtividade</option></select>
+    <label for="message">Pergunta de teste</label>
+    <textarea id="message" rows="3" maxlength="2000">Olá! Explica-me o que é HTML de forma simples.</textarea>
+    <button id="send" type="button" disabled>Testar NOVA AI</button>
+    <div id="status" class="state" role="status" aria-live="polite">Inicia sessão na NOVA para poderes testar.</div>
+    <section class="result"><strong>Resposta / diagnóstico</strong><pre id="result" aria-live="polite">Ainda não foi enviado nenhum pedido.</pre></section>
+    <p class="footer"><a href="./menu_principal.html">← Voltar ao Dashboard</a> · <a href="./login.html">Abrir login</a></p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./nova-ai-teste.js"></script>
+</body>
+</html>
