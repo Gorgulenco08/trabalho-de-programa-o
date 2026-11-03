@@ -2,7 +2,9 @@
 (() => {
   const placeholder = document.getElementById('sidebar');
   if (!placeholder || placeholder.dataset.novaShared === 'true') return;
-  const base = document.body.dataset.prefix || './';
+  // Resolves all links from the folder containing nova-sidebar.js, not the current page.
+  const scriptUrl = document.currentScript?.src || document.querySelector('script[src*="nova-sidebar.js"]')?.src;
+  const base = new URL('./', scriptUrl || location.href);
   const itemsLife = [
     ['Painel','menu_principal.html','layout-dashboard'],
     ['Tarefas','paginas_dashboard/tarefas.html','list-checks'],
@@ -23,18 +25,18 @@
   const path = new URL(location.href).pathname;
   const escapeText = value => String(value).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
   const makeNav = (items, title) => `<div class="nav-section">${title}</div><nav class="nav-list d-flex flex-column" aria-label="${title}">${items.map(([label,url,icon]) => {
-    const full = new URL(base + url, location.href);
+    const full = new URL(url, base);
     const active = decodeURIComponent(full.pathname) === decodeURIComponent(path);
     return `<a class="nav-item${active ? ' active' : ''}" href="${escapeText(full.href)}"${active ? ' aria-current="page"' : ''}><i data-lucide="${icon}" class="ico"></i>${label}</a>`;
   }).join('')}</nav>`;
   placeholder.dataset.novaShared = 'true';
   placeholder.setAttribute('aria-label', 'Menu principal da NOVA');
   placeholder.innerHTML = `
-    <a class="logo" href="${escapeText(new URL(base + 'menu_principal.html',location.href).href)}"><span class="logo-star">✦</span> NOVA</a>
+    <a class="logo" href="${escapeText(new URL('menu_principal.html', base).href)}"><span class="logo-star">✦</span> NOVA</a>
     ${makeNav(itemsLife,'NOVA Life')}
     ${makeNav(itemsQuest,'NOVA Quest / Zona de estudo')}
     <div class="sidebar-bottom">
-      <a class="nav-item" id="settingsButton" href="${escapeText(new URL(base + 'Definicoes.html',location.href).href)}"><i data-lucide="settings" class="ico"></i>Definições</a>
+      <a class="nav-item" id="settingsButton" href="${escapeText(new URL('Definicoes.html', base).href)}"><i data-lucide="settings" class="ico"></i>Definições</a>
       <button class="appearance" type="button" id="themeToggle"><i data-lucide="moon-star" class="ico"></i><span id="themeLabel">Modo escuro</span><span class="theme-switch" aria-hidden="true"></span></button>
       <button class="nav-item" type="button" id="logoutButton"><i data-lucide="log-out" class="ico"></i>Terminar sessão</button>
     </div>`;
