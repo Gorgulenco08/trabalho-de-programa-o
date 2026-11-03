@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="pt-PT" data-theme="dark">
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090f20">
@@ -10,14 +9,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+
+/* Estilo autónomo de reserva: entra em ação caso nova-uniform.css não carregue, como na pré-visualização do ChatGPT. */
+:root{color-scheme:dark;--ink:#eef0ff;--muted:#a4adcd;--surface:#161c34;--surface-2:#1e2745;--line:#303a5a;--accent:#ae8bff;--nav-active:rgba(151,107,255,.19);--track:#303858;--good:#58d9ad;--gradient:linear-gradient(120deg,#8064f0,#ad71f7);--banner:linear-gradient(135deg,#212646,#151b34);--shadow:0 10px 30px rgba(0,0,0,.15);--bg:#0b1020;--aside:#10162b}
+html[data-theme=light]{color-scheme:light;--ink:#28314b;--muted:#6c7795;--surface:#fff;--surface-2:#f3f5fc;--line:#e1e5f0;--accent:#6d66d5;--nav-active:#edeafd;--track:#e6e9f6;--good:#14976c;--gradient:linear-gradient(120deg,#6b72dc,#a582e8);--banner:linear-gradient(135deg,#f3efff,#edf5ff);--shadow:0 10px 30px rgba(34,45,100,.06);--bg:#f5f7fd;--aside:#fff}
+*{box-sizing:border-box}html{font-family:'DM Sans',Arial,sans-serif;background:var(--bg);color:var(--ink)}body{margin:0;background:var(--bg);color:var(--ink)}button,input,textarea,select{font-family:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}[hidden]{display:none!important}
+#app{min-height:100vh;display:grid;grid-template-columns:242px minmax(0,1fr)}.sidebar{position:sticky;top:0;min-height:100vh;height:100vh;display:flex;flex-direction:column;background:var(--aside);border-right:1px solid var(--line);padding:25px 15px;overflow-y:auto;gap:9px}.logo{font:800 24px Manrope,Arial,sans-serif;letter-spacing:-.06em;display:flex;align-items:center;gap:10px;padding:4px 13px 24px}.logo-star{color:var(--accent);font-size:34px}.nav-section{text-transform:uppercase;color:var(--muted);font-size:10px;letter-spacing:.12em;font-weight:800;padding:20px 13px 7px}.nav-list{display:grid;gap:4px}.nav-item{display:flex;align-items:center;gap:11px;width:100%;min-height:40px;padding:9px 12px;background:none;border:0;border-radius:11px;text-align:left;color:var(--muted);font-size:12px;font-weight:700}.nav-item:hover,.nav-item.active{background:var(--nav-active);color:var(--accent)}.ico,.nav-item svg{width:16px;height:16px;flex-shrink:0}.sidebar-bottom{margin-top:auto;padding-top:15px;display:grid;gap:7px}.appearance{display:flex;align-items:center;gap:10px;color:var(--muted);background:transparent;border:0;padding:12px;border-radius:11px;font-size:12px;text-align:left}.theme-switch{margin-left:auto;width:31px;height:18px;border-radius:40px;background:var(--accent);position:relative}.theme-switch:after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:white;transition:.2s}html[data-theme=dark] .theme-switch:after{left:16px}.workspace{min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:25px 30px 22px;border-bottom:1px solid var(--line)}.topbar-left{display:flex;align-items:center;gap:14px}.eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800}.topbar h1{font:800 29px Manrope,Arial,sans-serif;letter-spacing:-.05em;margin:2px 0 5px}.subtitle{margin:0;color:var(--muted);font-size:12px}.user-chip{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}.avatar{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;color:white;background:var(--gradient);font-weight:800}.page-wrap{padding:28px 30px 48px;max-width:1590px;margin:0 auto}.loading{font:700 14px DM Sans,Arial,sans-serif;padding:36px;color:var(--muted)}.overlay{display:none}.mobile-menu{display:none;background:var(--surface);border:1px solid var(--line);color:var(--ink);padding:8px;border-radius:9px}
+@media(max-width:1050px){#app{grid-template-columns:190px 1fr}.sidebar{padding-left:8px;padding-right:8px}.page-wrap,.topbar{padding-left:18px;padding-right:18px}}
+@media(max-width:750px){#app{display:block}.sidebar{position:static;height:auto;min-height:auto;display:block;border-right:0;border-bottom:1px solid var(--line);padding:14px}.sidebar .nav-section,.sidebar .nav-list,.sidebar .sidebar-bottom{display:none}.logo{padding:0}.page-wrap,.topbar{padding:16px}.user-chip{display:none}}
+
+</style>
   <link rel="stylesheet" href="../nova-uniform.css">
-  <link rel="stylesheet" href="../nova-sidebar.css">
+  <style>
+/* NOVA Life · Calendário de testes integrado na NOVA Quest */
+.c-shell{display:grid;gap:18px}.c-banner{background:var(--banner);border:1px solid var(--line);border-radius:23px;padding:23px;display:flex;justify-content:space-between;align-items:center;gap:15px}.c-banner h2{font:800 clamp(22px,2.5vw,30px) Manrope,sans-serif;letter-spacing:-.05em;margin:5px 0}.c-banner p{color:var(--muted);font-size:12px;margin:0;max-width:680px}.c-tag{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}.c-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(300px,1fr);gap:18px}.c-panel{border:1px solid var(--line);border-radius:21px;background:var(--surface);box-shadow:var(--shadow);padding:22px}.c-panel h2{font:800 17px Manrope,sans-serif;margin:0 0 5px}.c-panel p{color:var(--muted);font-size:12px}.c-toolbar{display:flex;justify-content:space-between;align-items:center;gap:9px;margin:0 0 20px}.c-toolbar h2{font:800 21px Manrope,sans-serif;margin:0}.c-nav{display:flex;gap:6px}.c-ibtn{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);display:grid;place-items:center;cursor:pointer}.c-ibtn svg{width:17px;height:17px}.c-ibtn:hover{color:var(--accent);border-color:var(--accent)}.c-weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;margin:0 0 5px}.c-weekdays span{color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;padding:9px 0}.c-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.c-day{min-height:75px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:left;color:var(--ink);cursor:pointer;position:relative;transition:border-color .15s}.c-day:hover{border-color:var(--accent)}.c-day.muted{opacity:.38}.c-day.selected{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--nav-active)}.c-day.today .c-daynum{color:white;background:var(--gradient)}.c-daynum{width:24px;height:24px;display:grid;place-items:center;border-radius:8px;font-size:12px;font-weight:800}.c-dots{display:flex;gap:4px;margin-top:11px;flex-wrap:wrap}.c-dots i{width:7px;height:7px;background:var(--accent);border-radius:50%}.c-dots i.task{background:var(--accent-2)}.c-legend{display:flex;gap:15px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:11px}.c-legend b{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:5px}.c-legend b.task{background:var(--accent-2)}.c-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.c-btn{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:11px;padding:10px 12px;cursor:pointer;font-size:12px;font-weight:800;display:inline-flex;gap:8px;align-items:center;justify-content:center}.c-btn.primary{background:var(--gradient);color:white;border:0}.c-btn svg{width:16px;height:16px}.c-btn:hover{filter:brightness(1.07)}.c-side{display:grid;gap:18px;align-content:start}.c-item{padding:12px 14px;border:1px solid var(--line);border-radius:13px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0;background:var(--surface-2)}.c-item-info{min-width:0}.c-item-info strong{font-size:12px;display:block;overflow-wrap:anywhere}.c-item-info small{font-size:11px;color:var(--muted);display:block;margin-top:4px}.c-item-badge{font-size:10px;font-weight:800;color:var(--accent);white-space:nowrap}.c-item-badge.task{color:var(--accent-2)}.c-empty{border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted);font-size:12px;margin-top:14px}.c-soon{border-left:3px solid var(--accent);padding:11px 14px;background:var(--surface-2);border-radius:8px;margin:9px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}.c-soon strong{font-size:12px}.c-soon small{font-size:11px;color:var(--muted)}.c-dialog{border:1px solid var(--line);padding:23px;border-radius:21px;background:var(--surface);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.3);width:min(480px,calc(100% - 24px))}.c-dialog::backdrop{background:rgba(1,4,15,.7);backdrop-filter:blur(5px)}.c-dialog-head{display:flex;align-items:start;justify-content:space-between;gap:13px;margin-bottom:14px}.c-dialog-head h2{margin:0}.c-form{display:grid;gap:12px}.c-field label{display:block;margin-bottom:6px;font-size:11px;font-weight:800;color:var(--muted)}.c-field select,.c-field input,.c-field textarea{display:block;width:100%;border:1px solid var(--line);border-radius:11px;background:var(--surface-2);color:var(--ink);padding:11px;font:600 12px DM Sans,sans-serif;min-width:0}.c-field textarea{resize:vertical;min-height:70px}.c-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.c-small{font-size:11px;color:var(--muted);line-height:1.6}.c-toast{position:fixed;bottom:24px;right:24px;z-index:200;border:1px solid var(--accent);background:var(--surface);color:var(--ink);border-radius:11px;padding:13px 17px;font-size:12px;font-weight:700;box-shadow:var(--shadow)}
+@media(max-width:1050px){.c-layout{grid-template-columns:1fr}.c-side{grid-template-columns:1fr 1fr;align-items:start}}@media(max-width:640px){.c-panel{padding:14px}.c-day{min-height:51px;padding:7px 3px}.c-grid{gap:4px}.c-weekdays span{font-size:9px}.c-dots{margin-top:5px}.c-side{grid-template-columns:1fr}.c-banner{flex-direction:column;align-items:stretch}.c-form-grid{grid-template-columns:1fr}}
+
+  </style>
 </head>
 <body data-prefix="../">
   <div id="loading" class="loading" role="status">A verificar a tua sessão…</div>
   <div id="app" hidden>
-    <aside class="sidebar" id="sidebar" aria-label="Menu principal da NOVA"></aside>
-    <script src="../nova-sidebar.js"></script>
+    <aside class="sidebar" id="sidebar">
+      <a class="logo" href="../menu_principal.html"><span class="logo-star">✦</span> NOVA</a>
+      <div class="nav-section">NOVA Life</div>
+      <nav class="nav-list" aria-label="Navegação principal"><a class="nav-item" href="../menu_principal.html"><i data-lucide="layout-dashboard" class="ico"></i>Painel</a><a class="nav-item" href="tarefas.html"><i data-lucide="list-checks" class="ico"></i>Tarefas</a><a class="nav-item" href="habitos.html"><i data-lucide="check-circle-2" class="ico"></i>Hábitos</a><a class="nav-item" href="objetivos.html"><i data-lucide="target" class="ico"></i>Objetivos</a><a class="nav-item active" href="calend%C3%A1rio.html"><i data-lucide="calendar-days" class="ico"></i>Calendário</a><a class="nav-item" href="dicas.html"><i data-lucide="lightbulb" class="ico"></i>Dicas</a><a class="nav-item" href="nova-ai.html"><i data-lucide="sparkles" class="ico"></i>NOVA AI</a></nav>
+      <div class="nav-section">NOVA Quest / Zona de estudo</div>
+      <nav class="nav-list" aria-label="Zona de estudo"><a class="nav-item" href="../Nova%20Quest/Centro_estudo.html"><i data-lucide="book-open" class="ico"></i>Centro de estudo</a><a class="nav-item" href="../Nova%20Quest/Miss%C3%B5es.html"><i data-lucide="shield-check" class="ico"></i>Missões</a><a class="nav-item" href="../Nova%20Quest/quizzes.html"><i data-lucide="clipboard-list" class="ico"></i>Quizzes</a><a class="nav-item" href="../Nova%20Quest/Conquistas.html"><i data-lucide="trophy" class="ico"></i>Conquistas</a><a class="nav-item" href="../Nova%20Quest/Ranking.html"><i data-lucide="chart-no-axes-column-increasing" class="ico"></i>Ranking</a></nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../Definicoes.html"><i data-lucide="settings" class="ico"></i>Definições</a>
+        <button class="appearance" id="themeToggle" type="button"><i data-lucide="moon-star" class="ico"></i><span id="themeLabel">Modo escuro</span><span class="theme-switch" aria-hidden="true"></span></button>
+        <button class="nav-item" id="logoutButton" type="button"><i data-lucide="log-out" class="ico"></i>Terminar sessão</button>
+      </div>
+    </aside>
     <div class="overlay" id="overlay"></div>
     <main class="workspace">
       <header class="topbar">
@@ -26,18 +51,248 @@
           <div class="topbar-copy">
             <div class="eyebrow">NOVA — Organize your life. Level up your future.</div>
             <h1>Calendário</h1>
-            <p class="subtitle">Visualiza eventos, tarefas e sessões importantes num só local, com a mesma estética do ecrã inicial.</p>
+            <p class="subtitle">Marca testes, acompanha as tarefas e recebe recomendações de estudo antes das avaliações.</p>
           </div>
         </div>
         <div class="user-chip"><span class="avatar" id="avatar">N</span><span id="userName">Utilizador</span></div>
       </header>
-      <div class="page-wrap">
-      <div class="stack"><section class="hero-card"><p>Esta secção servirá para organizar o teu tempo e integrar tarefas, hábitos e estudo num calendário simples e intuitivo.</p></section><section class="panel"><div class="sectionhead"><div class="roundicon"><i data-lucide="calendar-days"></i></div><div><h2>Calendário em preparação</h2><p>A barra lateral, os ícones e os tons já estão alinhados com o painel principal. A lógica do calendário será adicionada a seguir.</p></div></div><div class="actions"><a class="btn-primary" href="../menu_principal.html">Voltar ao Painel</a><a class="btn-secondary" href="tarefas.html">Ver Tarefas</a></div></section></div></div>
+      <div class="page-wrap"><div class="c-shell">
+  <section class="c-banner"><div><div class="c-tag">✦ NOVA Life · calendário inteligente</div><h2>Organiza os teus dias. Antecipa os testes.</h2><p>Marca testes por disciplina, acompanha prazos e recebe recomendações no NOVA Quest quando a data se aproxima.</p></div><button id="newTest" class="c-btn primary" type="button"><i data-lucide="calendar-plus"></i> Marcar teste</button></section>
+  <div class="c-layout">
+    <section class="c-panel" aria-label="Calendário mensal"><div class="c-toolbar"><h2 id="monthTitle">Calendário</h2><div class="c-nav"><button class="c-ibtn" id="monthPrev" aria-label="Mês anterior" type="button"><i data-lucide="chevron-left"></i></button><button class="c-ibtn" id="monthToday" aria-label="Ir para hoje" type="button"><i data-lucide="calendar-check"></i></button><button class="c-ibtn" id="monthNext" aria-label="Mês seguinte" type="button"><i data-lucide="chevron-right"></i></button></div></div><div class="c-weekdays"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span></div><div class="c-grid" id="calendarDays"></div><div class="c-legend"><span><b></b> Testes de avaliação</span><span><b class="task"></b> Tarefas com prazo</span><span>Seleciona um dia para ver os detalhes.</span></div></section>
+    <div class="c-side"><section class="c-panel"><div class="c-toolbar" style="margin-bottom:8px"><div><h2 id="selectedDateTitle">Dia selecionado</h2><p id="selectedDateSubtitle">Testes e tarefas do dia</p></div><button class="c-btn" id="newTestSelected" type="button"><i data-lucide="plus"></i> Teste</button></div><div id="selectedEvents"></div></section><section class="c-panel"><h2>Próximos testes</h2><p>A NOVA Quest usa estas datas para recomendar o que estudar.</p><div id="upcomingExamList"></div><div class="c-actions" style="margin-top:13px"><a class="c-btn" href="../Nova%20Quest/quizzes.html"><i data-lucide="brain"></i> Abrir Quizzes</a></div></section></div>
+  </div>
+  <p class="c-small" id="calendarStorageNote">A ligar ao Supabase…</p>
+</div></div>
+<div id="calToast" class="c-toast" role="status" aria-live="polite" hidden></div>
+<dialog class="c-dialog" id="calDialog" aria-labelledby="calDialogTitle"><div class="c-dialog-head"><div><h2 id="calDialogTitle">Marcar teste</h2><p class="c-small">O teste também será visível na NOVA Quest.</p></div><button class="c-ibtn" id="closeCalDialog" type="button" aria-label="Fechar">×</button></div><form class="c-form" id="calTestForm"><div class="c-field"><label for="calSubject">Disciplina</label><select id="calSubject" required></select></div><div class="c-field" id="calCustomWrap" hidden><label for="calCustomSubject">Nome da disciplina</label><input type="text" id="calCustomSubject" maxlength="100" placeholder="Ex.: História da Música"></div><div class="c-field"><label for="calCourse">Curso e ano</label><input id="calCourse" readonly tabindex="-1"></div><div class="c-form-grid"><div class="c-field"><label for="calTestDate">Data</label><input type="date" id="calTestDate" required></div><div class="c-field"><label for="calTestTitle">Título</label><input type="text" id="calTestTitle" maxlength="160" required></div></div><div class="c-field"><label for="calTestNotes">Matéria / notas</label><textarea id="calTestNotes" placeholder="Ex.: Capítulos 3 e 4"></textarea></div><div class="c-actions" style="justify-content:space-between"><button id="calDelete" class="c-btn" style="color:#e96784" type="button" hidden>Eliminar teste</button><button class="c-btn primary" type="submit">Guardar teste</button></div></form></dialog>
+
     </main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="../nova-uniform.js"></script>
+  <script src="../nova-uniform.js" onerror="window.NOVA_UNIFORM_MISSING=true"></script>
+  <script>
+/* Funcionamento básico do tema sem dependência do JS externo. */
+if (window.NOVA_UNIFORM_MISSING) {
+  const syncTheme=()=>{const dark=document.documentElement.dataset.theme!=='light';const label=document.getElementById('themeLabel');if(label)label.textContent=dark?'Modo escuro':'Modo claro';};
+  const t=document.getElementById('themeToggle');if(t)t.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;try{localStorage.setItem('nova-theme',next)}catch(_){}syncTheme()});
+  const log=document.getElementById('logoutButton');if(log)log.hidden=true;
+  syncTheme();
+}
+</script>
+  <script>
+
+  const COMMON = ['Português','Educação Física'];
+  const LANG = ['Inglês','Filosofia'];
+  const PROF = ['Português','Inglês','Área de Integração','Tecnologias da Informação e Comunicação','Educação Física'];
+  const YEARS_SEC = [10,11,12];
+  const COURSES = [
+    {id:'basico-1',group:'Ensino básico',name:'1.º ciclo — Ensino básico',years:[1,2,3,4],get:y=>['Português','Matemática','Estudo do Meio','Educação Artística','Educação Física','Cidadania e Desenvolvimento',...(y>=3?['Inglês']:[])]},
+    {id:'basico-2',group:'Ensino básico',name:'2.º ciclo — Ensino básico',years:[5,6],get:()=>['Português','Matemática','Inglês','História e Geografia de Portugal','Ciências Naturais','Educação Visual','Educação Tecnológica','Educação Musical','Educação Física','Cidadania e Desenvolvimento','Tecnologias da Informação e Comunicação']},
+    {id:'basico-3',group:'Ensino básico',name:'3.º ciclo — Ensino básico',years:[7,8,9],get:()=>['Português','Matemática','Inglês','Francês','Ciências Naturais','Físico-Química','História','Geografia','Educação Visual','Educação Física','Tecnologias da Informação e Comunicação','Cidadania e Desenvolvimento'],suggestions:['Espanhol','Alemão','Educação Tecnológica','Educação Moral e Religiosa']},
+    {id:'cef',group:'Ensino básico',name:'CEF / Percurso vocacional (personalizável)',years:[7,8,9],get:()=>['Português','Língua Estrangeira','Matemática','Cidadania e Mundo Atual','Tecnologias da Informação e Comunicação','Educação Física','Área Tecnológica'],suggestions:['Físico-Química','Ciências Naturais']},
+    {id:'ch-ct',group:'Secundário • Científico-humanísticos',name:'Ciências e Tecnologias',years:YEARS_SEC,get:y=>[...COMMON,...(y<12?LANG:[]),'Matemática A',...(y<12?['Biologia e Geologia','Física e Química A']:['Biologia','Física'])],suggestions:['Geometria Descritiva A','Geologia','Química','Aplicações Informáticas B','Psicologia B','Educação Moral e Religiosa']},
+    {id:'ch-cse',group:'Secundário • Científico-humanísticos',name:'Ciências Socioeconómicas',years:YEARS_SEC,get:y=>[...COMMON,...(y<12?LANG:[]),'Matemática A',...(y<12?['Economia A','Geografia A']:['Economia C','Sociologia'])],suggestions:['História B','Direito','Geografia C','Aplicações Informáticas B','Educação Moral e Religiosa']},
+    {id:'ch-lh',group:'Secundário • Científico-humanísticos',name:'Línguas e Humanidades',years:YEARS_SEC,get:y=>[...COMMON,...(y<12?LANG:[]),'História A',...(y<12?['Geografia A','Matemática Aplicada às Ciências Sociais']:['Sociologia','Psicologia B'])],suggestions:['Literatura Portuguesa','Latim A','Língua Estrangeira II','Direito','Geografia C','Educação Moral e Religiosa']},
+    {id:'ch-av',group:'Secundário • Científico-humanísticos',name:'Artes Visuais',years:YEARS_SEC,get:y=>[...COMMON,...(y<12?LANG:[]),'Desenho A',...(y<12?['Geometria Descritiva A','História da Cultura e das Artes']:['Oficina de Artes','Oficina Multimédia B'])],suggestions:['Matemática B','Materiais e Tecnologias','Educação Moral e Religiosa']},
+    ...[
+      ['arte-audiovisual','Comunicação Audiovisual',['História da Cultura e das Artes','Desenho','Comunicação Audiovisual','Fotografia','Vídeo e Som']],
+      ['arte-comunicacao','Design de Comunicação',['História da Cultura e das Artes','Desenho','Design de Comunicação','Tipografia','Tecnologias Gráficas']],
+      ['arte-produto','Design de Produto',['História da Cultura e das Artes','Desenho','Design de Produto','Materiais e Tecnologias','Modelação']],
+      ['arte-producao','Produção Artística',['História da Cultura e das Artes','Desenho','Oficina de Artes','Produção Artística','Materiais e Técnicas']]
+    ].map(([id,name,tech])=>({id,group:'Secundário • Artísticos especializados',name,years:YEARS_SEC,get:y=>[...COMMON,...(y<12?LANG:[]),...tech],suggestions:['Geometria Descritiva','Educação Moral e Religiosa']})),
+    ...[
+      ['prof-gpsi','Técnico/a de Gestão e Programação de Sistemas Informáticos',['Matemática','Física e Química'],['Programação e Sistemas de Informação','Redes de Comunicação','Sistemas Operativos','Arquitetura de Computadores','Bases de Dados']],
+      ['prof-inf-sistemas','Técnico/a de Informática — Sistemas',['Matemática','Física e Química'],['Sistemas Operativos','Redes de Comunicação','Arquitetura de Computadores','Hardware','Segurança Informática']],
+      ['prof-inf-gestao','Técnico/a de Informática de Gestão',['Matemática','Economia'],['Programação','Bases de Dados','Gestão de Sistemas de Informação','Aplicações Informáticas']],
+      ['prof-equip','Técnico/a de Gestão de Equipamentos Informáticos',['Matemática','Física e Química'],['Instalação e Manutenção de Computadores','Redes de Comunicação','Sistemas Operativos']],
+      ['prof-multimedia','Técnico/a de Multimédia',['Matemática','História da Cultura e das Artes'],['Design Gráfico','Produção Audiovisual','Edição de Imagem e Vídeo','Web Design']],
+      ['prof-design','Técnico/a de Design de Comunicação Gráfica',['Matemática','História da Cultura e das Artes'],['Design de Comunicação','Tipografia','Produção Gráfica','Tratamento de Imagem']],
+      ['prof-desporto','Técnico/a de Desporto',['Matemática','Estudo do Movimento'],['Atividades Físicas e Desportivas','Organização e Gestão do Desporto','Anatomia e Fisiologia','Treino Desportivo']],
+      ['prof-apoio-desporto','Técnico/a de Apoio à Gestão Desportiva',['Matemática','Economia'],['Gestão do Desporto','Organização de Eventos','Marketing Desportivo']],
+      ['prof-gestao','Técnico/a de Gestão',['Matemática','Economia'],['Gestão','Contabilidade','Gestão Financeira','Organização de Empresas']],
+      ['prof-comercio','Técnico/a de Comércio',['Matemática','Economia'],['Comercialização','Marketing','Técnicas de Venda','Gestão de Stocks']],
+      ['prof-marketing','Técnico/a de Marketing',['Matemática','Economia'],['Marketing','Comunicação Comercial','Estudos de Mercado','Publicidade']],
+      ['prof-contabilidade','Técnico/a de Contabilidade',['Matemática','Economia'],['Contabilidade','Fiscalidade','Gestão Financeira','Informática Aplicada']],
+      ['prof-turismo','Técnico/a de Turismo',['Geografia','História da Cultura e das Artes'],['Técnicas de Turismo','Informação Turística','Operações Turísticas','Línguas Estrangeiras Aplicadas']],
+      ['prof-hotelaria','Técnico/a de Hotelaria',['Economia','Geografia'],['Gestão Hoteleira','Receção','Atendimento','Operações Hoteleiras']],
+      ['prof-restaurante','Técnico/a de Restaurante/Bar',['Economia','Psicologia'],['Serviço de Restaurante','Serviço de Bar','Higiene e Segurança Alimentar','Atendimento']],
+      ['prof-cozinha','Técnico/a de Cozinha/Pastelaria',['Matemática','Economia'],['Técnicas de Cozinha','Pastelaria','Higiene e Segurança Alimentar','Gestão de Cozinha']],
+      ['prof-saude','Técnico/a Auxiliar de Saúde',['Biologia','Física e Química'],['Cuidados de Saúde','Higiene e Segurança','Anatomia e Fisiologia','Saúde Pública']],
+      ['prof-educativa','Técnico/a de Ação Educativa',['Psicologia','Sociologia'],['Desenvolvimento Infantil','Atividades Educativas','Pedagogia','Expressões Artísticas']],
+      ['prof-psico','Técnico/a de Apoio Psicossocial',['Psicologia','Sociologia'],['Intervenção Psicossocial','Comunicação e Relações Interpessoais','Desenvolvimento Humano']],
+      ['prof-eletronica','Técnico/a de Eletrónica, Automação e Computadores',['Matemática','Física e Química'],['Eletrónica','Automação','Sistemas Digitais','Programação de Microcontroladores']],
+      ['prof-eletrica','Técnico/a de Instalações Elétricas',['Matemática','Física e Química'],['Instalações Elétricas','Eletrotecnia','Automatismos','Segurança Elétrica']],
+      ['prof-mecatronica','Técnico/a de Mecatrónica',['Matemática','Física e Química'],['Mecânica','Eletrónica','Automação','Sistemas de Controlo']],
+      ['prof-manutencao','Técnico/a de Manutenção Industrial',['Matemática','Física e Química'],['Manutenção Industrial','Mecânica','Eletricidade','Desenho Técnico']],
+      ['prof-renovaveis','Técnico/a de Energias Renováveis',['Matemática','Física e Química'],['Energias Renováveis','Sistemas Fotovoltaicos','Eletrotecnia','Eficiência Energética']],
+      ['prof-laboratorio','Técnico/a de Análise Laboratorial',['Matemática','Física e Química'],['Análise Química','Técnicas Laboratoriais','Biologia','Segurança Laboratorial']],
+      ['prof-ambiente','Técnico/a de Ambiente e Segurança',['Biologia','Física e Química'],['Gestão Ambiental','Segurança e Higiene','Monitorização Ambiental']],
+      ['prof-agro','Técnico/a de Produção Agropecuária',['Biologia','Matemática'],['Produção Animal','Produção Vegetal','Gestão Agrícola','Mecanização Agrícola']],
+      ['prof-audiovisual','Técnico/a de Audiovisuais',['História da Cultura e das Artes','Matemática'],['Fotografia','Captação de Som','Produção Audiovisual','Edição de Vídeo']],
+      ['prof-fotografia','Técnico/a de Fotografia',['História da Cultura e das Artes','Matemática'],['Técnicas de Fotografia','Iluminação','Edição de Imagem','Produção Fotográfica']],
+      ['prof-moda','Técnico/a de Design de Moda',['História da Cultura e das Artes','Matemática'],['Desenho de Moda','Modelação','Materiais Têxteis','Produção de Moda']],
+      ['prof-comunicacao','Técnico/a de Comunicação e Serviço Digital',['Matemática','Economia'],['Comunicação Digital','Marketing Digital','Criação de Conteúdos','Gestão de Redes Sociais']]
+    ].map(([id,name,science,tech])=>({id,group:'Secundário • Cursos profissionais',name,years:YEARS_SEC,get:()=>unique([...PROF,...science,...tech]),suggestions:['Educação Moral e Religiosa','Língua Estrangeira II','Formação em Contexto de Trabalho','Prova de Aptidão Profissional']})),
+    {id:'prof-personalizado',group:'Secundário • Cursos profissionais',name:'Outro curso profissional — personalizar',years:YEARS_SEC,get:()=>[...PROF,'Matemática'],suggestions:['Física e Química','Biologia','Economia','Psicologia','Formação em Contexto de Trabalho','Prova de Aptidão Profissional']},
+    {id:'curso-personalizado',group:'Outros',name:'Outro percurso — personalizar disciplinas',years:[1,2,3,4,5,6,7,8,9,10,11,12],get:()=>[],suggestions:[]}
+  ];
+
+(() => {
+ 'use strict';
+ const $ = id => document.getElementById(id);
+ const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const keyOf = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ const newId = () => (globalThis.crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.floor(Math.random()*16); return (c==='x'?r:(r&3|8)).toString(16); });
+ const dateISO = d => [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+ const fromISO = d => {const [y,m,day]=String(d).split('-').map(Number);return new Date(y,m-1,day,12)};
+ const dayDiff = d => Math.round((fromISO(d)-fromISO(dateISO(new Date())))/86400000);
+ const shortDate=d=>new Intl.DateTimeFormat('pt-PT',{day:'numeric',month:'short'}).format(fromISO(d));
+ const longDate=d=>new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'numeric',month:'long'}).format(fromISO(d));
+ const client=window.supabase&&window.NOVA_SUPABASE_URL&&window.NOVA_SUPABASE_KEY?window.supabase.createClient(window.NOVA_SUPABASE_URL,window.NOVA_SUPABASE_KEY):null;
+ const state={user:null,cloud:false,courseId:'ch-ct',year:10,extra:[],hidden:[],tests:[],tasks:[],mastery:[],attempts:[],selected:dateISO(new Date()),month:new Date().getMonth(),yearCalendar:new Date().getFullYear(),editing:null};
+ const getCourse=()=>COURSES.find(c=>c.id===state.courseId)||COURSES.find(c=>c.id==='ch-ct');
+ const matchScope=e=>e?.course_id===state.courseId&&Number(e.school_year)===state.year;
+ const subjectList=()=>[...new Set([...getCourse().get(state.year),...state.extra.filter(matchScope).map(e=>e.name)])].filter(s=>!state.hidden.some(e=>matchScope(e)&&keyOf(e.name)===keyOf(s)));
+ const cacheKey=()=>`nova-study-cache-v2:${state.user.id}`;
+ function readCache(){try{return JSON.parse(localStorage.getItem(cacheKey())||'null')}catch(_){return null}}
+ function cache(){try{let previous=readCache()||{};Object.assign(previous,{courseId:state.courseId,year:state.year,extra:state.extra,hidden:state.hidden,tests:state.tests});localStorage.setItem(cacheKey(),JSON.stringify(previous))}catch(_){}}
+ function toast(s){$('calToast').textContent=s;$('calToast').hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('calToast').hidden=true,3800)}
+ function readiness(test){const matches=state.attempts.filter(a=>a.course_id===test.course_id&&Number(a.school_year)===Number(test.school_year)&&a.subject_key===test.subject_key).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
+  const manual=state.mastery.find(r=>r.course_id===test.course_id&&Number(r.school_year)===Number(test.school_year)&&r.subject_key===test.subject_key)?.self_score;
+  if(!matches.length)return manual==null?null:Number(manual);
+  const ws=matches.map((_,i)=>matches.length-i),sum=ws.reduce((a,b)=>a+b,0);
+  const q=matches.reduce((acc,a,i)=>acc+Number(a.score)*ws[i],0)/sum;
+  return Math.round(manual==null?q:.75*q+.25*Number(manual));
+ }
+ async function init(){
+  if(!client){
+   state.user={id:'nova-demo-local'};
+  }else{
+   let auth;try{auth=await client.auth.getUser()}catch(_){auth=null}
+   if(!auth?.data?.user){location.replace('../login.html');return}
+   state.user=auth.data.user;
+  }
+  const previous=readCache();
+  if(previous){
+   state.courseId=previous.courseId||state.courseId;
+   state.year=Number(previous.year)||state.year;
+   state.extra=previous.extra||[];state.hidden=previous.hidden||[];
+   state.tests=previous.tests||[];
+   // O Quiz e o Calendário partilham pontuações no modo local.
+   state.mastery=previous.self||[];state.attempts=previous.attempts||[];
+  }
+  if(client){
+   try{
+    const [profile,tests,mastery,attempts]=await Promise.all([
+     client.from('nova_study_profiles').select('*').eq('user_id',state.user.id).maybeSingle(),
+     client.from('nova_study_tests').select('*').eq('user_id',state.user.id).order('test_date',{ascending:true}).limit(500),
+     client.from('nova_study_mastery').select('*').eq('user_id',state.user.id),
+     client.from('nova_quiz_attempts').select('*').eq('user_id',state.user.id).order('created_at',{ascending:false}).limit(500)
+    ]);
+    if([profile,tests,mastery,attempts].some(r=>r.error))throw Error('Tabelas NOVA Study não disponíveis');
+    state.cloud=true;state.tests=tests.data||[];state.mastery=mastery.data||[];state.attempts=attempts.data||[];
+    if(profile.data){state.courseId=profile.data.course_id;state.year=Number(profile.data.school_year);state.extra=profile.data.extra_subjects||[];state.hidden=profile.data.hidden_subjects||[]}
+   }catch(_){toast('Modo local: ainda não foi possível sincronizar com o Supabase.');}
+  }
+  if(!COURSES.some(c=>c.id===state.courseId))state.courseId='ch-ct';
+  if(!getCourse().years.includes(state.year))state.year=getCourse().years[0];
+  if(client){try{const {data,error}=await client.from('tasks').select('id,title,due_at,status').eq('user_id',state.user.id).not('due_at','is',null).limit(500);if(!error)state.tasks=data||[]}catch(_){}}
+  const params=new URLSearchParams(location.search),requested=params.get('data');
+  if(requested&&/^\d{4}-\d{2}-\d{2}$/.test(requested)&&!Number.isNaN(fromISO(requested).getTime()))state.selected=requested;
+  const selected=fromISO(state.selected);state.month=selected.getMonth();state.yearCalendar=selected.getFullYear();
+  $('calendarStorageNote').textContent=(state.cloud?'✓ Testes sincronizados com Supabase.':'✓ Demonstração local: podes marcar testes e experimentar os Quizzes.')+' Os testes e os resultados partilham os dados deste navegador.';
+  bind();render();cache();$('loading').hidden=true;$('app').hidden=false;
+  if(params.get('novo')==='1')openTest(null,params.get('disciplina'));
+ }
+ function taskDate(t){if(!t.due_at)return'';return dateISO(new Date(t.due_at))}
+ function render(){
+  $('monthTitle').textContent=new Intl.DateTimeFormat('pt-PT',{month:'long',year:'numeric'}).format(new Date(state.yearCalendar,state.month,1)).replace(/^./,c=>c.toUpperCase());
+  const grid=$('calendarDays');grid.replaceChildren();const first=new Date(state.yearCalendar,state.month,1);
+  const before=(first.getDay()+6)%7;
+  for(let i=0;i<42;i++){
+   const date=new Date(state.yearCalendar,state.month,i-before+1,12),iso=dateISO(date),thisMonth=date.getMonth()===state.month;
+   const exams=state.tests.filter(t=>t.test_date===iso),tasks=state.tasks.filter(t=>taskDate(t)===iso);
+   const b=document.createElement('button');b.type='button';b.className='c-day'+(!thisMonth?' muted':'')+(iso===state.selected?' selected':'')+(iso===dateISO(new Date())?' today':'');
+   b.setAttribute('aria-label',`${longDate(iso)} · ${exams.length} teste(s), ${tasks.length} tarefa(s)`);
+   const dots=[...exams.slice(0,3).map(()=>'<i></i>'),...tasks.slice(0,2).map(()=>'<i class="task"></i>')].join('');
+   b.innerHTML=`<span class="c-daynum">${date.getDate()}</span><span class="c-dots">${dots}</span>`;
+   b.onclick=()=>{state.selected=iso;state.yearCalendar=date.getFullYear();state.month=date.getMonth();render()};
+   grid.append(b);
+  }
+  $('selectedDateTitle').textContent=longDate(state.selected);
+  const events=$('selectedEvents');events.replaceChildren();const tests=state.tests.filter(t=>t.test_date===state.selected),tasks=state.tasks.filter(t=>taskDate(t)===state.selected);
+  if(!tests.length&&!tasks.length)events.innerHTML='<div class="c-empty">Não existem testes ou tarefas com prazo neste dia. Podes marcar um teste.</div>';
+  for(const test of tests){const div=document.createElement('div');div.className='c-item';
+    div.innerHTML=`<div class="c-item-info"><strong>${esc(test.title)}</strong><small>${esc(test.subject_name)} · Teste de avaliação</small></div><button type="button" class="c-ibtn" aria-label="Editar teste"><i data-lucide="pencil"></i></button>`;
+    div.querySelector('button').onclick=()=>openTest(test);events.append(div);
+  }
+  for(const task of tasks){const div=document.createElement('div');div.className='c-item';
+    div.innerHTML=`<div class="c-item-info"><strong>${esc(task.title)}</strong><small>Tarefa · ${task.status==='concluida'?'Concluída':'Pendente'}</small></div><span class="c-item-badge task">TAREFA</span>`;events.append(div);
+  }
+  const upcoming=$('upcomingExamList');upcoming.replaceChildren();const soon=state.tests.filter(t=>dayDiff(t.test_date)>=0).sort((a,b)=>a.test_date.localeCompare(b.test_date)).slice(0,7);
+  if(!soon.length)upcoming.innerHTML='<div class="c-empty">Ainda não tens testes futuros.</div>';
+  for(const test of soon){const score=readiness(test),days=dayDiff(test.test_date);
+    const b=document.createElement('button');b.type='button';b.className='c-soon';b.style.width='100%';b.style.borderTop='0';b.style.borderRight='0';b.style.borderBottom='0';b.style.color='var(--ink)';b.style.textAlign='left';b.style.cursor='pointer';
+    b.innerHTML=`<span><strong>${esc(test.subject_name)}</strong><br><small>${esc(test.title)} · ${esc(shortDate(test.test_date))}</small></span><span style="text-align:right"><strong style="color:var(--accent)">${days===0?'Hoje':days===1?'Amanhã':days+' dias'}</strong><br><small>${days<=7&&(score===null||score<75)?'⚠ Rever matéria':score===null?'Sem avaliação':score+'% preparação'}</small></span>`;
+    b.onclick=()=>{state.selected=test.test_date;state.yearCalendar=fromISO(test.test_date).getFullYear();state.month=fromISO(test.test_date).getMonth();render()};upcoming.append(b);
+  }
+  if(window.lucide?.createIcons)window.lucide.createIcons();
+ }
+ function fillSubjects(requested){
+  const select=$('calSubject');select.replaceChildren();
+  const names=subjectList();
+  state.tests.forEach(t=>{if(t.course_id===state.courseId&&Number(t.school_year)===state.year&&!names.some(n=>keyOf(n)===keyOf(t.subject_name)))names.push(t.subject_name)});
+  if(requested&&!names.some(n=>keyOf(n)===keyOf(requested)))names.push(requested);
+  names.forEach(s=>select.add(new Option(s,s)));
+  select.add(new Option('Outra disciplina (escrever)…','__custom__'));
+  const found=requested&&names.find(n=>keyOf(n)===keyOf(requested));select.value=found||names[0]||'__custom__';
+  $('calCourse').value=getCourse().name+' · '+state.year+'.º ano';
+  toggleCustomSubject();
+ }
+ function toggleCustomSubject(){const custom=$('calCustomWrap');const enabled=$('calSubject').value==='__custom__';custom.hidden=!enabled;$('calCustomSubject').required=enabled;}
+ function openTest(test=null,requested=null){state.editing=test?.id||null;fillSubjects(test?.subject_name||requested||'');
+  $('calDialogTitle').textContent=test?'Editar teste':'Marcar teste';if(test&&(!matchScope(test))) $('calCourse').value='Percurso guardado anteriormente · '+test.school_year+'.º ano';$('calTestDate').value=test?.test_date||state.selected;
+  $('calTestTitle').value=test?.title||'';
+  if(!test&&$('calSubject').value!=='__custom__')$('calTestTitle').value='Teste de '+$('calSubject').value;
+  $('calTestNotes').value=test?.notes||'';$('calDelete').hidden=!test;
+  $('calDialog').showModal();if(window.lucide?.createIcons)window.lucide.createIcons();
+ }
+ function bind(){
+  $('monthPrev').onclick=()=>changeMonth(-1);$('monthNext').onclick=()=>changeMonth(1);
+  $('monthToday').onclick=()=>{state.selected=dateISO(new Date());state.yearCalendar=new Date().getFullYear();state.month=new Date().getMonth();render()};
+  $('newTest').onclick=()=>openTest();$('newTestSelected').onclick=()=>openTest();
+  $('closeCalDialog').onclick=()=>$('calDialog').close();
+  $('calSubject').onchange=()=>{toggleCustomSubject();if(!state.editing)$('calTestTitle').value=$('calSubject').value==='__custom__'?'':'Teste de '+$('calSubject').value};
+  $('calTestForm').onsubmit=saveTest;$('calDelete').onclick=deleteTest;
+  $('calDialog').addEventListener('click',e=>{if(e.target===$('calDialog'))$('calDialog').close()});
+ }
+ function changeMonth(delta){const date=new Date(state.yearCalendar,state.month+delta,1);state.month=date.getMonth();state.yearCalendar=date.getFullYear();render()}
+ async function saveTest(e){e.preventDefault();let subject=$('calSubject').value==='__custom__'?$('calCustomSubject').value.trim():$('calSubject').value;
+  const date=$('calTestDate').value,title=$('calTestTitle').value.trim();
+  if(subject.length<2||subject.length>100||!date||title.length<1){toast('Preenche disciplina, data e título corretamente.');return}
+  const older=state.editing?state.tests.find(t=>t.id===state.editing):null;
+  const payload={user_id:state.user.id,course_id:older?.course_id||state.courseId,school_year:older?.school_year||state.year,subject_key:keyOf(subject),subject_name:subject,title,test_date:date,notes:$('calTestNotes').value.trim()};
+  if(state.editing){
+   if(state.cloud){const {error}=await client.from('nova_study_tests').update(payload).eq('id',state.editing).eq('user_id',state.user.id);if(error){toast('Erro ao atualizar teste: '+error.message);return}}
+   state.tests=state.tests.map(t=>t.id===state.editing?{...t,...payload}:t);
+  }else{
+   let result={...payload,id:newId(),created_at:new Date().toISOString()};
+   if(state.cloud){const {data,error}=await client.from('nova_study_tests').insert(payload).select('*').single();if(error){toast('Erro ao guardar teste: '+error.message);return}result=data}
+   state.tests.push(result);
+  }
+  state.selected=date;state.month=fromISO(date).getMonth();state.yearCalendar=fromISO(date).getFullYear();
+  cache();$('calDialog').close();render();toast('Teste guardado. O Quiz já o considera nas recomendações.');
+ }
+ async function deleteTest(){if(!state.editing||!confirm('Eliminar este teste do calendário?'))return;
+  if(state.cloud){const {error}=await client.from('nova_study_tests').delete().eq('id',state.editing).eq('user_id',state.user.id);if(error){toast('Não foi possível eliminar: '+error.message);return}}
+  state.tests=state.tests.filter(t=>t.id!==state.editing);cache();$('calDialog').close();render();toast('Teste eliminado.');
+ }
+ init();
+})();
+
+  </script>
 </body>
 </html>
