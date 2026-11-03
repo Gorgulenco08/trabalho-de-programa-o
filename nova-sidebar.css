@@ -1,0 +1,9 @@
+/* NOVA shared Bootstrap navigation. Override Bootstrap defaults only in sidebar. */
+.sidebar .nav-item{color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:13px;min-height:40px;padding:9px 13px;border:0;border-radius:11px;background:transparent;text-align:left;font-weight:700;font-size:12.5px;line-height:1.5;width:100%}
+.sidebar .nav-item:hover{background:var(--nav-hover);color:var(--ink)}
+.sidebar .nav-item.active,.sidebar .nav-item[aria-current="page"]{background:var(--nav-active);color:var(--accent)}
+.sidebar .nav-list{gap:4px}
+.sidebar .logo{text-decoration:none;color:var(--ink)}
+.sidebar .appearance{display:flex;align-items:center;gap:11px;width:100%}
+.sidebar .nav-section{margin-top:16px}
+.sidebar .sidebar-bottom{margin-top:auto}

@@ -1,0 +1,10 @@
+NOVA — Menu partilhado com Bootstrap 5 / NOVA AI Life + Quest
+
+Projeto atualizado: copie todas as pastas e ficheiros para o repositório e faça commit/push.
+Altere futuramente as opções do menu APENAS em nova-sidebar.js.
+A aparência do menu está em nova-sidebar.css e nos estilos atuais do projeto.
+O script tem de ser executado através de Live Server / GitHub Pages (não abrir ficheiros com file://).
+A NOVA AI Life e Quest têm ficheiros HTML distintos e históricos separados.
+A criação de tarefas na Life exige login Supabase e a confirmação do utilizador.
+Verifique que a Edge Function nova-ai já está publicada e acessível.
+Atenção: não envie o diretório .git de outro computador.
