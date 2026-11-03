@@ -227,3 +227,9 @@
 /* Campos condicionais da autenticação */
 [hidden] { display: none !important; }
 #nameField, #confirmField { margin-bottom: 16px; }
+
+/* Ligações públicas aos documentos legais da NOVA. */
+.footer-legal { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:7px; margin-top:7px; }
+.footer-legal a { color:inherit; text-decoration:underline; text-underline-offset:3px; opacity:1; }
+.footer-legal a:hover, .footer-legal a:focus-visible { color:var(--accent); }
+.footer-legal a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }

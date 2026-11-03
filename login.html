@@ -193,7 +193,12 @@
   </main>
 
   <footer class="footer">
-    © <span id="year"></span> NOVA. Feito para o que vem a seguir.
+    <div>© <span id="year"></span> NOVA. Feito para o que vem a seguir.</div>
+    <nav class="footer-legal" aria-label="Informações legais">
+      <a href="./politica-privacidade.html">Política de Privacidade</a>
+      <span aria-hidden="true">·</span>
+      <a href="./termos-servico.html">Termos de Serviço</a>
+    </nav>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -583,7 +588,10 @@
         const { error } = await supabaseClient.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: redirectAfterAuth()
+            redirectTo: redirectAfterAuth(),
+            queryParams: {
+              prompt: 'select_account'
+            }
           }
         });
 
