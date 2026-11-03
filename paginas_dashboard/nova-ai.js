@@ -87,15 +87,49 @@
     });
   }
   function isTaskRequest(text) {
-    return mode === 'life' && /\b(cria|criar|adiciona|adicionar|mete|coloca|regista|registar)\b/i.test(text)
-      && /\b(tarefa|tarefas)\b/i.test(text);
+    return mode === 'life' && /\b(cria|criar|adiciona|adicionar|mete|coloca|regista|registar|agenda|agendar|lembra|lembrar|marca|marcar)\b/i.test(text)
+      && (/\b(tarefa|tarefas|lembrete|lembretes)\b/i.test(text)
+        || /\b(para|de|que|me)\b/i.test(text)
+        || /\b(às|as|pelas|amanhã|hoje)\b/i.test(text));
+  }
+  const dateLabel = value => new Intl.DateTimeFormat('pt-PT', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  }).format(new Date(value));
+  function parseDueAt(text) {
+    const hour = text.match(/(?:^|\s)(?:às|as|pelas|para as|para às)\s*(\d{1,2})(?:\s*:\s*(\d{1,2})|\s*h\s*(\d{1,2})?)?\s*(?:horas?)?\b/i);
+    const dateOnly = text.match(/\b(?:dia\s+)?(\d{1,2})[\/-](\d{1,2})(?:[\/-](\d{4}))?\b/);
+    const relative = /(?:^|\s)(amanhã|amanha|hoje)(?=\s|$)/i.exec(text);
+    if (!hour && !dateOnly && !relative) return null;
+    const now = new Date();
+    let due = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (dateOnly) {
+      const day = Number(dateOnly[1]), month = Number(dateOnly[2]) - 1;
+      let year = dateOnly[3] ? Number(dateOnly[3]) : now.getFullYear();
+      due = new Date(year, month, day);
+      if (due.getFullYear() !== year || due.getMonth() !== month || due.getDate() !== day) return null;
+      if (!dateOnly[3] && due < new Date(now.getFullYear(), now.getMonth(), now.getDate())) due.setFullYear(year + 1);
+    } else if (relative && /^amanh/i.test(relative[1])) due.setDate(due.getDate() + 1);
+    if (hour) {
+      const h = Number(hour[1]), m = Number(hour[2] || hour[3] || 0);
+      if (h > 23 || m > 59) return null;
+      due.setHours(h, m, 0, 0);
+    } else due.setHours(23, 59, 0, 0);
+    // Se só foi indicada uma hora e já passou, interpreta a próxima ocorrência.
+    if (hour && !dateOnly && !relative && due <= now) due.setDate(due.getDate() + 1);
+    return due.toISOString();
+  }
+  function cleanTaskTitle(text) {
+    return text.replace(/(?:^|\s)(?:hoje|amanhã|amanha)(?=\s|$)/gi, '')
+      .replace(/(?:^|\s)(?:às|as|pelas|para as|para às)\s*\d{1,2}(?:\s*:\s*\d{1,2}|\s*h\s*\d{0,2})?\s*(?:horas?)?\b/gi, '')
+      .replace(/\b(?:no\s+)?dia\s+\d{1,2}[\/-]\d{1,2}(?:[\/-]\d{4})?\b/gi, '')
+      .replace(/^[\s:.,-]+|[\s:.,!?-]+$/g, '').replace(/\s+/g, ' ').trim();
   }
   function directTask(text) {
-    const match = text.match(/^\s*(?:cria|adiciona|mete|coloca|regista)(?:-me)?\s+(?:uma?\s+)?tarefa\s+(?:para|de|:|-)?\s*(.+)$/i);
-    if (!match || !match[1]) return null;
-    const name = match[1].trim().replace(/[.!?]+$/, '').slice(0, 160);
-    if (!name || /^\d+\s+tarefas?\b/i.test(name)) return null;
-    return [{ title: name.charAt(0).toUpperCase() + name.slice(1), priority: 'media' }];
+    const match = text.match(/^\s*(?:cria|adiciona|mete|coloca|regista|agenda|marca|lembra)(?:-me)?\s+(?:(?:uma?\s+)?(?:tarefa|lembrete)\s+)?(?:para|de|que|me\s+de|:|-)?\s*(.+)$/i);
+    if (!match?.[1] || /\b\d+\s+tarefas?\b/i.test(text)) return null;
+    const name = cleanTaskTitle(match[1]).slice(0, 160);
+    if (name.length < 3) return null;
+    return [{ title: name.charAt(0).toUpperCase() + name.slice(1), priority: 'media', due_at: parseDueAt(text) }];
   }
   function parseTasks(text) {
     const cleaned = String(text).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
@@ -104,10 +138,13 @@
     const raw = Array.isArray(parsed) ? parsed : parsed?.tasks;
     if (!Array.isArray(raw)) return [];
     const seen = new Set();
-    return raw.slice(0, 10).map(t => ({
-      title: String(typeof t === 'string' ? t : t?.title || '').trim().slice(0, 160),
-      priority: ['alta', 'media', 'baixa'].includes(String(t?.priority || '').toLowerCase()) ? String(t.priority).toLowerCase() : 'media'
-    })).filter(t => {
+    return raw.slice(0, 10).map(t => {
+      const title = String(typeof t === 'string' ? t : t?.title || '').trim().slice(0, 160);
+      const priority = ['alta', 'media', 'baixa'].includes(String(t?.priority || '').toLowerCase()) ? String(t.priority).toLowerCase() : 'media';
+      const timestamp = typeof t?.due_at === 'string' ? new Date(t.due_at) : null;
+      const due_at = timestamp && !Number.isNaN(timestamp.getTime()) ? timestamp.toISOString() : null;
+      return { title, priority, due_at };
+    }).filter(t => {
       if (t.title.length < 3 || seen.has(t.title.toLowerCase())) return false;
       seen.add(t.title.toLowerCase()); return true;
     });
@@ -127,7 +164,7 @@
     const card = document.createElement('section'); card.className = 'ai-task-preview';
     const heading = document.createElement('strong'); heading.textContent = tasks.length === 1 ? 'Tarefa sugerida' : 'Tarefas sugeridas';
     const list = document.createElement('ul');
-    tasks.forEach(t => { const li = document.createElement('li'); li.textContent = t.title + (t.priority !== 'media' ? ` · Prioridade ${t.priority}` : ''); list.append(li); });
+    tasks.forEach(t => { const li = document.createElement('li'); li.textContent = t.title + (t.due_at ? ` · ${dateLabel(t.due_at)}` : '') + (t.priority !== 'media' ? ` · Prioridade ${t.priority}` : ''); list.append(li); });
     const controls = document.createElement('div'); controls.className = 'ai-task-actions';
     const confirm = document.createElement('button'); confirm.type = 'button'; confirm.className = 'ai-task-confirm'; confirm.textContent = tasks.length === 1 ? 'Guardar tarefa' : `Guardar ${tasks.length} tarefas`;
     const cancel = document.createElement('button'); cancel.type = 'button'; cancel.textContent = 'Cancelar';
@@ -136,7 +173,7 @@
     confirm.addEventListener('click', async () => {
       if (!client || !userId) { feedback.textContent = 'Precisas de ter sessão iniciada para guardar tarefas.'; feedback.classList.add('error'); return; }
       confirm.disabled = true; cancel.disabled = true; feedback.textContent = 'A guardar no Supabase…';
-      const payload = tasks.map(t => ({ user_id: userId, title: t.title, status: 'pendente', priority: t.priority, due_at: null }));
+      const payload = tasks.map(t => ({ user_id: userId, title: t.title, status: 'pendente', priority: t.priority, due_at: t.due_at || null }));
       const { error } = await client.from('tasks').insert(payload);
       if (error) {
         feedback.textContent = 'Não foi possível guardar: ' + error.message; feedback.classList.add('error');
@@ -152,9 +189,12 @@
   async function replyToTask(text, pending) {
     let tasks = directTask(text);
     if (!tasks) {
-      const instruction = `O utilizador quer criar tarefas na NOVA Life. Transforma o pedido seguinte em tarefas concretas e curtas (máximo 10). Responde APENAS com JSON válido no formato {"tasks":[{"title":"...","priority":"media"}]}. Prioridades permitidas: alta, media, baixa. Não uses Markdown nem texto fora do JSON. Não executes ações. Pedido do utilizador: ${JSON.stringify(text)}`;
+      const instruction = `O utilizador quer criar tarefas na NOVA Life. Transforma o pedido seguinte em tarefas concretas e curtas (máximo 10). Responde APENAS com JSON válido no formato {"tasks":[{"title":"...","priority":"media"}]}. Prioridades permitidas: alta, media, baixa. Quando o utilizador indicar uma data ou hora, inclui \"due_at\": data/hora ISO 8601 com fuso horário; caso contrário, null. Não uses Markdown nem texto fora do JSON. Não executes ações. Pedido do utilizador: ${JSON.stringify(text)}`;
       tasks = parseTasks(await invokeAI(instruction));
     }
+    // Para pedidos com hora explícita, usa a data interpretada no navegador do utilizador.
+    const explicitDue = parseDueAt(text);
+    if (explicitDue && tasks?.length === 1) tasks[0].due_at = explicitDue;
     pending.remove();
     if (!tasks?.length) { addMessage('assistant', 'Não consegui identificar as tarefas. Experimenta: “Cria uma tarefa para estudar matemática” ou “Cria 3 tarefas para preparar o teste”.'); return; }
     const row = addMessage('assistant', 'Preparei estas tarefas para a NOVA Life. Confirma para as guardar na tua lista:');

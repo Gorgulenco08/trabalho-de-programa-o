@@ -8,3 +8,36 @@
     @media(max-width:760px){.sidebar{transform:translateX(-100%);box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.overlay.show{display:block;position:fixed;z-index:20;inset:0;background:rgba(0,0,0,.42)}.workspace{margin-left:0;padding:20px 15px 35px}.mobile-menu{display:grid;place-items:center}.topbar{align-items:flex-start}.topbar-left{display:flex;gap:10px;align-items:flex-start}.topbar-copy{min-width:0}.user-chip{padding-right:7px}.user-chip #userName{display:none}.stats{gap:8px}.stat-card{padding:12px;display:block}.stat-icon{width:34px;height:34px;margin-bottom:10px}.stat-value{font-size:20px}.stat-label{font-size:10px}.card{padding:16px}.section-head{align-items:center}.add-form{flex-wrap:wrap}.add-form .field{flex:1 1 100%}.add-form button{flex:1}.tabs{width:100%}.tab{flex:1;padding:10px 8px}.day{min-height:36px}}
     @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
   
+
+/* Contraste do modo escuro: o Bootstrap aplica uma cor de texto propria em .card.
+   Reforcamos as cores do tema NOVA nas superficies das tarefas. */
+#app .card,
+#app .stat-card,
+#app .task-row,
+#app .history-item {
+  color: var(--ink);
+}
+#app .card h2,
+#app .card h3,
+#app .task-title,
+#app .history-item strong,
+#app .calendar-month {
+  color: var(--ink);
+}
+#app .task-row.is-done .task-title {
+  color: var(--muted);
+}
+#app .card .section-head p,
+#app .task-meta,
+#app .history-item small {
+  color: var(--muted);
+}
+html[data-theme="dark"] {
+  --bg: #0b1224;
+  --surface: #15223c;
+  --surface-2: #192945;
+  --sidebar: #0d172c;
+  --ink: #f2f4ff;
+  --muted: #aebbd8;
+  --line: #304362;
+}
