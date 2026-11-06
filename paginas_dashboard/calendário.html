@@ -12,8 +12,8 @@
   <style>
 
 /* Estilo autónomo de reserva: entra em ação caso nova-uniform.css não carregue, como na pré-visualização do ChatGPT. */
-:root{color-scheme:dark;--ink:#eef0ff;--muted:#a4adcd;--surface:#161c34;--surface-2:#1e2745;--line:#303a5a;--accent:#ae8bff;--nav-active:rgba(151,107,255,.19);--track:#303858;--good:#58d9ad;--gradient:linear-gradient(120deg,#8064f0,#ad71f7);--banner:linear-gradient(135deg,#212646,#151b34);--shadow:0 10px 30px rgba(0,0,0,.15);--bg:#0b1020;--aside:#10162b}
-html[data-theme=light]{color-scheme:light;--ink:#28314b;--muted:#6c7795;--surface:#fff;--surface-2:#f3f5fc;--line:#e1e5f0;--accent:#6d66d5;--nav-active:#edeafd;--track:#e6e9f6;--good:#14976c;--gradient:linear-gradient(120deg,#6b72dc,#a582e8);--banner:linear-gradient(135deg,#f3efff,#edf5ff);--shadow:0 10px 30px rgba(34,45,100,.06);--bg:#f5f7fd;--aside:#fff}
+:root{color-scheme:dark;--ink:#eef0ff;--muted:#a4adcd;--surface:#161c34;--surface-2:#1e2745;--line:#303a5a;--accent:#ae8bff;--nav-active:rgba(151,107,255,.19);--track:#303858;--good:#58d9ad;--accent-2:#40b9e3;--gradient:linear-gradient(120deg,#8064f0,#ad71f7);--banner:linear-gradient(135deg,#212646,#151b34);--shadow:0 10px 30px rgba(0,0,0,.15);--bg:#0b1020;--aside:#10162b}
+html[data-theme=light]{color-scheme:light;--ink:#28314b;--muted:#6c7795;--surface:#fff;--surface-2:#f3f5fc;--line:#e1e5f0;--accent:#6d66d5;--nav-active:#edeafd;--track:#e6e9f6;--good:#14976c;--accent-2:#1687bd;--gradient:linear-gradient(120deg,#6b72dc,#a582e8);--banner:linear-gradient(135deg,#f3efff,#edf5ff);--shadow:0 10px 30px rgba(34,45,100,.06);--bg:#f5f7fd;--aside:#fff}
 *{box-sizing:border-box}html{font-family:'DM Sans',Arial,sans-serif;background:var(--bg);color:var(--ink)}body{margin:0;background:var(--bg);color:var(--ink)}button,input,textarea,select{font-family:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}[hidden]{display:none!important}
 #app{min-height:100vh;display:grid;grid-template-columns:242px minmax(0,1fr)}.sidebar{position:sticky;top:0;min-height:100vh;height:100vh;display:flex;flex-direction:column;background:var(--aside);border-right:1px solid var(--line);padding:25px 15px;overflow-y:auto;gap:9px}.logo{font:800 24px Manrope,Arial,sans-serif;letter-spacing:-.06em;display:flex;align-items:center;gap:10px;padding:4px 13px 24px}.logo-star{color:var(--accent);font-size:34px}.nav-section{text-transform:uppercase;color:var(--muted);font-size:10px;letter-spacing:.12em;font-weight:800;padding:20px 13px 7px}.nav-list{display:grid;gap:4px}.nav-item{display:flex;align-items:center;gap:11px;width:100%;min-height:40px;padding:9px 12px;background:none;border:0;border-radius:11px;text-align:left;color:var(--muted);font-size:12px;font-weight:700}.nav-item:hover,.nav-item.active{background:var(--nav-active);color:var(--accent)}.ico,.nav-item svg{width:16px;height:16px;flex-shrink:0}.sidebar-bottom{margin-top:auto;padding-top:15px;display:grid;gap:7px}.appearance{display:flex;align-items:center;gap:10px;color:var(--muted);background:transparent;border:0;padding:12px;border-radius:11px;font-size:12px;text-align:left}.theme-switch{margin-left:auto;width:31px;height:18px;border-radius:40px;background:var(--accent);position:relative}.theme-switch:after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:white;transition:.2s}html[data-theme=dark] .theme-switch:after{left:16px}.workspace{min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:25px 30px 22px;border-bottom:1px solid var(--line)}.topbar-left{display:flex;align-items:center;gap:14px}.eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800}.topbar h1{font:800 29px Manrope,Arial,sans-serif;letter-spacing:-.05em;margin:2px 0 5px}.subtitle{margin:0;color:var(--muted);font-size:12px}.user-chip{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}.avatar{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;color:white;background:var(--gradient);font-weight:800}.page-wrap{padding:28px 30px 48px;max-width:1590px;margin:0 auto}.loading{font:700 14px DM Sans,Arial,sans-serif;padding:36px;color:var(--muted)}.overlay{display:none}.mobile-menu{display:none;background:var(--surface);border:1px solid var(--line);color:var(--ink);padding:8px;border-radius:9px}
 @media(max-width:1050px){#app{grid-template-columns:190px 1fr}.sidebar{padding-left:8px;padding-right:8px}.page-wrap,.topbar{padding-left:18px;padding-right:18px}}
@@ -24,8 +24,30 @@ html[data-theme=light]{color-scheme:light;--ink:#28314b;--muted:#6c7795;--surfac
   <style>
 /* NOVA Life · Calendário de testes integrado na NOVA Quest */
 .c-shell{display:grid;gap:18px}.c-banner{background:var(--banner);border:1px solid var(--line);border-radius:23px;padding:23px;display:flex;justify-content:space-between;align-items:center;gap:15px}.c-banner h2{font:800 clamp(22px,2.5vw,30px) Manrope,sans-serif;letter-spacing:-.05em;margin:5px 0}.c-banner p{color:var(--muted);font-size:12px;margin:0;max-width:680px}.c-tag{font-size:11px;font-weight:800;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}.c-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(300px,1fr);gap:18px}.c-panel{border:1px solid var(--line);border-radius:21px;background:var(--surface);box-shadow:var(--shadow);padding:22px}.c-panel h2{font:800 17px Manrope,sans-serif;margin:0 0 5px}.c-panel p{color:var(--muted);font-size:12px}.c-toolbar{display:flex;justify-content:space-between;align-items:center;gap:9px;margin:0 0 20px}.c-toolbar h2{font:800 21px Manrope,sans-serif;margin:0}.c-nav{display:flex;gap:6px}.c-ibtn{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);display:grid;place-items:center;cursor:pointer}.c-ibtn svg{width:17px;height:17px}.c-ibtn:hover{color:var(--accent);border-color:var(--accent)}.c-weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center;margin:0 0 5px}.c-weekdays span{color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;padding:9px 0}.c-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.c-day{min-height:75px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:left;color:var(--ink);cursor:pointer;position:relative;transition:border-color .15s}.c-day:hover{border-color:var(--accent)}.c-day.muted{opacity:.38}.c-day.selected{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--nav-active)}.c-day.today .c-daynum{color:white;background:var(--gradient)}.c-daynum{width:24px;height:24px;display:grid;place-items:center;border-radius:8px;font-size:12px;font-weight:800}.c-dots{display:flex;gap:4px;margin-top:11px;flex-wrap:wrap}.c-dots i{width:7px;height:7px;background:var(--accent);border-radius:50%}.c-dots i.task{background:var(--accent-2)}.c-legend{display:flex;gap:15px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:11px}.c-legend b{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:5px}.c-legend b.task{background:var(--accent-2)}.c-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.c-btn{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:11px;padding:10px 12px;cursor:pointer;font-size:12px;font-weight:800;display:inline-flex;gap:8px;align-items:center;justify-content:center}.c-btn.primary{background:var(--gradient);color:white;border:0}.c-btn svg{width:16px;height:16px}.c-btn:hover{filter:brightness(1.07)}.c-side{display:grid;gap:18px;align-content:start}.c-item{padding:12px 14px;border:1px solid var(--line);border-radius:13px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 0;background:var(--surface-2)}.c-item-info{min-width:0}.c-item-info strong{font-size:12px;display:block;overflow-wrap:anywhere}.c-item-info small{font-size:11px;color:var(--muted);display:block;margin-top:4px}.c-item-badge{font-size:10px;font-weight:800;color:var(--accent);white-space:nowrap}.c-item-badge.task{color:var(--accent-2)}.c-empty{border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted);font-size:12px;margin-top:14px}.c-soon{border-left:3px solid var(--accent);padding:11px 14px;background:var(--surface-2);border-radius:8px;margin:9px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}.c-soon strong{font-size:12px}.c-soon small{font-size:11px;color:var(--muted)}.c-dialog{border:1px solid var(--line);padding:23px;border-radius:21px;background:var(--surface);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.3);width:min(480px,calc(100% - 24px))}.c-dialog::backdrop{background:rgba(1,4,15,.7);backdrop-filter:blur(5px)}.c-dialog-head{display:flex;align-items:start;justify-content:space-between;gap:13px;margin-bottom:14px}.c-dialog-head h2{margin:0}.c-form{display:grid;gap:12px}.c-field label{display:block;margin-bottom:6px;font-size:11px;font-weight:800;color:var(--muted)}.c-field select,.c-field input,.c-field textarea{display:block;width:100%;border:1px solid var(--line);border-radius:11px;background:var(--surface-2);color:var(--ink);padding:11px;font:600 12px DM Sans,sans-serif;min-width:0}.c-field textarea{resize:vertical;min-height:70px}.c-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.c-small{font-size:11px;color:var(--muted);line-height:1.6}.c-toast{position:fixed;bottom:24px;right:24px;z-index:200;border:1px solid var(--accent);background:var(--surface);color:var(--ink);border-radius:11px;padding:13px 17px;font-size:12px;font-weight:700;box-shadow:var(--shadow)}
-@media(max-width:1050px){.c-layout{grid-template-columns:1fr}.c-side{grid-template-columns:1fr 1fr;align-items:start}}@media(max-width:640px){.c-panel{padding:14px}.c-day{min-height:51px;padding:7px 3px}.c-grid{gap:4px}.c-weekdays span{font-size:9px}.c-dots{margin-top:5px}.c-side{grid-template-columns:1fr}.c-banner{flex-direction:column;align-items:stretch}.c-form-grid{grid-template-columns:1fr}}
+@media(max-width:1050px){.c-layout{grid-template-columns:1fr}.c-side{grid-template-columns:1fr;align-items:start}}@media(max-width:640px){.c-panel{padding:14px}.c-day{min-height:51px;padding:7px 3px}.c-grid{gap:4px}.c-weekdays span{font-size:9px}.c-dots{margin-top:5px}.c-side{grid-template-columns:1fr}.c-banner{flex-direction:column;align-items:stretch}.c-form-grid{grid-template-columns:1fr}}
 
+
+/* Modais próprios: funcionam também em pré-visualizações que bloqueiam dialog.showModal() */
+.c-modal-shade{position:fixed;inset:0;z-index:899;background:rgba(1,4,16,.76);backdrop-filter:blur(5px)}
+.c-custom-modal{position:fixed;z-index:900;left:50%;top:50%;transform:translate(-50%,-50%);max-height:calc(100vh - 30px);overflow:auto}
+body.c-modal-open{overflow:hidden}
+/* Secções independentes: testes e tarefas do dia */
+.c-daypanel-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.c-daypanel-header h2{margin:0 0 3px}
+.c-daypanel-header p{margin:0;font-size:11px}
+.c-side .c-daypanel-header .c-btn{flex-shrink:0}
+.c-daypanel-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted);font-weight:800;margin-bottom:8px}
+.c-task-done .c-item-info strong{text-decoration:line-through;opacity:.55}
+.c-task-check{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+.c-task-item{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.c-item-actions{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.c-item .c-ibtn{width:31px;height:31px}
+.c-item .c-ibtn svg{width:15px;height:15px}
+.c-task-time{display:inline-flex;align-items:center;color:var(--accent);font-weight:800;font-variant-numeric:tabular-nums}.c-task-time:before{content:"◷";font-size:13px;margin-right:4px}.c-task-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;padding:4px 6px;border-radius:99px;background:var(--nav-active);color:var(--accent);font-size:11px;font-weight:800}
+.c-dialog-actions{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:4px}
+.c-dialog-actions button{white-space:nowrap}
+.c-item-sub{font-size:11px;color:var(--muted)}
+@media(max-width:640px){.c-daypanel-header{flex-wrap:wrap}.c-daypanel-header .c-btn{margin-left:auto}}
   </style>
 </head>
 <body data-prefix="../">
@@ -60,12 +82,36 @@ html[data-theme=light]{color-scheme:light;--ink:#28314b;--muted:#6c7795;--surfac
   <section class="c-banner"><div><div class="c-tag">✦ NOVA Life · calendário inteligente</div><h2>Organiza os teus dias. Antecipa os testes.</h2><p>Marca testes por disciplina, acompanha prazos e recebe recomendações no NOVA Quest quando a data se aproxima.</p></div><button id="newTest" class="c-btn primary" type="button"><i data-lucide="calendar-plus"></i> Marcar teste</button></section>
   <div class="c-layout">
     <section class="c-panel" aria-label="Calendário mensal"><div class="c-toolbar"><h2 id="monthTitle">Calendário</h2><div class="c-nav"><button class="c-ibtn" id="monthPrev" aria-label="Mês anterior" type="button"><i data-lucide="chevron-left"></i></button><button class="c-ibtn" id="monthToday" aria-label="Ir para hoje" type="button"><i data-lucide="calendar-check"></i></button><button class="c-ibtn" id="monthNext" aria-label="Mês seguinte" type="button"><i data-lucide="chevron-right"></i></button></div></div><div class="c-weekdays"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span></div><div class="c-grid" id="calendarDays"></div><div class="c-legend"><span><b></b> Testes de avaliação</span><span><b class="task"></b> Tarefas com prazo</span><span>Seleciona um dia para ver os detalhes.</span></div></section>
-    <div class="c-side"><section class="c-panel"><div class="c-toolbar" style="margin-bottom:8px"><div><h2 id="selectedDateTitle">Dia selecionado</h2><p id="selectedDateSubtitle">Testes e tarefas do dia</p></div><button class="c-btn" id="newTestSelected" type="button"><i data-lucide="plus"></i> Teste</button></div><div id="selectedEvents"></div></section><section class="c-panel"><h2>Próximos testes</h2><p>A NOVA Quest usa estas datas para recomendar o que estudar.</p><div id="upcomingExamList"></div><div class="c-actions" style="margin-top:13px"><a class="c-btn" href="../Nova%20Quest/quizzes.html"><i data-lucide="brain"></i> Abrir Quizzes</a></div></section></div>
+    <div class="c-side">
+      <section class="c-panel" aria-label="Testes do dia">
+        <div class="c-daypanel-eyebrow" id="selectedDateTitle">Dia selecionado</div>
+        <div class="c-daypanel-header"><div><h2>Testes do dia <span class="c-task-count" id="testDayCount">0</span></h2><p>Avaliações marcadas para este dia.</p></div><button class="c-btn" id="newTestSelected" type="button"><i data-lucide="plus"></i> Teste</button></div>
+        <div id="selectedTests"></div>
+      </section>
+      <section class="c-panel" aria-label="Tarefas do dia">
+        <div class="c-daypanel-header"><div><h2>Tarefas do dia <span class="c-task-count" id="taskDayCount">0</span></h2><p>Organiza e conclui as tarefas desta data.</p></div><button class="c-btn" id="newTaskSelected" type="button"><i data-lucide="plus"></i> Tarefa</button></div>
+        <div id="selectedTasks"></div>
+      </section>
+      <section class="c-panel"><h2>Próximos testes</h2><p>A NOVA Quest usa estas datas para recomendar o que estudar.</p><div id="upcomingExamList"></div><div class="c-actions" style="margin-top:13px"><a class="c-btn" href="../Nova%20Quest/quizzes.html"><i data-lucide="brain"></i> Abrir Quizzes</a></div></section>
+    </div>
   </div>
   <p class="c-small" id="calendarStorageNote">A ligar ao Supabase…</p>
 </div></div>
 <div id="calToast" class="c-toast" role="status" aria-live="polite" hidden></div>
-<dialog class="c-dialog" id="calDialog" aria-labelledby="calDialogTitle"><div class="c-dialog-head"><div><h2 id="calDialogTitle">Marcar teste</h2><p class="c-small">O teste também será visível na NOVA Quest.</p></div><button class="c-ibtn" id="closeCalDialog" type="button" aria-label="Fechar">×</button></div><form class="c-form" id="calTestForm"><div class="c-field"><label for="calSubject">Disciplina</label><select id="calSubject" required></select></div><div class="c-field" id="calCustomWrap" hidden><label for="calCustomSubject">Nome da disciplina</label><input type="text" id="calCustomSubject" maxlength="100" placeholder="Ex.: História da Música"></div><div class="c-field"><label for="calCourse">Curso e ano</label><input id="calCourse" readonly tabindex="-1"></div><div class="c-form-grid"><div class="c-field"><label for="calTestDate">Data</label><input type="date" id="calTestDate" required></div><div class="c-field"><label for="calTestTitle">Título</label><input type="text" id="calTestTitle" maxlength="160" required></div></div><div class="c-field"><label for="calTestNotes">Matéria / notas</label><textarea id="calTestNotes" placeholder="Ex.: Capítulos 3 e 4"></textarea></div><div class="c-actions" style="justify-content:space-between"><button id="calDelete" class="c-btn" style="color:#e96784" type="button" hidden>Eliminar teste</button><button class="c-btn primary" type="submit">Guardar teste</button></div></form></dialog>
+<div id="calModalShade" class="c-modal-shade" hidden></div>
+<div class="c-dialog c-custom-modal" id="calDialog" hidden aria-labelledby="calDialogTitle"><div class="c-dialog-head"><div><h2 id="calDialogTitle">Marcar teste</h2><p class="c-small">O teste também será visível na NOVA Quest.</p></div><button class="c-ibtn" id="closeCalDialog" type="button" aria-label="Fechar">×</button></div><form class="c-form" id="calTestForm"><div class="c-field"><label for="calSubject">Disciplina</label><select id="calSubject" required></select></div><div class="c-field" id="calCustomWrap" hidden><label for="calCustomSubject">Nome da disciplina</label><input type="text" id="calCustomSubject" maxlength="100" placeholder="Ex.: História da Música"></div><div class="c-field"><label for="calCourse">Curso e ano</label><input id="calCourse" readonly tabindex="-1"></div><div class="c-form-grid"><div class="c-field"><label for="calTestDate">Data</label><input type="date" id="calTestDate" required></div><div class="c-field"><label for="calTestTitle">Título</label><input type="text" id="calTestTitle" maxlength="160" required></div></div><div class="c-field"><label for="calTestNotes">Matéria / notas</label><textarea id="calTestNotes" placeholder="Ex.: Capítulos 3 e 4"></textarea></div><div class="c-actions" style="justify-content:space-between"><button id="calDelete" class="c-btn" style="color:#e96784" type="button" hidden>Eliminar teste</button><button class="c-btn primary" type="submit">Guardar teste</button></div></form></div>
+<div class="c-dialog c-custom-modal" id="taskDialog" hidden aria-labelledby="taskDialogTitle">
+  <div class="c-dialog-head"><div><h2 id="taskDialogTitle">Nova tarefa</h2><p class="c-small">Podes alterar a data, editar ou concluir a tarefa mais tarde.</p></div><button class="c-ibtn" id="closeTaskDialog" type="button" aria-label="Fechar">×</button></div>
+  <form class="c-form" id="taskForm">
+    <div class="c-field"><label for="taskTitle">Nome da tarefa</label><input id="taskTitle" type="text" maxlength="160" placeholder="Ex.: Estudar Matemática A" required></div>
+    <div class="c-form-grid">
+      <div class="c-field"><label for="taskDate">Data da tarefa</label><input id="taskDate" type="date" required></div>
+      <div class="c-field"><label for="taskTime">Hora da tarefa</label><input id="taskTime" type="time" step="60" value="09:00" required></div>
+    </div>
+    <p class="c-small" style="margin:0">A hora será mostrada nas tarefas desse dia e guardada com a tarefa.</p>
+    <div class="c-dialog-actions"><button id="taskDelete" class="c-btn" style="color:#e96784" type="button" hidden>Eliminar tarefa</button><button id="saveTaskBtn" class="c-btn primary" type="submit"><i data-lucide="save"></i> Guardar tarefa</button></div>
+  </form>
+</div>
 
     </main>
   </div>
@@ -84,6 +130,7 @@ if (window.NOVA_UNIFORM_MISSING) {
 </script>
   <script>
 
+  const unique = items => [...new Set(items)]; // Remover repetições nas disciplinas dos cursos profissionais.
   const COMMON = ['Português','Educação Física'];
   const LANG = ['Inglês','Filosofia'];
   const PROF = ['Português','Inglês','Área de Integração','Tecnologias da Informação e Comunicação','Educação Física'];
@@ -152,13 +199,26 @@ if (window.NOVA_UNIFORM_MISSING) {
  const shortDate=d=>new Intl.DateTimeFormat('pt-PT',{day:'numeric',month:'short'}).format(fromISO(d));
  const longDate=d=>new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'numeric',month:'long'}).format(fromISO(d));
  const client=window.supabase&&window.NOVA_SUPABASE_URL&&window.NOVA_SUPABASE_KEY?window.supabase.createClient(window.NOVA_SUPABASE_URL,window.NOVA_SUPABASE_KEY):null;
- const state={user:null,cloud:false,courseId:'ch-ct',year:10,extra:[],hidden:[],tests:[],tasks:[],mastery:[],attempts:[],selected:dateISO(new Date()),month:new Date().getMonth(),yearCalendar:new Date().getFullYear(),editing:null};
+ const state={user:null,cloud:false,tasksCloud:false,courseId:'ch-ct',year:10,extra:[],hidden:[],tests:[],tasks:[],mastery:[],attempts:[],selected:dateISO(new Date()),month:new Date().getMonth(),yearCalendar:new Date().getFullYear(),editing:null,editingTask:null};
  const getCourse=()=>COURSES.find(c=>c.id===state.courseId)||COURSES.find(c=>c.id==='ch-ct');
  const matchScope=e=>e?.course_id===state.courseId&&Number(e.school_year)===state.year;
  const subjectList=()=>[...new Set([...getCourse().get(state.year),...state.extra.filter(matchScope).map(e=>e.name)])].filter(s=>!state.hidden.some(e=>matchScope(e)&&keyOf(e.name)===keyOf(s)));
  const cacheKey=()=>`nova-study-cache-v2:${state.user.id}`;
  function readCache(){try{return JSON.parse(localStorage.getItem(cacheKey())||'null')}catch(_){return null}}
  function cache(){try{let previous=readCache()||{};Object.assign(previous,{courseId:state.courseId,year:state.year,extra:state.extra,hidden:state.hidden,tests:state.tests});localStorage.setItem(cacheKey(),JSON.stringify(previous))}catch(_){}}
+ function taskCacheKey(){return `nova-calendar-tasks-v1:${state.user.id}`}
+ function readTaskCache(){try{const value=JSON.parse(localStorage.getItem(taskCacheKey())||'[]');return Array.isArray(value)?value:[]}catch(_){return[]}}
+ function cacheTasks(){try{localStorage.setItem(taskCacheKey(),JSON.stringify(state.tasks))}catch(_){}}
+ function dueAtForDateTime(date, time){
+  const parts=String(time).match(/^([01]\d|2[0-3]):([0-5]\d)$/);
+  if(!parts)throw new Error('Escolhe uma hora válida.');
+  const [year,month,day]=date.split('-').map(Number);
+  const value=new Date(year,month-1,day,Number(parts[1]),Number(parts[2]));
+  if(Number.isNaN(value.getTime())||value.getFullYear()!==year||value.getMonth()!==month-1||value.getDate()!==day||value.getHours()!==Number(parts[1])||value.getMinutes()!==Number(parts[2]))throw new Error('A data ou hora escolhida não é válida.');
+  return value.toISOString();
+ }
+ function showDialog(el){$('calModalShade').hidden=false;el.hidden=false;document.body.classList.add('c-modal-open')}
+ function closeDialog(el){el.hidden=true;$('calModalShade').hidden=true;document.body.classList.remove('c-modal-open')}
  function toast(s){$('calToast').textContent=s;$('calToast').hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('calToast').hidden=true,3800)}
  function readiness(test){const matches=state.attempts.filter(a=>a.course_id===test.course_id&&Number(a.school_year)===Number(test.school_year)&&a.subject_key===test.subject_key).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,5);
   const manual=state.mastery.find(r=>r.course_id===test.course_id&&Number(r.school_year)===Number(test.school_year)&&r.subject_key===test.subject_key)?.self_score;
@@ -199,15 +259,23 @@ if (window.NOVA_UNIFORM_MISSING) {
   }
   if(!COURSES.some(c=>c.id===state.courseId))state.courseId='ch-ct';
   if(!getCourse().years.includes(state.year))state.year=getCourse().years[0];
-  if(client){try{const {data,error}=await client.from('tasks').select('id,title,due_at,status').eq('user_id',state.user.id).not('due_at','is',null).limit(500);if(!error)state.tasks=data||[]}catch(_){}}
+  state.tasks=readTaskCache();
+  if(client){
+   try{
+    const {data,error}=await client.from('tasks').select('id,title,due_at,status,priority').eq('user_id',state.user.id).not('due_at','is',null).limit(1000);
+    if(error)throw error;
+    state.tasks=data||[];state.tasksCloud=true;cacheTasks();
+   }catch(_){toast('As tarefas estão em modo local neste navegador; não foi possível sincronizá-las com o Supabase.')}
+  }
   const params=new URLSearchParams(location.search),requested=params.get('data');
   if(requested&&/^\d{4}-\d{2}-\d{2}$/.test(requested)&&!Number.isNaN(fromISO(requested).getTime()))state.selected=requested;
   const selected=fromISO(state.selected);state.month=selected.getMonth();state.yearCalendar=selected.getFullYear();
-  $('calendarStorageNote').textContent=(state.cloud?'✓ Testes sincronizados com Supabase.':'✓ Demonstração local: podes marcar testes e experimentar os Quizzes.')+' Os testes e os resultados partilham os dados deste navegador.';
+  $('calendarStorageNote').textContent=(state.cloud?'✓ Testes sincronizados com Supabase.':'✓ Testes em modo local.')+' '+(state.tasksCloud?'✓ Tarefas sincronizadas com Supabase.':'✓ Tarefas guardadas neste navegador.')+' As recomendações da NOVA Quest continuam ligadas às datas dos testes.';
   bind();render();cache();$('loading').hidden=true;$('app').hidden=false;
   if(params.get('novo')==='1')openTest(null,params.get('disciplina'));
  }
- function taskDate(t){if(!t.due_at)return'';return dateISO(new Date(t.due_at))}
+ function taskDate(t){if(!t.due_at)return'';const d=new Date(t.due_at);return Number.isNaN(d.getTime())?'':dateISO(d)}
+ function taskTime(t){if(!t.due_at)return'';const d=new Date(t.due_at);return Number.isNaN(d.getTime())?'':`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
  function render(){
   $('monthTitle').textContent=new Intl.DateTimeFormat('pt-PT',{month:'long',year:'numeric'}).format(new Date(state.yearCalendar,state.month,1)).replace(/^./,c=>c.toUpperCase());
   const grid=$('calendarDays');grid.replaceChildren();const first=new Date(state.yearCalendar,state.month,1);
@@ -223,14 +291,24 @@ if (window.NOVA_UNIFORM_MISSING) {
    grid.append(b);
   }
   $('selectedDateTitle').textContent=longDate(state.selected);
-  const events=$('selectedEvents');events.replaceChildren();const tests=state.tests.filter(t=>t.test_date===state.selected),tasks=state.tasks.filter(t=>taskDate(t)===state.selected);
-  if(!tests.length&&!tasks.length)events.innerHTML='<div class="c-empty">Não existem testes ou tarefas com prazo neste dia. Podes marcar um teste.</div>';
-  for(const test of tests){const div=document.createElement('div');div.className='c-item';
-    div.innerHTML=`<div class="c-item-info"><strong>${esc(test.title)}</strong><small>${esc(test.subject_name)} · Teste de avaliação</small></div><button type="button" class="c-ibtn" aria-label="Editar teste"><i data-lucide="pencil"></i></button>`;
-    div.querySelector('button').onclick=()=>openTest(test);events.append(div);
+  const tests=state.tests.filter(t=>t.test_date===state.selected);
+  const tasks=state.tasks.filter(t=>taskDate(t)===state.selected).sort((a,b)=>(taskTime(a)||'99:99').localeCompare(taskTime(b)||'99:99'));
+  $('testDayCount').textContent=String(tests.length);
+  $('taskDayCount').textContent=String(tasks.length);
+  const testList=$('selectedTests');testList.replaceChildren();
+  const taskList=$('selectedTasks');taskList.replaceChildren();
+  if(!tests.length)testList.innerHTML='<div class="c-empty">Não tens testes marcados para este dia. Clica em «+ Teste» para adicionar um.</div>';
+  for(const test of tests){
+   const div=document.createElement('div');div.className='c-item';
+   div.innerHTML=`<div class="c-item-info"><strong>${esc(test.title)}</strong><small>${esc(test.subject_name)} · Teste de avaliação</small></div><button type="button" class="c-ibtn" title="Editar teste" aria-label="Editar teste"><i data-lucide="pencil"></i></button>`;
+   div.querySelector('button').addEventListener('click',()=>openTest(test));testList.append(div);
   }
-  for(const task of tasks){const div=document.createElement('div');div.className='c-item';
-    div.innerHTML=`<div class="c-item-info"><strong>${esc(task.title)}</strong><small>Tarefa · ${task.status==='concluida'?'Concluída':'Pendente'}</small></div><span class="c-item-badge task">TAREFA</span>`;events.append(div);
+  if(!tasks.length)taskList.innerHTML='<div class="c-empty">Não tens tarefas para este dia. Clica em «+ Tarefa» para criar uma.</div>';
+  for(const task of tasks){
+   const div=document.createElement('div');div.className='c-item'+(task.status==='concluida'?' c-task-done':'');
+   div.innerHTML=`<div class="c-task-item"><input class="c-task-check" type="checkbox" ${task.status==='concluida'?'checked':''} aria-label="Marcar tarefa ${esc(task.title)} como concluída"><div class="c-item-info"><strong>${esc(task.title)}</strong><small><span class="c-task-time">${esc(taskTime(task))}</span> · ${task.status==='concluida'?'Concluída':'Pendente'}</small></div></div><div class="c-item-actions"><button type="button" class="c-ibtn" title="Editar tarefa" aria-label="Editar tarefa"><i data-lucide="pencil"></i></button></div>`;
+   div.querySelector('input').addEventListener('change',e=>toggleTask(task,e.target.checked));
+   div.querySelector('button').addEventListener('click',()=>openTask(task));taskList.append(div);
   }
   const upcoming=$('upcomingExamList');upcoming.replaceChildren();const soon=state.tests.filter(t=>dayDiff(t.test_date)>=0).sort((a,b)=>a.test_date.localeCompare(b.test_date)).slice(0,7);
   if(!soon.length)upcoming.innerHTML='<div class="c-empty">Ainda não tens testes futuros.</div>';
@@ -257,17 +335,24 @@ if (window.NOVA_UNIFORM_MISSING) {
   $('calDialogTitle').textContent=test?'Editar teste':'Marcar teste';if(test&&(!matchScope(test))) $('calCourse').value='Percurso guardado anteriormente · '+test.school_year+'.º ano';$('calTestDate').value=test?.test_date||state.selected;
   $('calTestTitle').value=test?.title||'';
   if(!test&&$('calSubject').value!=='__custom__')$('calTestTitle').value='Teste de '+$('calSubject').value;
-  $('calTestNotes').value=test?.notes||'';$('calDelete').hidden=!test;
-  $('calDialog').showModal();if(window.lucide?.createIcons)window.lucide.createIcons();
+  $('calTestNotes').value=test?.notes||'';$('calDelete').hidden=!test;$('calDelete').dataset.confirm='';$('calDelete').textContent='Eliminar teste';
+  $('calCustomSubject').value=test?.subject_name||requested||'';showDialog($('calDialog'));if(window.lucide?.createIcons)window.lucide.createIcons();
  }
  function bind(){
   $('monthPrev').onclick=()=>changeMonth(-1);$('monthNext').onclick=()=>changeMonth(1);
   $('monthToday').onclick=()=>{state.selected=dateISO(new Date());state.yearCalendar=new Date().getFullYear();state.month=new Date().getMonth();render()};
-  $('newTest').onclick=()=>openTest();$('newTestSelected').onclick=()=>openTest();
-  $('closeCalDialog').onclick=()=>$('calDialog').close();
+  $('newTest').onclick=()=>{try{openTest()}catch(error){console.error('NOVA Calendar · Marcar teste:',error);toast('Não foi possível abrir os testes: '+error.message)}};
+  $('newTestSelected').onclick=()=>{try{openTest()}catch(error){console.error('NOVA Calendar · Marcar teste:',error);toast('Não foi possível abrir os testes: '+error.message)}};
+  $('newTaskSelected').onclick=()=>openTask();
+  $('closeCalDialog').onclick=()=>closeDialog($('calDialog'));
+  $('closeTaskDialog').onclick=()=>closeDialog($('taskDialog'));
+  $('taskForm').onsubmit=saveTask;
+  $('taskDelete').onclick=deleteTask;
+  $('calModalShade').addEventListener('click',()=>{closeDialog($('calDialog'));closeDialog($('taskDialog'))});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDialog($('calDialog'));closeDialog($('taskDialog'))}});
   $('calSubject').onchange=()=>{toggleCustomSubject();if(!state.editing)$('calTestTitle').value=$('calSubject').value==='__custom__'?'':'Teste de '+$('calSubject').value};
   $('calTestForm').onsubmit=saveTest;$('calDelete').onclick=deleteTest;
-  $('calDialog').addEventListener('click',e=>{if(e.target===$('calDialog'))$('calDialog').close()});
+
  }
  function changeMonth(delta){const date=new Date(state.yearCalendar,state.month+delta,1);state.month=date.getMonth();state.yearCalendar=date.getFullYear();render()}
  async function saveTest(e){e.preventDefault();let subject=$('calSubject').value==='__custom__'?$('calCustomSubject').value.trim():$('calSubject').value;
@@ -284,11 +369,78 @@ if (window.NOVA_UNIFORM_MISSING) {
    state.tests.push(result);
   }
   state.selected=date;state.month=fromISO(date).getMonth();state.yearCalendar=fromISO(date).getFullYear();
-  cache();$('calDialog').close();render();toast('Teste guardado. O Quiz já o considera nas recomendações.');
+  cache();closeDialog($('calDialog'));render();toast('Teste guardado. O Quiz já o considera nas recomendações.');
  }
- async function deleteTest(){if(!state.editing||!confirm('Eliminar este teste do calendário?'))return;
+ async function deleteTest(){
+  if(!state.editing)return;
+  const button=$('calDelete');
+  if(button.dataset.confirm!=='sim'){button.dataset.confirm='sim';button.textContent='Confirmar eliminação';return}
   if(state.cloud){const {error}=await client.from('nova_study_tests').delete().eq('id',state.editing).eq('user_id',state.user.id);if(error){toast('Não foi possível eliminar: '+error.message);return}}
-  state.tests=state.tests.filter(t=>t.id!==state.editing);cache();$('calDialog').close();render();toast('Teste eliminado.');
+  state.tests=state.tests.filter(t=>t.id!==state.editing);cache();closeDialog($('calDialog'));render();toast('Teste eliminado.');
+ }
+ function openTask(task=null){
+  state.editingTask=task?.id||null;
+  $('taskDialogTitle').textContent=task?'Editar tarefa':'Nova tarefa';
+  $('taskTitle').value=task?.title||'';
+  $('taskDate').value=task?taskDate(task):state.selected;
+  $('taskTime').value=task&&taskTime(task)?taskTime(task):'09:00';
+  $('taskDelete').hidden=!task;$('taskDelete').dataset.confirm='';$('taskDelete').textContent='Eliminar tarefa';
+  showDialog($('taskDialog'));
+  $('taskTitle').focus();
+  if(window.lucide?.createIcons)window.lucide.createIcons();
+ }
+ async function saveTask(e){
+  e.preventDefault();
+  const title=$('taskTitle').value.trim(),date=$('taskDate').value,time=$('taskTime').value;
+  if(!title||title.length>160||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)){toast('Indica um nome, uma data e uma hora válidos.');return}
+  let dueAt;
+  try{dueAt=dueAtForDateTime(date,time)}catch(error){toast(error.message);return}
+  const submit=$('saveTaskBtn');submit.disabled=true;
+  try{
+   const payload={title,due_at:dueAt};
+   if(state.editingTask){
+    if(state.tasksCloud){
+     const {error}=await client.from('tasks').update(payload).eq('id',state.editingTask).eq('user_id',state.user.id);
+     if(error)throw error;
+    }
+    state.tasks=state.tasks.map(t=>t.id===state.editingTask?{...t,...payload}:t);
+   }else{
+    let task={...payload,id:newId(),status:'pendente',priority:'media',user_id:state.user.id};
+    if(state.tasksCloud){
+     const {data,error}=await client.from('tasks').insert({...payload,user_id:state.user.id,status:'pendente',priority:'media'}).select('id,title,due_at,status,priority').single();
+     if(error)throw error;
+     task=data;
+    }
+    state.tasks.push(task);
+   }
+   state.selected=date;const d=fromISO(date);state.month=d.getMonth();state.yearCalendar=d.getFullYear();
+   cacheTasks();closeDialog($('taskDialog'));render();toast('Tarefa guardada!');
+  }catch(error){toast('Não foi possível guardar a tarefa: '+(error.message||'erro desconhecido'))}
+  finally{submit.disabled=false}
+ }
+ async function toggleTask(task,completed){
+  const payload={status:completed?'concluida':'pendente',completed_at:completed?new Date().toISOString():null};
+  try{
+   if(state.tasksCloud){
+    const {error}=await client.from('tasks').update(payload).eq('id',task.id).eq('user_id',state.user.id);
+    if(error)throw error;
+   }
+   state.tasks=state.tasks.map(t=>t.id===task.id?{...t,...payload}:t);
+   cacheTasks();render();toast(completed?'Tarefa concluída!':'Tarefa marcada como pendente.');
+  }catch(error){render();toast('Não foi possível atualizar a tarefa: '+(error.message||'erro desconhecido'))}
+ }
+ async function deleteTask(){
+  if(!state.editingTask)return;
+  const button=$('taskDelete');
+  if(button.dataset.confirm!=='sim'){button.dataset.confirm='sim';button.textContent='Confirmar eliminação';return}
+  try{
+   if(state.tasksCloud){
+    const {error}=await client.from('tasks').delete().eq('id',state.editingTask).eq('user_id',state.user.id);
+    if(error)throw error;
+   }
+   state.tasks=state.tasks.filter(t=>t.id!==state.editingTask);
+   cacheTasks();closeDialog($('taskDialog'));render();toast('Tarefa eliminada.');
+  }catch(error){toast('Não foi possível eliminar a tarefa: '+(error.message||'erro desconhecido'))}
  }
  init();
 })();
