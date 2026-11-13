@@ -87,24 +87,39 @@
     });
   }
   function isTaskRequest(text) {
-    return mode === 'life' && /\b(cria|criar|adiciona|adicionar|mete|coloca|regista|registar|agenda|agendar|lembra|lembrar|marca|marcar)\b/i.test(text)
-      && (/\b(tarefa|tarefas|lembrete|lembretes)\b/i.test(text)
-        || /\b(para|de|que|me)\b/i.test(text)
-        || /\b(às|as|pelas|amanhã|hoje)\b/i.test(text));
+    if (mode !== 'life') return false;
+    const request = String(text).trim();
+    // Perguntas de ajuda sobre tarefas não devem executar uma ação.
+    if (/^(?:como|onde|porque|porquê|qual|quais|explica|ensina|o que|será que)\b/i.test(request)) return false;
+    if (/\b(?:não|nao)\s+(?:cries|criar|adiciones|adicionar|agendes|agendar)\b/i.test(request)) return false;
+    return /\b(?:cria|criar|adiciona|adicionar|mete|coloca|regista|registar|agenda|agendar|lembra|lembrar|marca|marcar)\b/i.test(request)
+      && (/\b(?:tarefa|tarefas|lembrete|lembretes)\b/i.test(request)
+        || /^(?:(?:por favor|pfv)[,\s]*)?(?:cria|adiciona|mete|coloca|regista|agenda|marca|lembra)(?:-me)?\b/i.test(request)
+        || /\b(?:podes|poderias|consegues)\s+(?:(?:por favor)\s+)?(?:criar|adicionar|agendar|registar|colocar|lembrar)\b/i.test(request));
   }
   const dateLabel = value => new Intl.DateTimeFormat('pt-PT', {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
   }).format(new Date(value));
+
+  // O JavaScript calcula o instante no fuso horário LOCAL do navegador,
+  // convertendo-o em UTC apenas para o guardar no Supabase.
+  const TIME_PATTERN = /(?:^|\s)(?:(?:às|as|pelas|para\s+as|para\s+às)\s*)?(\d{1,2})(?:\s*:\s*(\d{1,2})|\s*h(?:\s*(\d{1,2}))?)\s*(?:horas?)?(?=$|\s|[.,!?])/i;
+  const INTRO_TIME_PATTERN = /(?:^|\s)(?:às|as|pelas|para\s+as|para\s+às)\s*(\d{1,2})(?:\s*:\s*(\d{1,2})|\s*h(?:\s*(\d{1,2}))?)?\s*(?:horas?)?(?=$|\s|[.,!?])/i;
+  const DATE_PATTERN = /\b(?:dia\s+)?(\d{1,2})[\/-](\d{1,2})(?:[\/-](\d{4}))?\b/;
+  function timeMatch(text) { return INTRO_TIME_PATTERN.exec(text) || TIME_PATTERN.exec(text); }
+  function hasDateTime(text) {
+    return Boolean(timeMatch(text) || DATE_PATTERN.test(text) || /(?:^|\s)(?:amanhã|amanha|hoje)(?=$|\s|[.,!?])/i.test(text));
+  }
   function parseDueAt(text) {
-    const hour = text.match(/(?:^|\s)(?:às|as|pelas|para as|para às)\s*(\d{1,2})(?:\s*:\s*(\d{1,2})|\s*h\s*(\d{1,2})?)?\s*(?:horas?)?\b/i);
-    const dateOnly = text.match(/\b(?:dia\s+)?(\d{1,2})[\/-](\d{1,2})(?:[\/-](\d{4}))?\b/);
-    const relative = /(?:^|\s)(amanhã|amanha|hoje)(?=\s|$)/i.exec(text);
+    const hour = timeMatch(text);
+    const dateOnly = DATE_PATTERN.exec(text);
+    const relative = /(?:^|\s)(amanhã|amanha|hoje)(?=$|\s|[.,!?])/i.exec(text);
     if (!hour && !dateOnly && !relative) return null;
     const now = new Date();
     let due = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     if (dateOnly) {
       const day = Number(dateOnly[1]), month = Number(dateOnly[2]) - 1;
-      let year = dateOnly[3] ? Number(dateOnly[3]) : now.getFullYear();
+      const year = dateOnly[3] ? Number(dateOnly[3]) : now.getFullYear();
       due = new Date(year, month, day);
       if (due.getFullYear() !== year || due.getMonth() !== month || due.getDate() !== day) return null;
       if (!dateOnly[3] && due < new Date(now.getFullYear(), now.getMonth(), now.getDate())) due.setFullYear(year + 1);
@@ -113,20 +128,26 @@
       const h = Number(hour[1]), m = Number(hour[2] || hour[3] || 0);
       if (h > 23 || m > 59) return null;
       due.setHours(h, m, 0, 0);
+      // As horas locais inexistentes na mudança de hora de verão não são válidas.
+      if (due.getHours() !== h || due.getMinutes() !== m) return null;
     } else due.setHours(23, 59, 0, 0);
-    // Se só foi indicada uma hora e já passou, interpreta a próxima ocorrência.
     if (hour && !dateOnly && !relative && due <= now) due.setDate(due.getDate() + 1);
     return due.toISOString();
   }
   function cleanTaskTitle(text) {
-    return text.replace(/(?:^|\s)(?:hoje|amanhã|amanha)(?=\s|$)/gi, '')
-      .replace(/(?:^|\s)(?:às|as|pelas|para as|para às)\s*\d{1,2}(?:\s*:\s*\d{1,2}|\s*h\s*\d{0,2})?\s*(?:horas?)?\b/gi, '')
-      .replace(/\b(?:no\s+)?dia\s+\d{1,2}[\/-]\d{1,2}(?:[\/-]\d{4})?\b/gi, '')
+    return text.replace(/(?:^|\s)(?:hoje|amanhã|amanha)(?=$|\s|[.,!?])/gi, '')
+      .replace(INTRO_TIME_PATTERN, ' ')
+      .replace(TIME_PATTERN, ' ')
+      .replace(DATE_PATTERN, ' ')
+      .replace(/\b(?:por favor|pfv)\b/gi, '')
       .replace(/^[\s:.,-]+|[\s:.,!?-]+$/g, '').replace(/\s+/g, ' ').trim();
   }
   function directTask(text) {
-    const match = text.match(/^\s*(?:cria|adiciona|mete|coloca|regista|agenda|marca|lembra)(?:-me)?\s+(?:(?:uma?\s+)?(?:tarefa|lembrete)\s+)?(?:para|de|que|me\s+de|:|-)?\s*(.+)$/i);
-    if (!match?.[1] || /\b\d+\s+tarefas?\b/i.test(text)) return null;
+    const normalized = String(text).trim()
+      .replace(/^(?:por favor|pfv)[,\s]*/i, '')
+      .replace(/^(?:podes|poderias|consegues)\s+(?:por favor\s+)?(?:criar|adicionar|agendar|registar|colocar|lembrar)\b/i, 'cria');
+    const match = normalized.match(/^\s*(?:cria|adiciona|mete|coloca|regista|agenda|marca|lembra)(?:-me)?\s+(?:(?:uma?\s+)?(?:tarefa|lembrete)\s+)?(?:(?:para|de|que|me\s+de)\s+|[:\-]\s*)?(.+)$/i);
+    if (!match?.[1] || /\b(?:\d+|duas|dois|três|tres|quatro|cinco)\s+tarefas?\b/i.test(text)) return null;
     const name = cleanTaskTitle(match[1]).slice(0, 160);
     if (name.length < 3) return null;
     return [{ title: name.charAt(0).toUpperCase() + name.slice(1), priority: 'media', due_at: parseDueAt(text) }];
@@ -164,7 +185,7 @@
     const card = document.createElement('section'); card.className = 'ai-task-preview';
     const heading = document.createElement('strong'); heading.textContent = tasks.length === 1 ? 'Tarefa sugerida' : 'Tarefas sugeridas';
     const list = document.createElement('ul');
-    tasks.forEach(t => { const li = document.createElement('li'); li.textContent = t.title + (t.due_at ? ` · ${dateLabel(t.due_at)}` : '') + (t.priority !== 'media' ? ` · Prioridade ${t.priority}` : ''); list.append(li); });
+    tasks.forEach(t => { const li = document.createElement('li'); li.textContent = t.title + (t.due_at ? ` · ${dateLabel(t.due_at)}` : ' · Sem data definida') + (t.priority !== 'media' ? ` · Prioridade ${t.priority}` : ''); list.append(li); });
     const controls = document.createElement('div'); controls.className = 'ai-task-actions';
     const confirm = document.createElement('button'); confirm.type = 'button'; confirm.className = 'ai-task-confirm'; confirm.textContent = tasks.length === 1 ? 'Guardar tarefa' : `Guardar ${tasks.length} tarefas`;
     const cancel = document.createElement('button'); cancel.type = 'button'; cancel.textContent = 'Cancelar';
@@ -173,8 +194,16 @@
     confirm.addEventListener('click', async () => {
       if (!client || !userId) { feedback.textContent = 'Precisas de ter sessão iniciada para guardar tarefas.'; feedback.classList.add('error'); return; }
       confirm.disabled = true; cancel.disabled = true; feedback.textContent = 'A guardar no Supabase…';
+      const { data: authData, error: authError } = await client.auth.getUser();
+      if (authError || authData?.user?.id !== userId) {
+        feedback.textContent = 'A sessão expirou. Inicia sessão novamente para guardar.';
+        feedback.classList.add('error'); confirm.disabled = false; cancel.disabled = false;
+        return;
+      }
       const payload = tasks.map(t => ({ user_id: userId, title: t.title, status: 'pendente', priority: t.priority, due_at: t.due_at || null }));
-      const { error } = await client.from('tasks').insert(payload);
+      let error;
+      try { ({ error } = await client.from('tasks').insert(payload)); }
+      catch (e) { error = e; }
       if (error) {
         feedback.textContent = 'Não foi possível guardar: ' + error.message; feedback.classList.add('error');
         confirm.disabled = false; cancel.disabled = false;
@@ -189,12 +218,19 @@
   async function replyToTask(text, pending) {
     let tasks = directTask(text);
     if (!tasks) {
-      const instruction = `O utilizador quer criar tarefas na NOVA Life. Transforma o pedido seguinte em tarefas concretas e curtas (máximo 10). Responde APENAS com JSON válido no formato {"tasks":[{"title":"...","priority":"media"}]}. Prioridades permitidas: alta, media, baixa. Quando o utilizador indicar uma data ou hora, inclui \"due_at\": data/hora ISO 8601 com fuso horário; caso contrário, null. Não uses Markdown nem texto fora do JSON. Não executes ações. Pedido do utilizador: ${JSON.stringify(text)}`;
+      const instruction = `O utilizador quer criar tarefas na NOVA Life. Transforma o pedido seguinte em tarefas concretas e curtas (máximo 10). Responde APENAS com JSON válido no formato {"tasks":[{"title":"...","priority":"media"}]}. Prioridades permitidas: alta, media, baixa. Não inventes datas nem horários. Usa \"due_at\": null em todas as tarefas; o navegador atribui datas explícitas. Não uses Markdown nem texto fora do JSON. Não executes ações. Pedido do utilizador: ${JSON.stringify(text)}`;
       tasks = parseTasks(await invokeAI(instruction));
     }
-    // Para pedidos com hora explícita, usa a data interpretada no navegador do utilizador.
+    // Uma data/hora escrita pelo utilizador tem precedência sobre datas inventadas pela IA.
+    // Quando é comum a todas as tarefas, aplica-a a todas.
     const explicitDue = parseDueAt(text);
-    if (explicitDue && tasks?.length === 1) tasks[0].due_at = explicitDue;
+    if (hasDateTime(text) && !explicitDue) {
+      pending.remove();
+      addMessage('assistant', 'A data ou hora indicada parece inválida. Confirma, por exemplo: “Cria uma tarefa para ler amanhã às 23h”.');
+      return;
+    }
+    if (explicitDue) tasks?.forEach(t => { t.due_at = explicitDue; });
+    else tasks?.forEach(t => { t.due_at = null; });
     pending.remove();
     if (!tasks?.length) { addMessage('assistant', 'Não consegui identificar as tarefas. Experimenta: “Cria uma tarefa para estudar matemática” ou “Cria 3 tarefas para preparar o teste”.'); return; }
     const row = addMessage('assistant', 'Preparei estas tarefas para a NOVA Life. Confirma para as guardar na tua lista:');

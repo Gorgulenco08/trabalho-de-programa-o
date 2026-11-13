@@ -1,0 +1,64 @@
+/* NOVA Dashboard: contraste legível sem alterar a identidade Life / Quest.
+   Bootstrap define a cor de .card através de --bs-card-color; esta folha
+   repõe as cores do tema NOVA apenas no painel principal. */
+
+/* Aplicar as variáveis NOVA aos cartões Bootstrap do dashboard. */
+.content .card {
+  --bs-card-color: var(--ink);
+  --bs-card-bg: var(--surface);
+  --bs-card-border-color: var(--line);
+  color: var(--ink);
+}
+
+/* Títulos, valores e conteúdo dinâmico sempre legíveis. */
+.content .card .stat-info strong,
+.content .card .panel-heading h2,
+.content .card .task:not(.done) span,
+.content .card .habit-caption,
+.content .card .goal-desc,
+.content .card .calendar-head,
+.content .card .study-number,
+.content .card .quest h2 {
+  color: var(--ink);
+}
+
+/* Apoios visuais com contraste sem competir com o conteúdo principal. */
+.content .card .stat-info small,
+.content .card .task.done span,
+.content .card .goal-desc .sub,
+.content .card .study-sub {
+  color: var(--muted);
+}
+
+/* O tema Quest mantém o fundo escuro, mas os cartões ganham definição. */
+html[data-theme="dark"] .content .card {
+  background: linear-gradient(155deg, #142241 0%, #101c36 100%);
+  border-color: #34466f;
+  color: #eef1ff;
+}
+html[data-theme="dark"] .content .card .stat-info strong,
+html[data-theme="dark"] .content .card .panel-heading h2,
+html[data-theme="dark"] .content .card .task:not(.done) span,
+html[data-theme="dark"] .content .card .habit-caption,
+html[data-theme="dark"] .content .card .goal-desc,
+html[data-theme="dark"] .content .card .calendar-head,
+html[data-theme="dark"] .content .card .study-number,
+html[data-theme="dark"] .content .card .quest h2 {
+  color: #eef1ff;
+}
+html[data-theme="dark"] .content .card .stat-info small,
+html[data-theme="dark"] .content .card .task.done span,
+html[data-theme="dark"] .content .card .goal-desc .sub,
+html[data-theme="dark"] .content .card .study-sub {
+  color: #aebada;
+}
+
+/* Claridade das caixas de input dentro dos cartões escuros. */
+html[data-theme="dark"] .content .card input,
+html[data-theme="dark"] .content .card select {
+  color: #eef1ff;
+}
+html[data-theme="dark"] .content .card input::placeholder {
+  color: #aebada;
+  opacity: 1;
+}
