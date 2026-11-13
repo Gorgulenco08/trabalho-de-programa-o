@@ -1770,8 +1770,8 @@
           <div class="card stat">
             <div class="stat-icon fire">🔥</div>
             <div class="stat-info">
-              <strong>7 dias</strong>
-              <small>Sequência de hábitos*</small>
+              <strong id="habitDashboardStreak">—</strong>
+              <small>Melhor sequência de hábitos</small>
             </div>
             <span class="stat-chevron">›</span>
           </div>
@@ -1803,47 +1803,10 @@
 
           <article class="card panel">
             <div class="panel-heading">
-              <h2>Progresso dos hábitos*</h2>
+              <h2>Progresso dos hábitos</h2>
               <button type="button" class="text-action" data-page="Hábitos">Ver mais →</button>
             </div>
-            <div class="habit-list">
-              <div class="habit">
-                <div class="habit-icon">🎓</div>
-                <div class="habit-info">
-                  <div class="habit-caption"><span>Estudar</span><span>3/4</span></div>
-                  <div class="track">
-                    <div class="fill" style="width:75%"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="habit">
-                <div class="habit-icon">💪</div>
-                <div class="habit-info">
-                  <div class="habit-caption"><span>Exercício</span><span>2/4</span></div>
-                  <div class="track">
-                    <div class="fill" style="width:50%"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="habit">
-                <div class="habit-icon">📖</div>
-                <div class="habit-info">
-                  <div class="habit-caption"><span>Leitura</span><span>3/4</span></div>
-                  <div class="track">
-                    <div class="fill" style="width:75%"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="habit">
-                <div class="habit-icon">🌿</div>
-                <div class="habit-info">
-                  <div class="habit-caption"><span>Meditação</span><span>1/4</span></div>
-                  <div class="track">
-                    <div class="fill" style="width:25%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="habit-list" id="dashboardHabitList"><p style="color:var(--muted);font-size:12px">A carregar hábitos…</p></div>
           </article>
 
           <article class="card panel">
@@ -2551,6 +2514,7 @@
     initialize();
 
   </script>
+  <script src="./nova-dashboard-habits.js"></script>
 </body>
 
 </html>

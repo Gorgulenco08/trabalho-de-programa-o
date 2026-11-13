@@ -12,7 +12,7 @@
   const status = el('status');
   const suggestions = mode === 'quest'
     ? ['Explica o que é JavaScript', 'Cria 5 perguntas sobre HTML', 'Ajuda-me a estudar matemática', 'Como funciona o método Pomodoro?']
-    : ['Cria uma tarefa para estudar matemática', 'Cria 3 tarefas para organizar a minha semana', 'Como posso melhorar os meus hábitos?', 'Divide um objetivo em passos pequenos'];
+    : ['Cria uma tarefa para estudar matemática', 'Cria 3 tarefas para organizar a minha semana', 'Cria um hábito de ler todos os dias', 'Divide um objetivo em passos pequenos'];
   let busy = false;
   let lastMessageAt = 0;
   let userId = null;
@@ -97,6 +97,66 @@
         || /^(?:(?:por favor|pfv)[,\s]*)?(?:cria|adiciona|mete|coloca|regista|agenda|marca|lembra)(?:-me)?\b/i.test(request)
         || /\b(?:podes|poderias|consegues)\s+(?:(?:por favor)\s+)?(?:criar|adicionar|agendar|registar|colocar|lembrar)\b/i.test(request));
   }
+  function isHabitRequest(text) {
+    if (mode !== 'life') return false;
+    const request = String(text).trim();
+    if (/^(?:como|onde|porque|porquê|qual|quais|explica|ensina|o que|será que)\b/i.test(request)) return false;
+    if (/\b(?:não|nao)\s+(?:cries|criar|adiciones|adicionar|registes|registar)\b/i.test(request)) return false;
+    return /\b(?:hábito|habito|hábitos|habitos|rotina|rotinas)\b/i.test(request)
+      && /\b(?:cria|criar|adiciona|adicionar|mete|coloca|regista|registar|começa|comecar|começar|quero|gostava|podes|poderias|consegues)\b/i.test(request);
+  }
+  function parseHabits(text) {
+    let parsed;
+    try { parsed = JSON.parse(String(text).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')); }
+    catch (_) { return []; }
+    const raw = Array.isArray(parsed) ? parsed : parsed?.habits;
+    if (!Array.isArray(raw)) return [];
+    const seen = new Set();
+    return raw.slice(0, 8).map(item => ({
+      name: String(item?.name || '').trim().slice(0, 90),
+      description: String(item?.description || '').trim().slice(0, 350),
+      target_per_week: Number(item?.target_per_week)
+    })).filter(h => {
+      if (h.name.length < 3 || !Number.isInteger(h.target_per_week) || h.target_per_week < 1 || h.target_per_week > 7 || seen.has(h.name.toLocaleLowerCase('pt'))) return false;
+      seen.add(h.name.toLocaleLowerCase('pt')); return true;
+    });
+  }
+  function habitPreview(row, habits) {
+    const bubble = row.querySelector('.ai-bubble');
+    const card = document.createElement('section'); card.className = 'ai-task-preview';
+    const heading = document.createElement('strong'); heading.textContent = habits.length === 1 ? 'Hábito sugerido' : 'Hábitos sugeridos';
+    const list = document.createElement('ul');
+    habits.forEach(h => { const li=document.createElement('li'); li.textContent=`${h.name} · ${h.target_per_week} ${h.target_per_week===1?'dia':'dias'} por semana${h.description?' · '+h.description:''}`; list.append(li); });
+    const controls=document.createElement('div'); controls.className='ai-task-actions';
+    const confirm=document.createElement('button');confirm.type='button';confirm.className='ai-task-confirm';confirm.textContent=habits.length===1?'Guardar hábito':`Guardar ${habits.length} hábitos`;
+    const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Cancelar';
+    const feedback=document.createElement('p');feedback.className='ai-task-feedback';feedback.setAttribute('role','status');
+    cancel.addEventListener('click',()=>{confirm.remove();cancel.remove();feedback.textContent='Criação cancelada.';});
+    confirm.addEventListener('click',async()=>{
+      confirm.disabled=true;cancel.disabled=true;feedback.textContent='A guardar hábitos…';feedback.classList.remove('error');
+      try {
+        const {data,error:authError}=await client.auth.getUser();
+        if (authError || !userId || data?.user?.id!==userId) throw new Error('A sessão expirou. Inicia sessão novamente.');
+        const payload=habits.map(h=>({...h,user_id:userId,active:true}));
+        const {error}=await client.from('habits').insert(payload);
+        if(error) throw error;
+        confirm.remove();cancel.remove();feedback.textContent=`${habits.length} hábito(s) guardado(s) com sucesso. `;
+        const link=document.createElement('a');link.href='habitos.html';link.textContent='Ver os meus hábitos';feedback.append(link);
+      } catch(error) {
+        feedback.textContent='Não foi possível guardar: '+(error.message||'Erro desconhecido.');feedback.classList.add('error');confirm.disabled=false;cancel.disabled=false;
+      }
+    });
+    controls.append(confirm,cancel);card.append(heading,list,controls,feedback);bubble.append(card);messages.scrollTop=messages.scrollHeight;
+  }
+  async function replyToHabit(text,pending) {
+    const instruction=`Quero registar hábitos pessoais na NOVA Life. Converte APENAS a intenção explícita do utilizador em 1 a 8 hábitos. Responde APENAS com JSON válido, sem markdown: {"habits":[{"name":"Ler 20 minutos","description":"","target_per_week":7}]}. 'target_per_week' é o número de dias de prática por semana (inteiro de 1 a 7). Todos os dias = 7; 3 vezes por semana = 3. Se não houver frequência, usa 7. NÃO inventes hábitos que o utilizador não pediu. Não executes ações. Pedido: ${JSON.stringify(text)}`;
+    const habits=parseHabits(await invokeAI(instruction));
+    pending.remove();
+    if(!habits.length){addMessage('assistant','Não consegui identificar o hábito. Experimenta: “Cria um hábito de ler 20 minutos todos os dias” ou “Cria um hábito de estudar 3 vezes por semana”.');return;}
+    const row=addMessage('assistant','Preparei estes hábitos para a NOVA Life. Confirma para os guardar:');
+    habitPreview(row,habits);
+  }
+
   const dateLabel = value => new Intl.DateTimeFormat('pt-PT', {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
   }).format(new Date(value));
@@ -245,7 +305,8 @@
     setStatus('A NOVA AI está a responder…'); addMessage('user', question); prompt.value = '';
     const pending = addMessage('assistant', '', { typing: true, save: false });
     try {
-      if (isTaskRequest(question)) await replyToTask(question, pending);
+      if (isHabitRequest(question)) await replyToHabit(question, pending);
+      else if (isTaskRequest(question)) await replyToTask(question, pending);
       else {
         const answer = await invokeAI(question);
         pending.remove(); addMessage('assistant', answer);

@@ -61,6 +61,23 @@
       </section>
     </main>
   </div>
+  <dialog id="editTaskDialog" class="task-edit-dialog" aria-labelledby="editTaskTitle">
+    <form id="editTaskForm">
+      <h2 id="editTaskTitle">Editar tarefa</h2>
+      <label for="editTaskName">Nome da tarefa</label>
+      <input id="editTaskName" class="field" maxlength="160" required>
+      <label for="editTaskPriority">Prioridade</label>
+      <select id="editTaskPriority" class="field"><option value="baixa">Baixa</option><option value="media">Média</option><option value="alta">Alta</option></select>
+      <label for="editTaskDue">Data e hora (opcional)</label>
+      <input id="editTaskDue" class="field" type="datetime-local">
+      <div class="task-dialog-actions"><button type="button" class="secondary-btn" id="cancelEditTask">Cancelar</button><button type="submit" class="primary-btn" id="saveEditTask">Guardar alterações</button></div>
+    </form>
+  </dialog>
+  <dialog id="deleteTaskDialog" class="task-edit-dialog" aria-labelledby="deleteTaskTitle">
+    <h2 id="deleteTaskTitle">Eliminar tarefa?</h2>
+    <p id="deleteTaskDescription">Esta ação é permanente.</p>
+    <div class="task-dialog-actions"><button type="button" class="secondary-btn" id="cancelDeleteTask">Cancelar</button><button type="button" class="primary-btn task-danger" id="confirmDeleteTask">Eliminar tarefa</button></div>
+  </dialog>
   <dialog id="logoutDialog" style="border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);max-width:390px;width:calc(100% - 32px);padding:24px"><h2 style="margin-bottom:8px">Terminar sessão?</h2><p class="subtitle">Tens a certeza de que queres sair da tua conta NOVA?</p><p id="logoutError" style="color:var(--danger)" hidden></p><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px"><button class="secondary-btn" id="cancelLogout" type="button">Cancelar</button><button class="primary-btn" id="confirmLogout" type="button">Sim, sair</button></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
@@ -80,7 +97,38 @@
     function showView(view){currentView=view;for(const id of ['today','completed','calendar']){$(id+'View').hidden=id!==view;$(id+'Tab').classList.toggle('active',id===view);$(id+'Tab').setAttribute('aria-selected',String(id===view))}if(view==='calendar')renderCalendar();if(window.lucide?.createIcons)window.lucide.createIcons()}
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>showView(btn.dataset.view)));
     async function loadTasks(){if(!client||!currentUser)return;const {data,error}=await client.from('tasks').select('id,title,status,priority,due_at,created_at,completed_at').eq('user_id',currentUser.id).order('created_at',{ascending:false});if(error){notify('Não foi possível carregar as tarefas: '+error.message);return}tasks=(data||[]).map(t=>({...t,done:t.status==='concluida'}));renderAll()}
-    function taskRow(task,showCheckbox=true){const row=document.createElement('div');row.className='task-row'+(task.done?' is-done':'');const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='task-check';checkbox.checked=task.done;checkbox.setAttribute('aria-label',task.done?'Marcar tarefa como pendente':'Marcar tarefa como concluída');checkbox.disabled=!showCheckbox;checkbox.addEventListener('change',()=>toggleTask(task,checkbox));const main=document.createElement('div');main.className='task-main';const title=document.createElement('div');title.className='task-title';title.textContent=task.title;const meta=document.createElement('div');meta.className='task-meta';const date=document.createElement('span');date.textContent=task.done&&task.completed_at?'Concluída a '+new Intl.DateTimeFormat('pt-PT',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(task.completed_at)):task.due_at?'Prazo: '+new Intl.DateTimeFormat('pt-PT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(task.due_at)):'Sem prazo definido';meta.append(date);main.append(title,meta);const priority=document.createElement('span');const p=(task.priority||'media').toLowerCase();priority.className='priority '+p;priority.textContent=({alta:'Alta',media:'Média',baixa:'Baixa'})[p]||'Média';row.append(checkbox,main,priority);return row}
+    let editTarget = null, deleteTarget = null;
+    function toDatetimeLocal(value){if(!value)return '';const d=new Date(value);if(Number.isNaN(d.getTime()))return '';return `${localDateString(d)}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
+    function editTask(task){editTarget=task;$('editTaskName').value=task.title;$('editTaskPriority').value=['alta','media','baixa'].includes(task.priority)?task.priority:'media';$('editTaskDue').value=toDatetimeLocal(task.due_at);$('editTaskDialog').showModal();$('editTaskName').focus();}
+    function askDeleteTask(task){deleteTarget=task;$('deleteTaskDescription').textContent=`Queres eliminar “${task.title}”? Não é possível recuperar esta tarefa.`;$('deleteTaskDialog').showModal();}
+    $('cancelEditTask').addEventListener('click',()=>$('editTaskDialog').close());
+    $('cancelDeleteTask').addEventListener('click',()=>$('deleteTaskDialog').close());
+    $('editTaskDialog').addEventListener('close',()=>{editTarget=null;});
+    $('deleteTaskDialog').addEventListener('close',()=>{deleteTarget=null;});
+    $('editTaskForm').addEventListener('submit',async event=>{
+      event.preventDefault();if(!editTarget||!currentUser)return;
+      const title=$('editTaskName').value.trim();if(!title){notify('Escreve um nome para a tarefa.');return;}
+      const dateText=$('editTaskDue').value;const dueDate=dateText?new Date(dateText):null;
+      if(dueDate&&Number.isNaN(dueDate.getTime())){notify('A data indicada não é válida.');return;}
+      const button=$('saveEditTask');button.disabled=true;
+      try {
+        const {error}=await client.from('tasks').update({title,priority:$('editTaskPriority').value,due_at:dueDate?dueDate.toISOString():null}).eq('id',editTarget.id).eq('user_id',currentUser.id);
+        if(error)throw error;$('editTaskDialog').close();notify('Tarefa atualizada.');await loadTasks();
+      } catch(error){notify('Não foi possível editar: '+(error.message||'Tenta novamente.'));}
+      finally{button.disabled=false;}
+    });
+    $('confirmDeleteTask').addEventListener('click',async()=>{
+      if(!deleteTarget||!currentUser)return;const button=$('confirmDeleteTask');button.disabled=true;
+      try {
+        const {error}=await client.from('tasks').delete().eq('id',deleteTarget.id).eq('user_id',currentUser.id);
+        if(error)throw error;$('deleteTaskDialog').close();notify('Tarefa eliminada.');await loadTasks();
+      }catch(error){notify('Não foi possível eliminar: '+(error.message||'Tenta novamente.'));}
+      finally{button.disabled=false;}
+    });
+    function taskRow(task,showCheckbox=true){const row=document.createElement('div');row.className='task-row'+(task.done?' is-done':'');const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='task-check';checkbox.checked=task.done;checkbox.setAttribute('aria-label',task.done?'Marcar tarefa como pendente':'Marcar tarefa como concluída');checkbox.disabled=!showCheckbox;checkbox.addEventListener('change',()=>toggleTask(task,checkbox));const main=document.createElement('div');main.className='task-main';const title=document.createElement('div');title.className='task-title';title.textContent=task.title;const meta=document.createElement('div');meta.className='task-meta';const date=document.createElement('span');date.textContent=task.done&&task.completed_at?'Concluída a '+new Intl.DateTimeFormat('pt-PT',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(task.completed_at)):task.due_at?'Prazo: '+new Intl.DateTimeFormat('pt-PT',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(task.due_at)):'Sem prazo definido';meta.append(date);main.append(title,meta);const priority=document.createElement('span');const p=(task.priority||'media').toLowerCase();priority.className='priority '+p;priority.textContent=({alta:'Alta',media:'Média',baixa:'Baixa'})[p]||'Média';const actions=document.createElement('div');actions.className='task-row-actions';
+      const edit=document.createElement('button');edit.type='button';edit.className='task-action';edit.textContent='Editar';edit.setAttribute('aria-label',`Editar ${task.title}`);edit.addEventListener('click',()=>editTask(task));
+      const remove=document.createElement('button');remove.type='button';remove.className='task-action task-action-delete';remove.textContent='Eliminar';remove.setAttribute('aria-label',`Eliminar ${task.title}`);remove.addEventListener('click',()=>askDeleteTask(task));
+      actions.append(edit,remove);row.append(checkbox,main,priority,actions);return row}
     async function toggleTask(task,checkbox){checkbox.disabled=true;const done=checkbox.checked;const update={status:done?'concluida':'pendente',completed_at:done?new Date().toISOString():null};const {error}=await client.from('tasks').update(update).eq('id',task.id).eq('user_id',currentUser.id);if(error){checkbox.checked=!done;checkbox.disabled=false;notify('Não foi possível atualizar a tarefa: '+error.message);return}task.done=done;task.status=update.status;task.completed_at=update.completed_at;notify(done?'Tarefa concluída!':'Tarefa reaberta.');renderAll()}
     function fillList(containerId,list,emptyText,checkbox=true){const container=$(containerId);container.replaceChildren();if(!list.length){const empty=document.createElement('div');empty.className='empty-state';empty.innerHTML='<div class="empty-icon">✦</div><strong>'+escapeText(emptyText)+'</strong>';container.append(empty);return}list.forEach(t=>container.append(taskRow(t,checkbox)))}
     function isTodayTask(t){if(t.done)return taskDate(t)===selectedDate; if(t.due_at)return localDateString(new Date(t.due_at))===localDateString(new Date());return localDateString(new Date(t.created_at))===localDateString(new Date())||!t.due_at}

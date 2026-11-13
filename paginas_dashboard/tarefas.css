@@ -41,3 +41,20 @@ html[data-theme="dark"] {
   --muted: #aebbd8;
   --line: #304362;
 }
+
+/* Gestão de tarefas: ações e janelas de edição/eliminação */
+#app .task-row{flex-wrap:wrap;}
+#app .task-row-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap;}
+#app .task-action{border:1px solid var(--line);border-radius:9px;padding:6px 9px;background:var(--surface-2);color:var(--ink);font-size:11px;font-weight:700;cursor:pointer;}
+#app .task-action:hover{border-color:var(--accent);}
+#app .task-action-delete{color:#f38da6;}
+.task-edit-dialog{max-width:440px;width:calc(100% - 32px);border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--surface);color:var(--ink);box-shadow:var(--shadow);}
+.task-edit-dialog::backdrop{background:rgba(3,8,25,.72);}
+.task-edit-dialog h2{font-size:20px;font-weight:800;margin:0 0 15px;color:var(--ink);}
+.task-edit-dialog label{display:block;margin:14px 0 6px;font-size:12px;font-weight:700;color:var(--ink);}
+.task-edit-dialog .field{width:100%;max-width:100%;color:var(--ink);background:var(--surface-2);color-scheme:dark;}
+html[data-theme="light"] .task-edit-dialog .field{color-scheme:light;}
+.task-edit-dialog p{color:var(--muted);}
+.task-dialog-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:22px;}
+.task-dialog-actions .task-danger{background:#aa3454;color:#fff;}
+@media(max-width:650px){#app .task-row-actions{flex-basis:100%;margin-left:32px;}.task-edit-dialog{padding:18px;}}
