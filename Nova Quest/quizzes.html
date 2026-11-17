@@ -521,8 +521,10 @@ if (window.NOVA_UNIFORM_MISSING) {
       await persistProfile();renderManage();render();};box.append(row)});
   }
   async function saveSelf(e){e.preventDefault();const score=Number($('selfRange').value),row={user_id:state.user.id,...scope(),subject_key:keyOf(state.subject),self_score:score,updated_at:new Date().toISOString()};
+    const saved=await persist('nova_study_mastery','upsert',row,{onConflict:'user_id,course_id,school_year,subject_key'});
+    if(saved===false)return;
     state.self=state.self.filter(r=>!(r.course_id===state.courseId&&Number(r.school_year)===state.year&&r.subject_key===row.subject_key));state.self.push(row);
-    await persist('nova_study_mastery','upsert',row,{onConflict:'user_id,course_id,school_year,subject_key'});dialogClose('selfDialog');render();notify('Autoavaliação guardada.');
+    cache();dialogClose('selfDialog');render();notify('Autoavaliação guardada.');
   }
   async function saveQuestion(e){e.preventDefault();const prompt=$('questionPrompt').value.trim(),choices=[0,1,2,3].map(i=>$('opt'+i).value.trim());
     if(prompt.length<5||choices.some(s=>!s)){notify('Preenche a pergunta e as quatro opções.');return}
