@@ -1,0 +1,33 @@
+/* NOVA Life · Objetivos — usa as variáveis de tema da aplicação */
+.goals-page{color:var(--ink)}.goals-page [hidden]{display:none!important}
+.goals-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:10px 0 22px}
+.goals-stat,.goal-card,.goals-empty,.goals-toolbar{border:1px solid var(--line);background:var(--surface);border-radius:19px;box-shadow:var(--shadow)}
+.goals-stat{padding:20px;display:flex;flex-direction:column;gap:6px;min-width:0}.goals-stat-icon{font-size:22px;color:var(--accent)}.goals-stat strong{font:800 clamp(22px,3vw,30px)/1.2 Manrope,sans-serif;color:var(--ink)}.goals-stat span:last-child{font-size:12px;color:var(--muted)}
+.goals-toolbar{display:flex;gap:15px;align-items:center;justify-content:space-between;margin-bottom:18px;padding:20px 23px}.goals-toolbar h2{font:800 19px Manrope,sans-serif;color:var(--ink);margin:0 0 5px}.goals-toolbar p{color:var(--muted);margin:0;font-size:12px}.goals-toolbar-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.goals-toolbar select,.goal-dialog input,.goal-dialog textarea,.goal-dialog select{border:1px solid var(--line);border-radius:11px;padding:10px 12px;color:var(--ink);background:var(--surface-2);font:inherit;font-size:13px}
+.goal-main-button,.goal-outline-button,.goal-icon-button{font:700 12px 'DM Sans',sans-serif;cursor:pointer}
+.goal-main-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;color:#fff;background:var(--gradient);border:0;border-radius:11px;padding:12px 16px;min-height:42px}.goal-main-button svg{width:16px;height:16px}
+.goal-outline-button{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-height:36px}
+.goal-icon-button{background:var(--surface-2);color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:4px 10px;font-size:21px;line-height:1.3}
+.goal-main-button:disabled,.goal-outline-button:disabled{opacity:.55;cursor:not-allowed}
+.goals-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.goal-card{padding:21px 22px;min-width:0}.goal-card.done{opacity:.82}
+.goal-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}.goal-top h3{font:800 17px/1.4 Manrope,sans-serif;margin:0;color:var(--ink);overflow-wrap:anywhere}.goal-top p{color:var(--muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere;margin:4px 0 0}
+.goal-actions{display:flex;gap:6px;flex-shrink:0}.goal-actions button{font-size:11px;padding:6px 9px;min-height:0}
+.goal-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.goal-pill{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:var(--nav-active);padding:6px 9px;border-radius:99px}
+.goal-pill.late{color:#ff8fa3;background:rgba(215,49,91,.14)}.goal-pill.ok{color:#4adeb4}
+html[data-theme="light"] .goal-pill.late{color:#9f2046}html[data-theme="light"] .goal-pill.ok{color:#138b6c}
+.goal-progress-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 9px;font-size:12px}.goal-progress-head strong{font-weight:800;color:var(--ink)}.goal-progress-head span{color:var(--muted)}
+.goal-progress{height:8px;background:var(--line);border-radius:20px;overflow:hidden}.goal-progress-fill{height:100%;border-radius:20px;background:var(--gradient);transition:width .25s}
+.goal-slider{width:100%;margin-top:14px;accent-color:var(--accent)}
+.goal-card-foot{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.goals-empty{text-align:center;padding:45px 25px}.goals-empty-icon{font-size:40px;color:var(--accent)}.goals-empty h2{font:800 20px Manrope,sans-serif;color:var(--ink);margin:9px 0}.goals-empty p{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto 20px}
+.goals-alert{border:1px solid #f29c9c;color:#ffb6c1;background:rgba(215,49,91,.12);padding:12px 15px;border-radius:12px;margin:0 0 14px}html[data-theme="light"] .goals-alert{color:#9f2046}
+.goal-dialog{width:min(460px,calc(100% - 28px));padding:25px;border:1px solid var(--line);border-radius:20px;color:var(--ink);background:var(--surface);box-shadow:0 28px 70px rgba(0,0,0,.3)}.goal-dialog::backdrop{background:rgba(5,8,22,.68)}
+.goal-dialog-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.goal-dialog h2{font:800 23px Manrope,sans-serif;color:var(--ink);margin:5px 0 17px}
+.goal-dialog label{display:block;font-size:12px;font-weight:800;margin:13px 0 7px}.goal-dialog input,.goal-dialog textarea,.goal-dialog select{display:block;width:100%;min-width:0}.goal-dialog input[type=range]{padding:0;accent-color:var(--accent)}
+.goal-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.goals-page button:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px}
+@media(max-width:1100px){.goals-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.goals-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.goals-summary{gap:10px}.goals-stat{padding:15px}.goals-toolbar{align-items:flex-start;flex-direction:column}.goals-toolbar-actions{width:100%;justify-content:space-between}.goal-card{padding:17px}.goal-top{flex-wrap:wrap}}

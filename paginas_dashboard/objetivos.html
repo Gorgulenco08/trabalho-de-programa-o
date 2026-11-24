@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../nova-uniform.css">
   <link rel="stylesheet" href="../nova-sidebar.css">
+  <link rel="stylesheet" href="./objetivos.css">
 </head>
 <body data-prefix="../">
   <div id="loading" class="loading" role="status">A verificar a tua sessão…</div>
@@ -24,20 +25,60 @@
         <div class="topbar-left">
           <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
           <div class="topbar-copy">
-            <div class="eyebrow">NOVA — Organize your life. Level up your future.</div>
+            <div class="eyebrow">NOVA LIFE · METAS</div>
             <h1>Objetivos</h1>
             <p class="subtitle">Define metas pessoais, acompanha a evolução e mantém o foco nos resultados que queres alcançar.</p>
           </div>
         </div>
         <div class="user-chip"><span class="avatar" id="avatar">N</span><span id="userName">Utilizador</span></div>
       </header>
-      <div class="page-wrap">
-      <div class="stack"><section class="hero-card"><p>Em breve poderás criar objetivos, definir prazos e visualizar o progresso com o mesmo visual do Dashboard.</p></section><section class="panel"><div class="sectionhead"><div class="roundicon"><i data-lucide="target"></i></div><div><h2>Secção em desenvolvimento</h2><p>Estamos a preparar esta área para funcionar com o Supabase e com a identidade visual principal da NOVA.</p></div></div><div class="actions"><a class="btn-primary" href="../menu_principal.html">Voltar ao Painel</a><a class="btn-secondary" href="tarefas.html">Ir para Tarefas</a></div></section></div></div>
+      <div class="page-wrap goals-page">
+        <div id="goalsAlert" class="goals-alert" role="alert" hidden></div>
+        <section class="goals-summary" aria-label="Estatísticas de objetivos">
+          <div class="goals-stat"><span class="goals-stat-icon">◎</span><strong id="goalActive">—</strong><span>Objetivos ativos</span></div>
+          <div class="goals-stat"><span class="goals-stat-icon">✓</span><strong id="goalDone">—</strong><span>Concluídos</span></div>
+          <div class="goals-stat"><span class="goals-stat-icon">↗</span><strong id="goalAvg">—</strong><span>Progresso médio</span></div>
+          <div class="goals-stat"><span class="goals-stat-icon">⏳</span><strong id="goalSoon">—</strong><span>A terminar em 7 dias</span></div>
+        </section>
+        <section class="goals-toolbar panel">
+          <div><h2>Os teus objetivos</h2><p>Define prazos, atualiza o progresso e celebra cada meta alcançada.</p></div>
+          <div class="goals-toolbar-actions">
+            <select id="goalFilter" aria-label="Filtrar objetivos">
+              <option value="active">Ativos</option>
+              <option value="overdue">Em atraso</option>
+              <option value="done">Concluídos</option>
+              <option value="all">Todos</option>
+            </select>
+            <button id="newGoal" class="goal-main-button" type="button"><i data-lucide="plus"></i> Novo objetivo</button>
+          </div>
+        </section>
+        <div id="goalList" class="goals-grid" aria-live="polite"></div>
+        <div id="goalsEmpty" class="goals-empty panel" hidden>
+          <span class="goals-empty-icon">✦</span>
+          <h2>Define o teu primeiro objetivo</h2>
+          <p>Escolhe uma meta, define um prazo e vai atualizando o progresso.</p>
+          <button class="goal-main-button" id="firstGoal" type="button">Criar objetivo</button>
+        </div>
+      </div>
     </main>
   </div>
+  <dialog id="goalDialog" class="goal-dialog" aria-labelledby="goalDialogTitle">
+    <form id="goalForm">
+      <div class="goal-dialog-head"><div><span class="eyebrow">NOVA LIFE</span><h2 id="goalDialogTitle">Novo objetivo</h2></div><button type="button" id="closeGoalDialog" class="goal-icon-button" aria-label="Fechar">×</button></div>
+      <label for="goalTitle">Título *</label><input id="goalTitle" type="text" maxlength="90" required placeholder="Ex.: Ler 12 livros este ano">
+      <label for="goalDescription">Descrição (opcional)</label><textarea id="goalDescription" rows="3" maxlength="350" placeholder="Porque é que este objetivo é importante?"></textarea>
+      <label for="goalCategory">Categoria</label>
+      <select id="goalCategory"><option>Estudos</option><option>Saúde</option><option>Finanças</option><option>Carreira</option><option>Pessoal</option><option>Outro</option></select>
+      <label for="goalDeadline">Prazo *</label><input id="goalDeadline" type="date" required>
+      <label for="goalProgress">Progresso inicial: <span id="goalProgressValue">0%</span></label>
+      <input id="goalProgress" type="range" min="0" max="100" step="5" value="0">
+      <div class="goal-dialog-actions"><button type="button" class="goal-outline-button" id="cancelGoal">Cancelar</button><button type="submit" class="goal-main-button" id="saveGoal">Guardar objetivo</button></div>
+    </form>
+  </dialog>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="../nova-uniform.js"></script>
+  <script src="./objetivos.js"></script>
 </body>
 </html>
