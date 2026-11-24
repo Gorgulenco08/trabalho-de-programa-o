@@ -1,43 +1,165 @@
 <!doctype html>
 <html lang="pt-PT" data-theme="dark">
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#090f20">
   <title>Missões — NOVA</title>
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='light'?'light':'dark';}catch(_ ){document.documentElement.dataset.theme='dark';}</script>
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('nova-theme')==='light'?'light':'dark'}catch(_){document.documentElement.dataset.theme='dark'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../nova-uniform.css">
   <link rel="stylesheet" href="../nova-sidebar.css">
+  <style>
+    :root{--m-glow:rgba(130,99,255,.12);--m-positive:#41c6a1;--m-gold:#f0b34f}
+    .m-stack{display:grid;gap:18px}.m-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(230px,.7fr);gap:22px;align-items:center;background:var(--banner);padding:30px;min-height:214px}
+    .m-hero:after{content:'';position:absolute;width:280px;height:280px;border-radius:50%;right:-85px;top:-130px;border:45px solid rgba(137,103,255,.1);pointer-events:none}.m-hero h2{margin:7px 0 10px;font:800 clamp(23px,2.8vw,37px)/1.16 Manrope,sans-serif;letter-spacing:-.05em}.m-hero p{color:var(--muted);max-width:620px;margin:0 0 17px}.m-kicker{display:flex;align-items:center;gap:7px;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.m-hero-cta{display:flex;gap:9px;flex-wrap:wrap}.m-hero .m-hero-cta a{font-weight:800}.m-level-panel{background:var(--surface);border:1px solid var(--line);border-radius:19px;padding:20px;position:relative;z-index:1;box-shadow:var(--shadow)}.m-level-top{display:flex;align-items:center;gap:13px}.m-level-icon{width:48px;height:48px;display:grid;place-items:center;background:var(--nav-active);border-radius:14px;color:var(--accent)}.m-level-top small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.06em}.m-level-top strong{display:block;font:800 23px Manrope,sans-serif}.m-bar{height:9px;border-radius:999px;background:var(--line);overflow:hidden}.m-fill{height:100%;width:0%;border-radius:999px;background:var(--gradient);transition:width .5s ease}.m-level-row{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);font-weight:700;margin:11px 0 9px}.m-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.m-stat{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px;min-width:0}.m-stat-icon{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:var(--nav-active);color:var(--accent);flex-shrink:0}.m-stat small{display:block;color:var(--muted);font-size:11px;font-weight:700}.m-stat strong{display:block;font:800 21px Manrope,sans-serif;letter-spacing:-.03em}.m-top-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(290px,.7fr);gap:18px}.m-sectiontop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}.m-sectiontop h2{font:800 18px Manrope,sans-serif;letter-spacing:-.025em;margin:0 0 4px}.m-sectiontop p{font-size:12px;color:var(--muted);margin:0}.m-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:6px 9px;color:var(--muted);font-size:10px;font-weight:800;white-space:nowrap;background:var(--surface-2)}.m-feature{min-height:180px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:flex-start}.m-feature-icon{width:53px;height:53px;border-radius:16px;display:grid;place-items:center;color:var(--accent);background:var(--nav-active)}.m-feature h3{font:800 20px Manrope,sans-serif;letter-spacing:-.04em;margin:8px 0 7px}.m-feature p{margin:0 0 14px;color:var(--muted);font-size:12px;line-height:1.6}.m-feature-info{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}.m-feature-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.m-chart{display:flex;align-items:end;gap:12px;min-height:145px;border-bottom:1px solid var(--line);padding:7px 0 0}.m-col{min-width:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:9px;height:128px}.m-colbar{height:90px;width:min(38px,100%);border-radius:9px 9px 3px 3px;background:var(--surface-2);display:flex;align-items:end;overflow:hidden}.m-colbar span{width:100%;min-height:3px;border-radius:9px 9px 3px 3px;background:var(--gradient)}.m-col label{font-size:10px;font-weight:800;color:var(--muted);margin:0}.m-chart-legend{color:var(--muted);font-size:11px;margin:14px 0 0}.m-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.m-toolbar h2{font:800 21px Manrope,sans-serif;letter-spacing:-.04em;margin:0 0 4px}.m-toolbar p{margin:0;color:var(--muted);font-size:12px}.m-filters{display:flex;gap:6px;flex-wrap:wrap}.m-filter{border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--muted);background:var(--surface);font-size:12px;font-weight:800}.m-filter[aria-pressed="true"]{background:var(--nav-active);border-color:var(--accent);color:var(--accent)}.m-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.m-card{display:flex;flex-direction:column;min-height:243px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}.m-card.ready{border-color:var(--accent);box-shadow:0 0 0 1px var(--m-glow),var(--shadow)}.m-card.claimed{opacity:.8}.m-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.m-mission-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:13px;background:var(--nav-active);color:var(--accent)}.m-reward{display:flex;align-items:center;gap:4px;padding:6px 8px;border-radius:9px;background:var(--surface-2);font-weight:800;color:var(--accent);font-size:11px}.m-card h3{font:800 16px Manrope,sans-serif;letter-spacing:-.03em;margin:14px 0 6px}.m-card p{font-size:12px;line-height:1.55;color:var(--muted);margin:0 0 13px}.m-card-end{margin-top:auto}.m-mission-line{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:11px;margin:0 0 8px}.m-mission-line span:last-child{color:var(--muted)}.m-card .m-bar{height:7px}.m-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}.m-status{display:flex;align-items:center;gap:5px;color:var(--muted);font-weight:800;font-size:11px}.m-status.completed{color:var(--m-positive)}.m-claim,.m-go{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:10px;padding:9px 12px;min-width:106px;font-size:11px;font-weight:800;border:1px solid var(--line);color:var(--ink);background:var(--surface-2);text-decoration:none}.m-claim{background:var(--gradient);color:white;border:0}.m-claim:disabled{opacity:.65;cursor:not-allowed}.m-go:hover,.m-claim:hover:not(:disabled){filter:brightness(1.06)}.m-note{font-size:12px;color:var(--muted);margin:0}.m-note strong{color:var(--ink)}.m-notice{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:13px 15px;font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:10px}.m-notice i{color:var(--accent)}.m-notice.warn{border-color:rgba(240,179,79,.45)}.m-notice.warn i{color:var(--m-gold)}.m-demo{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.m-empty{padding:26px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:15px;color:var(--muted)}.m-toast{position:fixed;bottom:22px;right:22px;z-index:150;background:#27204b;color:white;border:1px solid #6a5ab5;max-width:345px;padding:13px 16px;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.3);font-size:12px;font-weight:700}.m-toast[hidden]{display:none}.m-sync{font-size:11px;color:var(--muted);display:flex;gap:8px;align-items:center}.m-dot{display:inline-block;background:var(--m-positive);height:7px;width:7px;border-radius:50%}.m-sync.local .m-dot{background:var(--m-gold)}.m-refresh{border:1px solid var(--line);background:var(--surface);padding:8px 10px;border-radius:10px;color:var(--ink);font-size:11px;font-weight:800}.m-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    @media(max-width:1150px){.m-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.m-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.m-top-grid{grid-template-columns:1fr}}
+    @media(max-width:760px){.m-hero{grid-template-columns:1fr;padding:21px}.m-grid{grid-template-columns:1fr}.m-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.m-stat strong{font-size:18px}.m-top-grid{grid-template-columns:1fr}.panel{padding:18px}.m-feature{grid-template-columns:1fr}.m-feature-icon{width:45px;height:45px}}
+    @media(max-width:450px){.m-stats{gap:8px}.m-stat{padding:12px;gap:8px}.m-stat-icon{width:34px;height:34px}}
+    @media(prefers-reduced-motion:reduce){.m-fill{transition:none}}
+  </style>
 </head>
 <body data-prefix="../">
-  <div id="loading" class="loading" role="status">A verificar a tua sessão…</div>
-  <div id="app" hidden>
-    <aside class="sidebar" id="sidebar" aria-label="Menu principal da NOVA"></aside>
-    <script src="../nova-sidebar.js"></script>
-    <div class="overlay" id="overlay"></div>
-    <main class="workspace">
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
-          <div class="topbar-copy">
-            <div class="eyebrow">NOVA QUEST — Zona de estudo</div>
-            <h1>Missões</h1>
-            <p class="subtitle">Cria desafios, ganha XP e sobe de nível com a mesma linguagem visual do ecrã inicial.</p>
-          </div>
-        </div>
-        <div class="user-chip"><span class="avatar" id="avatar">N</span><span id="userName">Utilizador</span></div>
-      </header>
-      <div class="page-wrap">
-      <div class="stack"><section class="hero-card"><p>As missões vão permitir acompanhar desafios diários e semanais ligados aos estudos e à evolução pessoal.</p></section><section class="panel"><div class="sectionhead"><div class="roundicon"><i data-lucide="shield-check"></i></div><div><h2>Missões em desenvolvimento</h2><p>O menu lateral desta página foi alinhado a 100% com o do Dashboard, incluindo cores, ícones e estrutura.</p></div></div><div class="actions"><a class="btn-primary" href="../menu_principal.html">Voltar ao Painel</a><a class="btn-secondary" href="Ranking.html">Ver Ranking</a></div></section></div></div>
-    </main>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../supabase-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="../nova-uniform.js"></script>
+<div id="loading" class="loading" role="status">A carregar as tuas missões…</div>
+<div id="app" hidden>
+  <aside class="sidebar" id="sidebar" aria-label="Menu principal da NOVA"></aside>
+  <script src="../nova-sidebar.js"></script>
+  <div class="overlay" id="overlay"></div>
+  <main class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Abrir menu"><i data-lucide="menu"></i></button>
+        <div class="topbar-copy"><div class="eyebrow">NOVA QUEST · Zona de estudo</div><h1>Missões</h1><p class="subtitle">Estuda, supera desafios e transforma o teu esforço em recompensas.</p></div>
+      </div>
+      <div class="user-chip"><span class="avatar" id="avatar">N</span><span id="userName">Explorador</span></div>
+    </header>
+    <div class="page-wrap">
+      <div class="m-stack">
+        <section class="m-hero hero-card" aria-label="O teu progresso">
+          <div><div class="m-kicker"><i data-lucide="sparkles" style="width:15px"></i> NOVA Quest · O teu próximo nível</div>
+          <h2>Cada sessão conta.<br> Cada missão aproxima-te.</h2>
+          <p>Faz quizzes, estuda no temporizador e conclui tarefas. As missões acompanham automaticamente o teu progresso.</p>
+          <div class="m-hero-cta"><a class="btn-primary" href="quizzes.html"><i data-lucide="clipboard-list" style="width:16px"></i> Fazer um quiz</a><a class="btn-secondary" href="Centro_estudo.html"><i data-lucide="timer" style="width:16px"></i> Estudar 25 min</a></div></div>
+          <div class="m-level-panel"><div class="m-level-top"><span class="m-level-icon"><i data-lucide="zap"></i></span><div><small>NÍVEL DE ESTUDO</small><strong id="mLevel">Nível 1</strong></div></div><div class="m-level-row"><span id="mTotalXP">0 XP acumulados</span><span id="mNextXP">0 / 400</span></div><div class="m-bar"><div class="m-fill" id="mLevelFill"></div></div><p class="m-note" style="margin-top:11px">XP dos quizzes e das missões resgatadas.</p></div>
+        </section>
+        <section class="m-stats" aria-label="Estatísticas">
+          <article class="m-stat"><span class="m-stat-icon"><i data-lucide="swords"></i></span><div><small>Missões resgatadas</small><strong id="mClaimed">0</strong></div></article>
+          <article class="m-stat"><span class="m-stat-icon"><i data-lucide="target"></i></span><div><small>Prontas a resgatar</small><strong id="mReady">0</strong></div></article>
+          <article class="m-stat"><span class="m-stat-icon"><i data-lucide="notebook-pen"></i></span><div><small>Quizzes esta semana</small><strong id="mQuizWeek">0</strong></div></article>
+          <article class="m-stat"><span class="m-stat-icon"><i data-lucide="clock-3"></i></span><div><small>Estudo esta semana</small><strong id="mMinutesWeek">0 min</strong></div></article>
+        </section>
+        <div id="mNotice" class="m-notice" role="status" hidden></div>
+        <section class="m-top-grid" aria-label="Destaques das missões">
+          <article class="panel"><div class="m-sectiontop"><div><h2>A missão recomendada</h2><p>O próximo objetivo que te pode fazer evoluir.</p></div><span class="m-chip" id="mFeaturedChip"><i data-lucide="sparkles" style="width:12px"></i> Destaque</span></div><div id="mFeature" class="m-feature"></div></article>
+          <article class="panel"><div class="m-sectiontop"><div><h2>Atividade dos últimos 7 dias</h2><p>Quizzes feitos e minutos de estudo.</p></div><i data-lucide="activity" style="color:var(--accent);width:20px"></i></div><div class="m-chart" id="mChart" role="img" aria-label="Gráfico da atividade dos últimos sete dias"></div><p class="m-chart-legend" id="mChartLegend"></p></article>
+        </section>
+        <section class="m-toolbar"><div><h2>O teu quadro de missões</h2><p>As diárias renovam todos os dias; as semanais renovam à segunda-feira.</p></div><div class="m-filters" role="group" aria-label="Filtrar missões"><button type="button" class="m-filter" data-filter="all" aria-pressed="true">Todas</button><button type="button" class="m-filter" data-filter="daily" aria-pressed="false">Diárias</button><button type="button" class="m-filter" data-filter="weekly" aria-pressed="false">Semanais</button><button type="button" class="m-filter" data-filter="once" aria-pressed="false">Marcos</button></div></section>
+        <section id="mGrid" class="m-grid" aria-label="Lista de missões"></section>
+        <div class="m-footer"><div class="m-sync local" id="mSync"><span class="m-dot"></span><span>Os dados estão a carregar…</span></div><button class="m-refresh" id="mRefresh" type="button"><i data-lucide="refresh-cw" style="width:14px;vertical-align:middle"></i> Atualizar progresso</button></div>
+        <div id="mDemo" class="m-notice" hidden><div style="flex:1"><strong style="color:var(--ink)">Experimentar sem Supabase</strong><p class="m-note" style="margin-top:4px">Podes simular atividades para testar a página. Só afeta os dados de demonstração neste navegador.</p><div class="m-demo"><button type="button" class="btn-secondary" id="mDemoQuiz">+ Simular quiz (8 certas)</button><button type="button" class="btn-secondary" id="mDemoStudy">+ Simular 25 min de estudo</button><button type="button" class="btn-secondary" id="mDemoTask">+ Simular tarefa concluída</button></div></div></div>
+        <p class="m-note">As missões contam atividades guardadas no <strong>Quizzes</strong>, <strong>Centro de estudo</strong> e <strong>Tarefas</strong>. As recompensas são resgatadas uma vez por período. A sincronização entre dispositivos requer a tabela de missões no Supabase.</p>
+      </div>
+    </div>
+  </main>
+</div>
+<div id="mToast" class="m-toast" role="status" aria-live="polite" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const client = window.supabase && window.NOVA_SUPABASE_URL && window.NOVA_SUPABASE_KEY
+    ? window.supabase.createClient(window.NOVA_SUPABASE_URL, window.NOVA_SUPABASE_KEY) : null;
+  const M = [
+    {id:'d_quiz',period:'daily',title:'Primeira conquista',desc:'Completa um quiz hoje.',goal:1,xp:80,icon:'clipboard-check',unit:'quiz',kind:'quizzes',href:'quizzes.html'},
+    {id:'d_correct',period:'daily',title:'Mente afiada',desc:'Responde corretamente a 5 perguntas hoje.',goal:5,xp:110,icon:'brain-circuit',unit:'respostas certas',kind:'correct',href:'quizzes.html'},
+    {id:'d_study',period:'daily',title:'Foco total',desc:'Regista 25 minutos de estudo hoje no Centro de estudo.',goal:25,xp:120,icon:'timer',unit:'min',kind:'minutes',href:'Centro_estudo.html'},
+    {id:'d_grade',period:'daily',title:'Bom desempenho',desc:'Termina um quiz com pelo menos 80% de respostas certas hoje.',goal:1,xp:130,icon:'star',unit:'quizzes ≥80%',kind:'high',href:'quizzes.html'},
+    {id:'d_tasks',period:'daily',title:'Dia organizado',desc:'Conclui 2 tarefas da NOVA Life hoje.',goal:2,xp:70,icon:'list-checks',unit:'tarefas',kind:'tasks',href:'../paginas_dashboard/tarefas.html'},
+    {id:'w_quizzes',period:'weekly',title:'Maratona de quizzes',desc:'Completa 5 quizzes esta semana.',goal:5,xp:300,icon:'swords',unit:'quizzes',kind:'quizzes',href:'quizzes.html'},
+    {id:'w_study',period:'weekly',title:'Disciplina de ferro',desc:'Acumula 120 minutos de estudo nesta semana.',goal:120,xp:320,icon:'book-open-check',unit:'min',kind:'minutes',href:'Centro_estudo.html'},
+    {id:'w_correct',period:'weekly',title:'Caçador de conhecimento',desc:'Acerta 30 perguntas ao longo da semana.',goal:30,xp:350,icon:'target',unit:'respostas certas',kind:'correct',href:'quizzes.html'},
+    {id:'w_subjects',period:'weekly',title:'Explorador de matérias',desc:'Faz quizzes de 3 disciplinas diferentes nesta semana.',goal:3,xp:260,icon:'layers-3',unit:'disciplinas',kind:'subjects',href:'quizzes.html'},
+    {id:'w_tasks',period:'weekly',title:'Semana produtiva',desc:'Conclui 5 tarefas da NOVA Life nesta semana.',goal:5,xp:180,icon:'calendar-check',unit:'tarefas',kind:'tasks',href:'../paginas_dashboard/tarefas.html'},
+    {id:'o_quiz',period:'once',title:'Primeiros passos',desc:'Completa o teu primeiro quiz na NOVA.',goal:1,xp:150,icon:'flag',unit:'quiz',kind:'quizzes',href:'quizzes.html'},
+    {id:'o_study',period:'once',title:'Começa a jornada',desc:'Guarda a tua primeira sessão de estudo.',goal:1,xp:150,icon:'rocket',unit:'sessão',kind:'sessions',href:'Centro_estudo.html'},
+    {id:'o_ten',period:'once',title:'Veterano do saber',desc:'Termina 10 quizzes ao longo da tua jornada.',goal:10,xp:500,icon:'trophy',unit:'quizzes',kind:'quizzes',href:'quizzes.html'}
+  ];
+  const state = {user:{id:'nova-demo-local'},demo:!client,mode:'local',filter:'all',attempts:[],sessions:[],tasks:[],claims:[],busy:false,alerts:[]};
+  const icons = () => window.lucide?.createIcons?.();
+  const now = () => new Date();
+  const dateStr = d => [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+  const dateOf = val => {const d=new Date(val);return Number.isNaN(d.getTime())?null:d;};
+  const monday = date => {const d=new Date(date.getFullYear(),date.getMonth(),date.getDate());d.setDate(d.getDate() - ((d.getDay()+6)%7));return dateStr(d)};
+  const weekKey = monday(now());
+  const todayKey = dateStr(now());
+  const entryDate = val => {const d=dateOf(val);return d?dateStr(d):''};
+  const inPeriod=(row,period)=>period==='once'||(period==='daily'?entryDate(row)===dateStr(now()):monday(dateOf(row)??new Date(0))===monday(now()));
+  const keyFor = m => m.period==='daily'?'D:'+dateStr(now()):m.period==='weekly'?'W:'+monday(now()):'ALL';
+  const claimKey = c => c.mission_id+'|'+c.period_key;
+  const hasClaim=m=>state.claims.some(c=>claimKey(c)===m.id+'|'+keyFor(m));
+  const localKey=()=>`nova-missions-claims-v1:${state.user.id}`;
+  const demoKey=()=>`nova-missions-demo-v1:${state.user.id}`;
+  const loadJSON=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||'null')||fallback}catch(_){return fallback}};
+  const storeJSON=(key,data)=>{try{localStorage.setItem(key,JSON.stringify(data))}catch(_){}};
+  function showToast(msg){$('mToast').textContent=msg;$('mToast').hidden=false;clearTimeout(showToast.t);showToast.t=setTimeout(()=>$('mToast').hidden=true,4500)}
+  function count(m){
+    const relevant=arr=>arr.filter(r=>inPeriod(r.created_at||r.started_at||r.completed_at,m.period));
+    if(m.kind==='sessions')return relevant(state.sessions).length;
+    if(m.kind==='minutes')return relevant(state.sessions).reduce((sum,s)=>sum+Math.max(0,Number(s.duration_minutes)||0),0);
+    if(m.kind==='tasks')return state.tasks.filter(t=>t.status==='concluida'&&inPeriod(t.completed_at,m.period)).length;
+    const attempts=relevant(state.attempts);
+    if(m.kind==='quizzes')return attempts.length;
+    if(m.kind==='correct')return attempts.reduce((sum,a)=>sum+Math.max(0,Number(a.correct_count)||0),0);
+    if(m.kind==='high')return attempts.filter(a=>Number(a.score)>=80).length;
+    if(m.kind==='subjects')return new Set(attempts.map(a=>String(a.subject_key||a.subject_name||'').toLowerCase().trim()).filter(Boolean)).size;
+    return 0;
+  }
+  const getProgress=m=>Math.max(0,count(m));
+  const ready=m=>!hasClaim(m)&&getProgress(m)>=m.goal;
+  function totalXP(){const quiz=state.attempts.reduce((n,a)=>n+Math.max(0,Number(a.correct_count)||0)*10+(Number(a.score)===100?25:0),0);const mission=state.claims.reduce((n,c)=>n+Math.max(0,Number(c.xp)||0),0);return quiz+mission}
+  function levelData(){const xp=totalXP(),size=400;return{level:1+Math.floor(xp/size),xp,part:xp%size,size}}
+  function setupAppearance(){const setTheme=val=>{const theme=val==='light'?'light':'dark';document.documentElement.dataset.theme=theme;try{localStorage.setItem('nova-theme',theme)}catch(_){};document.querySelector('meta[name="theme-color"]').content=theme==='light'?'#f5f7ff':'#090f20';$('themeLabel')&&($('themeLabel').textContent=theme==='light'?'Modo claro':'Modo escuro')};$('themeToggle')?.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='light'?'dark':'light'));$('mobileMenu')?.addEventListener('click',()=>{$('sidebar').classList.add('open');$('overlay').classList.add('show')});$('overlay')?.addEventListener('click',()=>{$('sidebar').classList.remove('open');$('overlay').classList.remove('show')});setTheme(document.documentElement.dataset.theme);}
+  function normalizeAttempts(rows){return (rows||[]).filter(a=>a&&a.created_at).map(a=>({...a,correct_count:Number(a.correct_count)||0,total_count:Number(a.total_count)||0,score:Number(a.score)||0}));}
+  async function loadActivity(){
+    const issues=[];
+    if(!client){const saved=loadJSON('nova-study-cache-v2:'+state.user.id,{});const demo=loadJSON(demoKey(),{attempts:[],sessions:[],tasks:[]});state.attempts=normalizeAttempts([...(saved.attempts||[]),...(demo.attempts||[])]);state.sessions=demo.sessions||[];state.tasks=demo.tasks||[];return}
+    const res=await Promise.allSettled([
+      client.from('nova_quiz_attempts').select('id,created_at,subject_key,subject_name,correct_count,total_count,score').eq('user_id',state.user.id).order('created_at',{ascending:false}).limit(1200),
+      client.from('study_sessions').select('id,started_at,created_at,duration_minutes').eq('user_id',state.user.id).order('started_at',{ascending:false}).limit(1200),
+      client.from('tasks').select('id,status,completed_at').eq('user_id',state.user.id).eq('status','concluida').order('completed_at',{ascending:false}).limit(1200)
+    ]);
+    const keys=['attempts','sessions','tasks'];res.forEach((r,i)=>{if(r.status==='fulfilled'&&!r.value.error){state[keys[i]]=i===0?normalizeAttempts(r.value.data):r.value.data||[]}else{issues.push(keys[i]);state[keys[i]]=[]}});
+    if(issues.includes('attempts')){const cache=loadJSON('nova-study-cache-v2:'+state.user.id,{});state.attempts=normalizeAttempts(cache.attempts||[])}
+    state.alerts=issues;
+  }
+  async function loadClaims(){
+    if(!client){state.claims=loadJSON(localKey(),[]);state.mode='local';return}
+    const res=await client.from('nova_quest_mission_claims').select('mission_id,period_key,xp,claimed_at').eq('user_id',state.user.id).limit(2500);
+    if(!res.error){state.claims=res.data||[];state.mode='cloud'}
+    else{state.claims=loadJSON(localKey(),[]);state.mode='local';state.alerts.push('claims')}
+  }
+  function renderNotices(){const el=$('mNotice');let message='';if(state.alerts.includes('claims'))message='A tabela de Missões ainda não existe no Supabase. As recompensas ficam guardadas neste navegador até instalares o SQL.';if(state.alerts.some(x=>x!=='claims'))message+=(message?' ':'')+'Nem todas as atividades puderam ser lidas ('+state.alerts.filter(x=>x!=='claims').join(', ')+'). Verifica as tabelas e as permissões do Supabase.';el.hidden=!message;if(message){el.className='m-notice warn';el.innerHTML='<i data-lucide="alert-triangle"></i><span></span>';el.querySelector('span').textContent=message}const sync=$('mSync');sync.classList.toggle('local',state.mode!=='cloud');sync.lastElementChild.textContent=state.mode==='cloud'?'Recompensas sincronizadas no Supabase':'Recompensas guardadas neste navegador';$('mDemo').hidden=!state.demo;}
+  function renderStats(){const level=levelData();$('mLevel').textContent='Nível '+level.level;$('mTotalXP').textContent=level.xp.toLocaleString('pt-PT')+' XP acumulados';$('mNextXP').textContent=level.part+' / '+level.size+' XP';$('mLevelFill').style.width=(level.part/level.size*100)+'%';$('mClaimed').textContent=state.claims.length;$('mReady').textContent=M.filter(ready).length;$('mQuizWeek').textContent=state.attempts.filter(x=>inPeriod(x.created_at,'weekly')).length;$('mMinutesWeek').textContent=state.sessions.filter(x=>inPeriod(x.started_at||x.created_at,'weekly')).reduce((a,x)=>a+(Number(x.duration_minutes)||0),0)+' min';}
+  function renderFeature(){const unclaimed=M.filter(m=>!hasClaim(m));const m=unclaimed.filter(ready)[0]||unclaimed.slice().sort((a,b)=>getProgress(b)/b.goal-getProgress(a)/a.goal)[0];if(!m){$('mFeature').innerHTML='<div class="m-feature-icon"><i data-lucide="party-popper"></i></div><div><h3>Tudo concluído!</h3><p>Resgataste as missões disponíveis. Volta amanhã para novos objetivos diários.</p><a class="m-go" href="quizzes.html">Continuar a estudar</a></div>';return}const value=getProgress(m),percent=Math.min(100,Math.round(value/m.goal*100));$('mFeature').innerHTML=`<div class="m-feature-icon"><i data-lucide="${m.icon}"></i></div><div><div class="m-kicker">${ready(m)?'PRONTA PARA RESGATAR':'O TEU PRÓXIMO OBJETIVO'}</div><h3>${m.title}</h3><p>${m.desc}</p><div class="m-feature-info"><strong>${Math.min(value,m.goal)} / ${m.goal} ${m.unit}</strong><span>·</span><span>+${m.xp} XP</span></div><div class="m-bar" style="margin-top:10px"><div class="m-fill" style="width:${percent}%"></div></div><div class="m-feature-actions">${ready(m)?`<button type="button" class="m-claim" data-claim="${m.id}">Resgatar +${m.xp} XP</button>`:`<a class="btn-primary" href="${m.href}">Começar agora <i data-lucide="arrow-right" style="width:15px"></i></a>`}</div></div>`}
+  function renderChart(){const d=new Date();d.setHours(0,0,0,0);const days=Array.from({length:7},(_,i)=>{const day=new Date(d);day.setDate(d.getDate()-(6-i));return day});const data=days.map(day=>{const key=dateStr(day),q=state.attempts.filter(a=>entryDate(a.created_at)===key).length,s=state.sessions.filter(x=>entryDate(x.started_at||x.created_at)===key).reduce((n,x)=>n+(Number(x.duration_minutes)||0),0);return{key,label:new Intl.DateTimeFormat('pt-PT',{weekday:'short'}).format(day).replace('.','').slice(0,3),q,s,value:q*15+s}});const max=Math.max(1,...data.map(d=>d.value));$('mChart').innerHTML=data.map(d=>`<div class="m-col" title="${d.label}: ${d.q} quiz(es), ${d.s} min de estudo"><div class="m-colbar"><span style="height:${Math.max(3,d.value/max*100)}%"></span></div><label>${d.label}</label></div>`).join('');$('mChartLegend').textContent='Atividade: 15 pontos por quiz + 1 ponto por minuto de estudo. Escala apenas visual.';}
+  function renderMissions(){let list=M.filter(m=>state.filter==='all'||m.period===state.filter).slice();list.sort((a,b)=>Number(ready(b))-Number(ready(a))||Number(hasClaim(a))-Number(hasClaim(b))||b.xp-a.xp);const grid=$('mGrid');if(!list.length){grid.innerHTML='<div class="m-empty">Ainda não existem missões neste filtro.</div>';return}grid.innerHTML=list.map(m=>{const countVal=getProgress(m),val=Math.min(countVal,m.goal),progress=Math.min(100,Math.round(val/m.goal*100)),claimed=hasClaim(m),can=ready(m),category=m.period==='daily'?'Diária · renova amanhã':m.period==='weekly'?'Semanal · renova segunda-feira':'Marco permanente';return `<article class="m-card ${claimed?'claimed':can?'ready':''}"><div class="m-card-top"><span class="m-mission-icon"><i data-lucide="${m.icon}"></i></span><span class="m-reward"><i data-lucide="zap" style="width:13px"></i> ${m.xp} XP</span></div><h3>${m.title}</h3><p>${m.desc}</p><div class="m-card-end"><div class="m-mission-line"><span>${category}</span><span>${val} / ${m.goal} ${m.unit}</span></div><div class="m-bar"><div class="m-fill" style="width:${progress}%"></div></div><div class="m-actions">${claimed?'<span class="m-status completed"><i data-lucide="check-circle-2" style="width:15px"></i> Resgatada</span>':can?'<span class="m-status completed">Concluída!</span>':`<span class="m-status">${progress}% concluído</span>`}${claimed?'<span class="m-chip">✓ Feito</span>':can?`<button class="m-claim" type="button" data-claim="${m.id}">Resgatar XP</button>`:`<a class="m-go" href="${m.href}">Continuar <i data-lucide="arrow-right" style="width:13px"></i></a>`}</div></div></article>`}).join('');}
+  function render(){renderNotices();renderStats();renderFeature();renderChart();renderMissions();icons();}
+  async function claimMission(id){const m=M.find(x=>x.id===id);if(!m||state.busy)return;if(hasClaim(m)){showToast('Esta recompensa já foi resgatada.');return}if(!ready(m)){showToast('Conclui a missão antes de resgatar XP.');return}state.busy=true;document.querySelectorAll('[data-claim]').forEach(b=>b.disabled=true);const period_key=keyFor(m),local={mission_id:m.id,period_key,xp:m.xp,claimed_at:new Date().toISOString()};try{if(state.mode==='cloud'){
+      const res=await client.from('nova_quest_mission_claims').insert({user_id:state.user.id,mission_id:id,period_key}).select('mission_id,period_key,xp,claimed_at').single();
+      if(res.error){if(res.error.code==='23505'){showToast('Recompensa já resgatada noutro dispositivo.');await loadClaims();return}throw new Error(res.error.message)}state.claims.push(res.data);
+    }else{state.claims.push(local);storeJSON(localKey(),state.claims)}showToast('Missão concluída! +'+m.xp+' XP 🎉');
+    }catch(e){showToast('Não foi possível guardar a recompensa: '+(e?.message||'erro inesperado'))}finally{state.busy=false;render()}}
+  async function refresh(){const button=$('mRefresh');button.disabled=true;try{if(state.demo){const demo=loadJSON(demoKey(),{attempts:[],sessions:[],tasks:[]});const saved=loadJSON('nova-study-cache-v2:'+state.user.id,{});state.attempts=normalizeAttempts([...(saved.attempts||[]),...(demo.attempts||[])]);state.sessions=demo.sessions||[];state.tasks=demo.tasks||[];}else{await loadActivity();await loadClaims()}render();showToast('Progresso atualizado.')}catch(e){showToast('Não foi possível atualizar: '+(e?.message||'erro de rede'))}finally{button.disabled=false}}
+  function simulate(kind){if(!state.demo)return;const v=loadJSON(demoKey(),{attempts:[],sessions:[],tasks:[]});const stamp=new Date().toISOString(),id=(window.crypto?.randomUUID?.()||String(Date.now()+Math.random()));if(kind==='quiz')v.attempts.push({id,created_at:stamp,subject_key:['matematica','portugues','historia'][v.attempts.length%3],correct_count:8,total_count:10,score:80});if(kind==='study')v.sessions.push({id,started_at:stamp,created_at:stamp,duration_minutes:25});if(kind==='task')v.tasks.push({id,status:'concluida',completed_at:stamp});storeJSON(demoKey(),v);refresh()}
+  function bind(){document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{state.filter=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderMissions();icons()}));document.addEventListener('click',event=>{const button=event.target.closest('[data-claim]');if(button)claimMission(button.dataset.claim)});$('mRefresh').addEventListener('click',refresh);$('mDemoQuiz').addEventListener('click',()=>simulate('quiz'));$('mDemoStudy').addEventListener('click',()=>simulate('study'));$('mDemoTask').addEventListener('click',()=>simulate('task'));$('logoutButton')?.addEventListener('click',async()=>{if(client){await client.auth.signOut();location.replace('../login.html')}else showToast('Estás numa demonstração sem sessão iniciada.')});}
+  async function init(){setupAppearance();bind();if(client){let auth=null;try{auth=await client.auth.getUser()}catch(_){auth=null}if(!auth?.data?.user){location.replace('../login.html');return}state.user=auth.data.user;state.demo=false;const user=state.user;const name=String(user.user_metadata?.full_name||user.user_metadata?.name||user.email?.split('@')[0]||'Explorador').trim().split(/\s+/)[0];$('userName').textContent=name;$('avatar').textContent=(name[0]||'N').toUpperCase();await loadActivity();await loadClaims()}else{await loadActivity();await loadClaims();$('userName').textContent='Demonstração'}$('loading').hidden=true;$('app').hidden=false;render()}
+  init().catch(err=>{$('loading').textContent='Erro ao abrir Missões: '+(err?.message||'tenta recarregar a página')});
+})();
+</script>
 </body>
 </html>
